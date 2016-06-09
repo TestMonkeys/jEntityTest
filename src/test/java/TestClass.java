@@ -8,6 +8,7 @@ import org.testmonkeys.jentitytest.Entity;
 import org.testmonkeys.jentitytest.EntityComparisonDictionary;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.impl.SimpleTypeCoparator;
+import org.testmonkeys.jentitytest.inspect.EntityInspector;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -18,17 +19,6 @@ import java.beans.PropertyDescriptor;
  * Created by cpascal on 6/7/2016.
  */
 public class TestClass {
-
-    @Before
-    public void modelAndDictionarySetup() throws IntrospectionException {
-
-        ComparisonModel model = new ComparisonModel();
-        for(PropertyDescriptor propertyDescriptor :
-                Introspector.getBeanInfo(SimpleModel.class).getPropertyDescriptors()) {
-            model.setComparisonPoint(propertyDescriptor, new SimpleTypeCoparator());
-        }
-        EntityComparisonDictionary.getInstance().addComparisonModel(SimpleModel.class,model);
-    }
 
     @Test
     public void testPassing(){
