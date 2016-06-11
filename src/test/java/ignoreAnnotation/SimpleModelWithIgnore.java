@@ -1,17 +1,20 @@
-package models;
+package ignoreAnnotation;
+
+import org.testmonkeys.jentitytest.framework.IgnoreComparison;
 
 /**
  * Created by cpascal on 6/7/2016.
  */
-public class SimpleModel {
+public class SimpleModelWithIgnore {
 
-    public SimpleModel(String name, int age){
+    public SimpleModelWithIgnore(String name, int age){
         this.name=name;
         this.age=age;
     }
 
     private String name;
 
+    @IgnoreComparison
     public int getAge() {
         return age;
     }

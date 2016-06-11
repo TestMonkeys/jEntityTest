@@ -5,7 +5,7 @@ import org.testmonkeys.jentitytest.comparison.Comparator;
 /**
  * Created by cpascal on 6/7/2016.
  */
-public class SimpleTypeCoparator implements Comparator {
+public class SimpleTypeComparator implements Comparator {
 
     @Override
     public boolean areEqual(Object actual, Object expected) {
