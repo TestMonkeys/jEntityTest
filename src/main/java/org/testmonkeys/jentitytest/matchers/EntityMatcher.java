@@ -1,6 +1,5 @@
 package org.testmonkeys.jentitytest.matchers;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.testmonkeys.jentitytest.EntityComparisonDictionary;
@@ -9,7 +8,6 @@ import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Objects;
 
 /**
  * Created by cpascal on 6/7/2016.
