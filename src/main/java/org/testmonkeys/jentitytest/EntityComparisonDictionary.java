@@ -7,31 +7,27 @@ import java.beans.IntrospectionException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by cpascal on 6/7/2016.
- */
 public class EntityComparisonDictionary {
     private static EntityComparisonDictionary instance;
-    public static synchronized EntityComparisonDictionary getInstance(){
-        if(instance==null)
-            instance=new EntityComparisonDictionary();
+    private final Map<Class, ComparisonModel> dictionary;
+    private final EntityInspector inspector;
+
+    private EntityComparisonDictionary() {
+        dictionary = new HashMap<>();
+        inspector = new EntityInspector();
+    }
+
+    public static synchronized EntityComparisonDictionary getInstance() {
+        if (instance == null)
+            instance = new EntityComparisonDictionary();
         return instance;
     }
 
-    private Map<Class,ComparisonModel> dictionary;
-    private EntityInspector inspector;
-
-
-    private EntityComparisonDictionary(){
-        dictionary=new HashMap<>();
-        inspector=new EntityInspector();
+    public void addComparisonModel(Class clazz, ComparisonModel model) {
+        dictionary.put(clazz, model);
     }
 
-    public void addComparisonModel(Class clazz, ComparisonModel model){
-        dictionary.put(clazz,model);
-    }
-
-    public ComparisonModel getComparisonModel(Class clazz)  {
+    public ComparisonModel getComparisonModel(Class clazz) {
         if (!dictionary.containsKey(clazz)) {
             try {
                 dictionary.put(clazz, inspector.getComparisonModel(clazz));

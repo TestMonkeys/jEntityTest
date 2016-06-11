@@ -9,28 +9,25 @@ import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 
-/**
- * Created by cpascal on 6/7/2016.
- */
 public class EntityMatcher<T> extends BaseMatcher<T> {
 
-    private Object expected;
-    private EntityComparisonDictionary comparisonDictionary=EntityComparisonDictionary.getInstance();
+    private final Object expected;
+    private final EntityComparisonDictionary comparisonDictionary = EntityComparisonDictionary.getInstance();
 
-    public EntityMatcher(Object expected){
-        this.expected=expected;
+    public EntityMatcher(Object expected) {
+        this.expected = expected;
     }
 
     @Override
     public boolean matches(Object actualItem) {
-        ComparisonModel comparisonModel=comparisonDictionary.getComparisonModel(expected.getClass());
-        for (PropertyDescriptor propertyDescriptor:comparisonModel.getComparableProperties()){
-            Comparator comparator=comparisonModel.getComparator(propertyDescriptor);
+        ComparisonModel comparisonModel = comparisonDictionary.getComparisonModel(expected.getClass());
+        for (PropertyDescriptor propertyDescriptor : comparisonModel.getComparableProperties()) {
+            Comparator comparator = comparisonModel.getComparator(propertyDescriptor);
 
             try {
-                Object expectedValue=propertyDescriptor.getReadMethod().invoke(expected);
-                Object actualValue =propertyDescriptor.getReadMethod().invoke(actualItem);
-                if (!comparator.areEqual(actualValue,expectedValue))
+                Object expectedValue = propertyDescriptor.getReadMethod().invoke(expected);
+                Object actualValue = propertyDescriptor.getReadMethod().invoke(actualItem);
+                if (!comparator.areEqual(actualValue, expectedValue))
                     return false;
             } catch (IllegalAccessException e) {
                 e.printStackTrace();

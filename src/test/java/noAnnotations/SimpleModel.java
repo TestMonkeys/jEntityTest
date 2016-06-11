@@ -1,16 +1,14 @@
 package noAnnotations;
 
-/**
- * Created by cpascal on 6/7/2016.
- */
 public class SimpleModel {
 
-    public SimpleModel(String name, int age){
-        this.name=name;
-        this.age=age;
-    }
-
     private String name;
+    private int age;
+
+    public SimpleModel(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
 
     public int getAge() {
         return age;
@@ -19,8 +17,6 @@ public class SimpleModel {
     public void setAge(int age) {
         this.age = age;
     }
-
-    private int age;
 
     public String getName() {
         return name;

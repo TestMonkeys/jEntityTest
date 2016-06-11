@@ -2,17 +2,15 @@ package ignoreAnnotation;
 
 import org.testmonkeys.jentitytest.framework.IgnoreComparison;
 
-/**
- * Created by cpascal on 6/7/2016.
- */
 public class SimpleModelWithIgnore {
 
-    public SimpleModelWithIgnore(String name, int age){
-        this.name=name;
-        this.age=age;
-    }
-
     private String name;
+    private int age;
+
+    public SimpleModelWithIgnore(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
 
     @IgnoreComparison
     public int getAge() {
@@ -22,8 +20,6 @@ public class SimpleModelWithIgnore {
     public void setAge(int age) {
         this.age = age;
     }
-
-    private int age;
 
     public String getName() {
         return name;

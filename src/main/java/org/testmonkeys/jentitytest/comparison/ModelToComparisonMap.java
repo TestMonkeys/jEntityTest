@@ -9,27 +9,23 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by cpascal on 6/11/2016.
- */
 public class ModelToComparisonMap {
 
     private static ModelToComparisonMap instance;
+    private final Map<Class, Class> mapping;
 
-    public static ModelToComparisonMap getInstance(){
-        if (instance==null)
-            instance=new ModelToComparisonMap();
-        return instance;
-    }
-
-    private Map<Class,Class> mapping;
-
-    private ModelToComparisonMap(){
+    private ModelToComparisonMap() {
         mapping = new HashMap<>();
         mapping.put(IgnoreComparison.class, IgnoreComparator.class);
     }
 
-    public Comparator getComparatorForAnnotation(Annotation annotation){
+    public static ModelToComparisonMap getInstance() {
+        if (instance == null)
+            instance = new ModelToComparisonMap();
+        return instance;
+    }
+
+    public Comparator getComparatorForAnnotation(Annotation annotation) {
 
         if (mapping.containsKey(annotation.annotationType()))
             try {
