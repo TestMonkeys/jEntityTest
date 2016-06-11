@@ -3,13 +3,11 @@ machine:
     version: openjdk8
 
 dependencies:
-  pre:
-    - wget "https://services.gradle.org/distributions/gradle-2.10-bin.zip"; unzip gradle-2.10-bin.zip
-  override:
+   override:
     - chmod +x gradlew
     - ./gradlew dependencies
 
 test:
   post:
     - mkdir -p $CIRCLE_TEST_REPORTS/junit/
-    - find . -type f -regex ".build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
+    - find . -type f -regex "./build/test-results/.*xml" -exec cp {} $CIRCLE_TEST_REPORTS/junit/ \;
