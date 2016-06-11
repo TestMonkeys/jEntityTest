@@ -1,0 +1,3 @@
+dependencies:
+  pre:
+    - wget "https://services.gradle.org/distributions/gradle-2.10-bin.zip"; unzip gradle-2.10-bin.zip
