@@ -10,6 +10,10 @@
 # Gradle pack
 .gradle/
 
+# Build pack
+
+build/
+
 # Package Files #
 *.jar
 *.war
