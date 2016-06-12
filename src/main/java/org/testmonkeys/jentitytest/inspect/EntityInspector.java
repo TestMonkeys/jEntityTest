@@ -1,8 +1,7 @@
 package org.testmonkeys.jentitytest.inspect;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
-import org.testmonkeys.jentitytest.comparison.ModelToComparisonMap;
-import org.testmonkeys.jentitytest.comparison.impl.SimpleTypeComparator;
+import org.testmonkeys.jentitytest.comparison.property.SimpleTypeComparator;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;

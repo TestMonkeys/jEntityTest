@@ -1,7 +1,8 @@
-package org.testmonkeys.jentitytest.comparison;
+package org.testmonkeys.jentitytest.inspect;
 
-import org.testmonkeys.jentitytest.comparison.impl.IgnoreComparator;
-import org.testmonkeys.jentitytest.comparison.impl.SimpleTypeComparator;
+import org.testmonkeys.jentitytest.comparison.Comparator;
+import org.testmonkeys.jentitytest.comparison.property.IgnoreComparator;
+import org.testmonkeys.jentitytest.comparison.property.SimpleTypeComparator;
 import org.testmonkeys.jentitytest.framework.IgnoreComparison;
 
 import java.lang.annotation.Annotation;
