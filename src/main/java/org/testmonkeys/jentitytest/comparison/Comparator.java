@@ -5,7 +5,9 @@ import java.util.List;
 
 public interface Comparator {
 
-    ComparisonResult areEqual(PropertyDescriptor property, Object actual, Object expected);
+
+
+    List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context);
 
 
 }

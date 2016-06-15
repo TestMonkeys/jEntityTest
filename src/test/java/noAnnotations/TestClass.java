@@ -3,6 +3,7 @@ package noAnnotations;
 import org.junit.Assert;
 import org.junit.Test;
 import org.testmonkeys.jentitytest.Entity;
+import org.testmonkeys.jentitytest.matchers.EntityMatcher;
 
 public class TestClass {
 
@@ -20,5 +21,13 @@ public class TestClass {
         SimpleModel expected = new SimpleModel("Johan", 26);
         SimpleModel actual = new SimpleModel("John", 26);
         Assert.assertThat(actual, Entity.isEqualTo(expected));
+    }
+
+    @Test
+    public void debug(){
+        SimpleModel expected = new SimpleModel("Johan", 26);
+        SimpleModel actual = new SimpleModel("John", 26);
+        EntityMatcher matcher = new EntityMatcher(expected);
+        matcher.matches(actual);
     }
 }

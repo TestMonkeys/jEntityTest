@@ -19,7 +19,7 @@ public class EntityInspector {
     public ComparisonModel getComparisonModel(Class clazz) throws IntrospectionException {
         ComparisonModel model = new ComparisonModel();
         for (PropertyDescriptor propertyDescriptor :
-                Introspector.getBeanInfo(clazz).getPropertyDescriptors()) {
+                Introspector.getBeanInfo(clazz,Object.class).getPropertyDescriptors()) {
             boolean customComparison = false;
             for (Annotation annotation : propertyDescriptor.getReadMethod().getAnnotations()) {
 
