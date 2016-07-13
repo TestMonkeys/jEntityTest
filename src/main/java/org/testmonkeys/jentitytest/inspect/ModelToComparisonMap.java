@@ -26,6 +26,10 @@ public class ModelToComparisonMap {
         return instance;
     }
 
+    public void setComparatorForAnnotation(Class<? extends Comparator> comparator, Class<?> annotation) {
+        mapping.put(annotation, comparator);
+    }
+
     public Comparator getComparatorForAnnotation(Annotation annotation) {
 
         if (mapping.containsKey(annotation.annotationType()))
