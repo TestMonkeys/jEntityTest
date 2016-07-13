@@ -2,16 +2,14 @@ package entityInspectionTests;
 
 import static org.junit.Assert.*;
 
-import org.junit.Before;
-import org.junit.BeforeClass;
+import entityInspectionTests.models.*;
 import org.junit.Test;
 import static org.hamcrest.CoreMatchers.*;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.property.IgnoreComparator;
 import org.testmonkeys.jentitytest.inspect.EntityInspector;
+import org.testmonkeys.jentitytest.inspect.ModelToComparisonMap;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import testModels.inspection.InvalidProperties;
-import testModels.inspection.Model1;
 
 import java.beans.PropertyDescriptor;
 import java.util.Set;
@@ -57,7 +55,13 @@ public class InspectionTest {
     }
 
     @Test
-    public void inspectionTakesFiledAnnotationInsteadOfGetter(){
-        throw new NotImplementedException();
+    public void inspectionTakesFiledAnnotationInsteadOfGetter() throws Throwable {
+        ModelToComparisonMap.getInstance().setComparatorForAnnotation(IgnoreComparatorCustom.class, IgnoreComparisonCustom.class);
+        EntityInspector inspector = new EntityInspector();
+        ComparisonModel model = inspector.getComparisonModel(ModelWithBothLevelAnnotations.class);
+        Set<PropertyDescriptor> props = model.getComparableProperties();
+        assertThat("'id' in model", props.stream().anyMatch(x -> x.getName().equals("id")), is(true));
+        PropertyDescriptor prop = props.stream().filter(x -> x.getName().equals("id")).findFirst().get();
+        assertThat("comparator", model.getComparator(prop).getClass(), is(IgnoreComparatorCustom.class));
     }
 }
