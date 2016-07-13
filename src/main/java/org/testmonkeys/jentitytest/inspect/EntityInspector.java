@@ -7,6 +7,8 @@ import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 
 public class EntityInspector {
 
@@ -19,12 +21,28 @@ public class EntityInspector {
     public ComparisonModel getComparisonModel(Class clazz) throws IntrospectionException {
         ComparisonModel model = new ComparisonModel();
         for (PropertyDescriptor propertyDescriptor :
-                Introspector.getBeanInfo(clazz,Object.class).getPropertyDescriptors()) {
+                Introspector.getBeanInfo(clazz, Object.class).getPropertyDescriptors()) {
+            Method method = propertyDescriptor.getReadMethod();
+            if (method == null)
+                continue;
             boolean customComparison = false;
-            for (Annotation annotation : propertyDescriptor.getReadMethod().getAnnotations()) {
+            boolean fieldLevelComparison = false;
+            try {
+                Field field = clazz.getDeclaredField(propertyDescriptor.getName());
+                for (Annotation annotation : field.getAnnotations()) {
+                    model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
+                    customComparison = true;
+                    fieldLevelComparison = true;
+                }
+            } catch (NoSuchFieldException nfe) {
 
-                model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
-                customComparison = true;
+            }
+            if (!fieldLevelComparison) {
+
+                for (Annotation annotation : method.getAnnotations()) {
+                    model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
+                    customComparison = true;
+                }
             }
             if (!customComparison)
                 model.setComparisonPoint(propertyDescriptor, new SimpleTypeComparator());
