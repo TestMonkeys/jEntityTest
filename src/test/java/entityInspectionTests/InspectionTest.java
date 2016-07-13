@@ -32,7 +32,7 @@ public class InspectionTest {
         ComparisonModel model = inspector.getComparisonModel(Model1.class);
         Set<PropertyDescriptor> props= model.getComparableProperties();
         assertThat("'id' in model",props.stream().anyMatch(x -> x.getName().equals("id")),is(true));
-        PropertyDescriptor prop=props.stream().findFirst().filter(x -> x.getName().equals("id")).get();
+        PropertyDescriptor prop = props.stream().filter(x -> x.getName().equals("id")).findFirst().get();
         assertThat("comparator",model.getComparator(prop).getClass(), is(IgnoreComparator.class));
     }
 
@@ -42,7 +42,7 @@ public class InspectionTest {
         ComparisonModel model = inspector.getComparisonModel(Model1.class);
         Set<PropertyDescriptor> props= model.getComparableProperties();
         assertThat("'available' in model",props.stream().anyMatch(x -> x.getName().equals("available")),is(true));
-        PropertyDescriptor prop=props.stream().findFirst().filter(x -> x.getName().equals("available")).get();
+        PropertyDescriptor prop = props.stream().filter(x -> x.getName().equals("available")).findFirst().get();
         assertThat("comparator",model.getComparator(prop).getClass(), is(IgnoreComparator.class));
     }
 
@@ -52,7 +52,7 @@ public class InspectionTest {
         ComparisonModel model = inspector.getComparisonModel(Model1.class);
         Set<PropertyDescriptor> props= model.getComparableProperties();
         assertThat("'age' in model",props.stream().anyMatch(x -> x.getName().equals("age")),is(true));
-        PropertyDescriptor prop=props.stream().findFirst().filter(x -> x.getName().equals("age")).get();
+        PropertyDescriptor prop = props.stream().filter(x -> x.getName().equals("age")).findFirst().get();
         assertThat("comparator",model.getComparator(prop).getClass(), is(IgnoreComparator.class));
     }
 
