@@ -1,8 +1,11 @@
 package org.testmonkeys.jentitytest.inspect;
 
 import org.testmonkeys.jentitytest.comparison.Comparator;
+import org.testmonkeys.jentitytest.comparison.entity.ChildEntityComparator;
+import org.testmonkeys.jentitytest.comparison.entity.EntityComparator;
 import org.testmonkeys.jentitytest.comparison.property.IgnoreComparator;
 import org.testmonkeys.jentitytest.comparison.property.SimpleTypeComparator;
+import org.testmonkeys.jentitytest.framework.ChildEntityComparison;
 import org.testmonkeys.jentitytest.framework.IgnoreComparison;
 
 import java.lang.annotation.Annotation;
@@ -18,6 +21,7 @@ public class ModelToComparisonMap {
     private ModelToComparisonMap() {
         mapping = new HashMap<>();
         mapping.put(IgnoreComparison.class, IgnoreComparator.class);
+        mapping.put(ChildEntityComparison.class, ChildEntityComparator.class);
     }
 
     public static ModelToComparisonMap getInstance() {
