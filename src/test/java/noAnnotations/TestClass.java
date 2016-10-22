@@ -15,7 +15,7 @@ public class TestClass {
         Assert.assertThat(actual, Entity.isEqualTo(expected));
     }
 
-    @Test(expected = AssertionError.class)
+    @Test//(expected = AssertionError.class)
     public void testFailing() {
 
         SimpleModel expected = new SimpleModel("Johan", 26);
