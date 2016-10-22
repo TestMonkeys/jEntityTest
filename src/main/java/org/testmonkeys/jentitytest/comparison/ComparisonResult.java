@@ -19,11 +19,23 @@ public class ComparisonResult {
         this.comparisonContext = comparisonContext;
     }
 
+    public ComparisonContext getContext() {
+        return this.comparisonContext;
+    }
+
     public void setExpected(Object expected) {
         this.expected = expected;
     }
 
+    public Object getExpected() {
+        return this.expected;
+    }
+
     public void setActual(Object actual) {
         this.actual = actual;
+    }
+
+    public Object getActual() {
+        return this.actual;
     }
 }
