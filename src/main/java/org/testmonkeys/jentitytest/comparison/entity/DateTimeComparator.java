@@ -3,6 +3,7 @@ package org.testmonkeys.jentitytest.comparison.entity;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.SingleResultComparator;
+import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
 import java.time.temporal.ChronoUnit;
@@ -15,22 +16,31 @@ public class DateTimeComparator extends SingleResultComparator {
 
     @Override
     protected ComparisonResult computeComparison(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) {
-
-        Temporal actualValue = (Temporal) getPropertyValue(property, actual);
-        Temporal expectedValue = (Temporal) getPropertyValue(property, expected);
-
+        Object a = getPropertyValue(property, actual);
+        Object e = getPropertyValue(property, expected);
         ComparisonResult result = new ComparisonResult();
+
+        result.setComparisonContext(context);
+        result.setActual(a);
+        result.setExpected(e);
+
+        if (a == null && e == null) {
+            result.setPassed(true);
+            return result;
+        }
+
+        if (!(a instanceof Temporal) && !(e instanceof Temporal))
+            throw new JEntityTestException("Expected and Actual values must of type " + Temporal.class.getName());
+
+        Temporal actualValue = (Temporal) a;
+        Temporal expectedValue = (Temporal) e;
+
         boolean passed = false;
 
-        if (actual == null && expectedValue == null)
-            passed = true;
-        else if (actual != null && expectedValue != null)
+        if (actualValue != null && expectedValue != null)
             passed = actualValue.until(expectedValue, unit) <= delta;
 
         result.setPassed(passed);
-        result.setComparisonContext(context);
-        result.setActual(actualValue);
-        result.setExpected(expectedValue);
         return result;
     }
 }
