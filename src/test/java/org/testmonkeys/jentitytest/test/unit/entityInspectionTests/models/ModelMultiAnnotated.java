@@ -1,12 +1,18 @@
-package entityInspectionTests.models;
+package org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models;
 
 import org.testmonkeys.jentitytest.framework.IgnoreComparison;
 
-public class Model1 {
+/**
+ * Model used for testing how jEntityTest will do inspection when there are annotations
+ * from other frameworks.
+ */
+public class ModelMultiAnnotated {
 
+    @SimpleAnnotation
     @IgnoreComparison
     private int id;
 
+    @SimpleAnnotation
     private boolean available;
 
     private int age;
@@ -28,6 +34,7 @@ public class Model1 {
         this.available = available;
     }
 
+    @SimpleAnnotation
     @IgnoreComparison
     public int getAge() {
         return age;

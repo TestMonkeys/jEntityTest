@@ -1,5 +1,6 @@
 package org.testmonkeys.jentitytest.inspect;
 
+import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.property.SimpleTypeComparator;
 
@@ -30,7 +31,9 @@ public class EntityInspector {
             try {
                 Field field = clazz.getDeclaredField(propertyDescriptor.getName());
                 for (Annotation annotation : field.getAnnotations()) {
-                    model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
+                    if (!annotationToComparator.mapsToComparator(annotation))
+                        continue;
+                    model.setComparisonPoint(propertyDescriptor,annotationToComparator.getComparatorForAnnotation(annotation) );
                     customComparison = true;
                     fieldLevelComparison = true;
                 }
@@ -38,8 +41,9 @@ public class EntityInspector {
 
             }
             if (!fieldLevelComparison) {
-
                 for (Annotation annotation : method.getAnnotations()) {
+                    if (!annotationToComparator.mapsToComparator(annotation))
+                        continue;
                     model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
                     customComparison = true;
                 }
