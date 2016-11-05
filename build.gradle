@@ -11,10 +11,10 @@ allprojects {
 }
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'org.testmonkeys.jEntityTest'
+    bintrayName = 'org.testmonkeys.jentitytest'
 
     publishedGroupId = 'org.testmonkeys'
-    libraryName = 'jEntityTest'
+    libraryName = 'jentitytest'
     artifact = 'jentitytest'
 
     libraryDescription = 'Entity Matchers that are able to compare objects and provide ' +
@@ -108,7 +108,7 @@ publishing {
 
 // Bintray
 Properties properties = new Properties()
-//properties.load(project.rootProject.file('local.properties').newDataInputStream())
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 bintray {
     user = properties.getProperty("bintray.user")
