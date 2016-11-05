@@ -4,7 +4,7 @@ import org.testmonkeys.jentitytest.framework.ChildEntityComparison;
 
 public class EntityChild {
 
-//    @ChildEntityComparison
+    //    @ChildEntityComparison
 //    private EntityParent mom;
     @ChildEntityComparison
     private EntityParent dad;

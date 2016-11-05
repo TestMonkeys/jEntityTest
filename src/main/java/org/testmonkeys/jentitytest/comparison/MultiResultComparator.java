@@ -1,5 +1,6 @@
 package org.testmonkeys.jentitytest.comparison;
 
+import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
@@ -10,23 +11,26 @@ import java.util.List;
 public abstract class MultiResultComparator implements Comparator {
 
     public List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
-        List<ComparisonResult> resultList =new LinkedList<>();
+        List<ComparisonResult> resultList = new LinkedList<>();
 
-        resultList.addAll(computeComparison(property,actual,expected,context));
+        Object actualValue = getPropertyValue(property, actual);
+        Object expectedValue = getPropertyValue(property, expected);
+
+        if (context.isRecursive(actualValue))
+            return resultList;
+        context.setActualObj(actualValue);
+
+        resultList.addAll(computeComparison(property, actualValue, expectedValue, context));
 
         return resultList;
     }
 
-    protected Object getPropertyValue(PropertyDescriptor property, Object obj){
+    protected Object getPropertyValue(PropertyDescriptor property, Object obj) {
         try {
-            //TODO: think how to handle such exceptions
             return property.getReadMethod().invoke(obj);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            throw new JEntityTestException("Could not read property from object", e);
         }
-        return null;
     }
 
     protected abstract List<ComparisonResult> computeComparison(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) throws JEntityTestException;

@@ -2,7 +2,7 @@ package org.testmonkeys.jentitytest.inspect;
 
 import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.entity.ChildEntityComparator;
-import org.testmonkeys.jentitytest.comparison.entity.DateTimeComparator;
+import org.testmonkeys.jentitytest.comparison.property.DateTimeComparator;
 import org.testmonkeys.jentitytest.comparison.property.IgnoreComparator;
 import org.testmonkeys.jentitytest.framework.ChildEntityComparison;
 import org.testmonkeys.jentitytest.framework.DateTimeComparison;
