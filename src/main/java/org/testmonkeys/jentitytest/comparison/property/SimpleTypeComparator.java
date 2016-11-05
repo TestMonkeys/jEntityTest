@@ -1,12 +1,10 @@
 package org.testmonkeys.jentitytest.comparison.property;
 
-import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.SingleResultComparator;
 
 import java.beans.PropertyDescriptor;
-import java.util.List;
 
 public class SimpleTypeComparator extends SingleResultComparator {
 

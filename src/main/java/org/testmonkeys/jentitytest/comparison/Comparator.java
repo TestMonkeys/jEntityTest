@@ -7,9 +7,5 @@ import java.util.List;
 
 public interface Comparator {
 
-
-
     List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) throws JEntityTestException;
-
-
 }
