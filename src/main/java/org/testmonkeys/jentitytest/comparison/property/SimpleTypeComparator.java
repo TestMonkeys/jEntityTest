@@ -13,9 +13,11 @@ public class SimpleTypeComparator extends SingleResultComparator {
     @Override
     public ComparisonResult computeComparison(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) {
 
+
         ComparisonResult result =new ComparisonResult();
         Object actualValue=getPropertyValue(property,actual);
         Object expectedValue = getPropertyValue(property,expected);
+        context.setActualObj(actualValue);
         result.setPassed(actualValue.equals(expectedValue));
         result.setComparisonContext(context);
         result.setActual(actualValue);

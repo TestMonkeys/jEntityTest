@@ -12,9 +12,6 @@ public abstract class MultiResultComparator implements Comparator {
     public List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
         List<ComparisonResult> resultList =new LinkedList<>();
 
-        //TODO check if not recursive
-
-
         resultList.addAll(computeComparison(property,actual,expected,context));
 
         return resultList;

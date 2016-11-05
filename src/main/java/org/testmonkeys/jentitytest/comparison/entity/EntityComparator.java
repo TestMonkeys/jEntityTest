@@ -32,14 +32,17 @@ public class EntityComparator{
 
     public List<ComparisonResult> compare(Object actual, Object expected, ComparisonModel model, ComparisonContext context) throws JEntityTestException {
         List<ComparisonResult> comparisonResults=new LinkedList<>();
+        if (context==null) {
+            context = new ComparisonContext();
+            context.setParentName("Entity");
+        }
         for (PropertyDescriptor propertyDescriptor : model.getComparableProperties()) {
             Comparator comparator = model.getComparator(propertyDescriptor);
             ComparisonContext comparisonContext;
-            if (context==null) {
-                comparisonContext = new ComparisonContext();
-                comparisonContext.setParentName(propertyDescriptor.getName());
-            }else
+
+
                 comparisonContext=context.withProprety(propertyDescriptor.getName());
+
 
             comparisonResults.addAll(comparator.areEqual(propertyDescriptor,actual,expected, comparisonContext));
         }
