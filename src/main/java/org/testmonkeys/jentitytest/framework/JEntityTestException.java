@@ -1,6 +1,6 @@
 package org.testmonkeys.jentitytest.framework;
 
-public class JEntityTestException extends Exception {
+public class JEntityTestException extends RuntimeException {
 
     public JEntityTestException() {
         super();
