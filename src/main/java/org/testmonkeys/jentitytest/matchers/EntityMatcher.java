@@ -4,8 +4,8 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.testmonkeys.jentitytest.EntityComparisonDictionary;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
-import org.testmonkeys.jentitytest.comparison.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.entity.EntityComparator;
+import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.util.LinkedList;
@@ -30,16 +30,15 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
         } catch (JEntityTestException e) {
             e.printStackTrace();
         }
-        List<ComparisonResult> result=new LinkedList<>();
+        List<ComparisonResult> result = new LinkedList<>();
         EntityComparator comparator = new EntityComparator();
         try {
-            result.addAll(comparator.compare(actualItem,expected,comparisonModel));
+            result.addAll(comparator.compare(actualItem, expected, comparisonModel));
         } catch (JEntityTestException e) {
             e.printStackTrace();
         }
-        StringBuilder sb=new StringBuilder();
-        for ( ComparisonResult res:result)
-        {
+        StringBuilder sb = new StringBuilder();
+        for (ComparisonResult res : result) {
             if (res.isPassed())
                 continue;
             sb.append(res.getContext().toString()).
@@ -47,7 +46,7 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
                     append(" Actual: ").append(res.getActual()).append("" +
                     "\r\n");
         }
-        textualOutput=sb.toString();
+        textualOutput = sb.toString();
         return result.stream().allMatch(p -> p.isPassed());
     }
 
@@ -61,12 +60,12 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
     @Override
     public void describeTo(Description description) {
 
-       description.appendText("Entities have same values in properties");
+        description.appendText("Entities have same values in properties");
         //description.appendText("textValue");//description.appendText(textualOutput);
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "test";
     }
 }

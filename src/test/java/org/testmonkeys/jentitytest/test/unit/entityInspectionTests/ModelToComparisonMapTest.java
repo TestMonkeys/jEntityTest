@@ -19,22 +19,22 @@ import java.lang.annotation.Annotation;
  */
 public class ModelToComparisonMapTest {
 
+    @Rule
+    public ExpectedException expectedEx = ExpectedException.none();
     private ModelToComparisonMap comparisonMap;
 
     /**
      * initialization of EntityInspector,
      * generation of comparison model for ModelMultiAnnotated.class,
      * retrieval of comparable properties
+     *
      * @throws IntrospectionException
      */
     @Before
     public void background() throws IntrospectionException, JEntityTestException {
-        comparisonMap= ModelToComparisonMap.getInstance();
+        comparisonMap = ModelToComparisonMap.getInstance();
         comparisonMap.setComparatorForAnnotation(BadComparator.class, BadComparisonCustom.class);
     }
-
-    @Rule
-    public ExpectedException expectedEx = ExpectedException.none();
 
     /**
      * Check comparisonMap will throw exception if it has no comparator for annotation
@@ -42,10 +42,10 @@ public class ModelToComparisonMapTest {
     @Test
     public void modelToComparison_noMappingForAnnotation() throws Throwable {
         expectedEx.expect(JEntityTestException.class);
-        expectedEx.expectMessage("There is no comparator defined for annotation "+
-        "org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.SimpleAnnotation");
+        expectedEx.expectMessage("There is no comparator defined for annotation " +
+                "org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.SimpleAnnotation");
 
-        Annotation an= () -> SimpleAnnotation.class;
+        Annotation an = () -> SimpleAnnotation.class;
         comparisonMap.getComparatorForAnnotation(an);
     }
 
@@ -66,10 +66,10 @@ public class ModelToComparisonMapTest {
     @Test
     public void modelToComparison_badComparatorImplementation() throws Throwable {
         expectedEx.expect(JEntityTestException.class);
-        expectedEx.expectMessage("Could not create Comparator for annotation "+
+        expectedEx.expectMessage("Could not create Comparator for annotation " +
                 "org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.BadComparisonCustom");
 
-        Annotation an= () -> BadComparisonCustom.class;
+        Annotation an = () -> BadComparisonCustom.class;
         comparisonMap.getComparatorForAnnotation(an);
     }
 
@@ -92,6 +92,6 @@ public class ModelToComparisonMapTest {
         expectedEx.expect(JEntityTestException.class);
         expectedEx.expectMessage("Annotation can not be null");
 
-        comparisonMap.setComparatorForAnnotation(IgnoreComparatorCustom.class,null);
+        comparisonMap.setComparatorForAnnotation(IgnoreComparatorCustom.class, null);
     }
 }

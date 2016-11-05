@@ -1,6 +1,5 @@
 package org.testmonkeys.jentitytest.inspect;
 
-import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.property.SimpleTypeComparator;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
@@ -30,7 +29,7 @@ public class EntityInspector {
                 for (Annotation annotation : field.getAnnotations()) {
                     if (!annotationToComparator.mapsToComparator(annotation))
                         continue;
-                    model.setComparisonPoint(propertyDescriptor,annotationToComparator.getComparatorForAnnotation(annotation) );
+                    model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
                     customComparison = true;
                     fieldLevelComparison = true;
                 }

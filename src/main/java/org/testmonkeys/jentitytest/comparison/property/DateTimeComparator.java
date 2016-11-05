@@ -1,8 +1,8 @@
-package org.testmonkeys.jentitytest.comparison.entity;
+package org.testmonkeys.jentitytest.comparison.property;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
-import org.testmonkeys.jentitytest.comparison.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.SingleResultComparator;
+import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
@@ -15,14 +15,8 @@ public class DateTimeComparator extends SingleResultComparator {
     private ChronoUnit unit = ChronoUnit.SECONDS;
 
     @Override
-    protected ComparisonResult computeComparison(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) {
-        Object a = getPropertyValue(property, actual);
-        Object e = getPropertyValue(property, expected);
-        ComparisonResult result = new ComparisonResult();
-
-        result.setComparisonContext(context);
-        result.setActual(a);
-        result.setExpected(e);
+    protected ComparisonResult computeSingleComparison(PropertyDescriptor property, Object a, Object e, ComparisonContext context) {
+        ComparisonResult result = new ComparisonResult(false, context, a, e);
 
         if (a == null && e == null) {
             result.setPassed(true);
