@@ -47,7 +47,7 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
     @Override
     public void describeMismatch(Object item, Description description) {
 
-        description.appendText("Follwoing properties didn't match:\r\n").appendText(textualOutput);
+        description.appendText("Following properties didn't match:\r\n").appendText(textualOutput);
 
     }
 
