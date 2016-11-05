@@ -35,14 +35,14 @@ public class ModelToComparisonMap {
     }
 
 
-    public boolean mapsToComparator(Annotation annotation){
+    public boolean mapsToComparator(Annotation annotation) {
         return mapping.containsKey(annotation.annotationType());
     }
 
-    public void setComparatorForAnnotation(Class<? extends Comparator> comparator, Class<?> annotation) throws JEntityTestException{
-        if (comparator==null)
+    public void setComparatorForAnnotation(Class<? extends Comparator> comparator, Class<?> annotation) throws JEntityTestException {
+        if (comparator == null)
             throw new JEntityTestException("Comparator can not be null");
-        if (annotation==null)
+        if (annotation == null)
             throw new JEntityTestException("Annotation can not be null");
         mapping.put(annotation, comparator);
     }
@@ -73,8 +73,7 @@ public class ModelToComparisonMap {
 
             return comparator;
         } catch (InvocationTargetException | IllegalAccessException | InstantiationException | NoSuchFieldException e) {
-            throw new JEntityTestException("Failed to initialize comparator:" + type.getSimpleName()
-                    + "from annotation:" + annotation.toString(), e);
+            throw new JEntityTestException("Could not create Comparator for annotation " + annotation.annotationType().getName(), e);
         }
     }
 

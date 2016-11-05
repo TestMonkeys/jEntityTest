@@ -1,10 +1,14 @@
 package org.testmonkeys.jentitytest.comparison.entity;
 
-import org.testmonkeys.jentitytest.comparison.*;
+import org.testmonkeys.jentitytest.comparison.ComparisonContext;
+import org.testmonkeys.jentitytest.comparison.ComparisonResult;
+import org.testmonkeys.jentitytest.comparison.MultiResultComparator;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 
 public class ChildEntityComparator extends MultiResultComparator {
@@ -22,7 +26,7 @@ public class ChildEntityComparator extends MultiResultComparator {
         Object actualValue=getPropertyValue(property,actual);
         Object expectedValue = getPropertyValue(property,expected);
         if (context.isRecursive(actualValue))
-            return new ArrayList<ComparisonResult>();
+            return new ArrayList<>();
         context.setActualObj(actualValue);
         EntityComparator comparator = new EntityComparator();
         return comparator.compare(actualValue,expectedValue,context);
