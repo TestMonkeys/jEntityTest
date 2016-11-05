@@ -4,19 +4,18 @@ import org.testmonkeys.jentitytest.framework.IgnoreComparison;
 
 public class InconsistentNamingModel {
 
-    @IgnoreComparison
-    private int id;
+    private int it;
 
     private boolean available;
 
     private int age;
 
     public int getId() {
-        return id;
+        return it;
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.it = id;
     }
 
     @IgnoreComparison

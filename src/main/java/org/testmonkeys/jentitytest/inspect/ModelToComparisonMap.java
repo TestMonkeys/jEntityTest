@@ -32,11 +32,14 @@ public class ModelToComparisonMap {
 
 
     public boolean mapsToComparator(Annotation annotation){
-
         return mapping.containsKey(annotation.annotationType());
     }
 
-    public void setComparatorForAnnotation(Class<? extends Comparator> comparator, Class<?> annotation) {
+    public void setComparatorForAnnotation(Class<? extends Comparator> comparator, Class<?> annotation) throws JEntityTestException{
+        if (comparator==null)
+            throw new JEntityTestException("Comparator can not be null");
+        if (annotation==null)
+            throw new JEntityTestException("Annotation can not be null");
         mapping.put(annotation, comparator);
     }
 

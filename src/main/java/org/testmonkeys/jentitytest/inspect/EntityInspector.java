@@ -16,10 +16,6 @@ public class EntityInspector {
 
     private final ModelToComparisonMap annotationToComparator = ModelToComparisonMap.getInstance();
 
-    public ComparisonModel getComparisonModel(Object obj) throws IntrospectionException, JEntityTestException {
-        return getComparisonModel(obj.getClass());
-    }
-
     public ComparisonModel getComparisonModel(Class clazz) throws IntrospectionException, JEntityTestException {
         ComparisonModel model = new ComparisonModel();
         for (PropertyDescriptor propertyDescriptor :

@@ -2,6 +2,7 @@ package org.testmonkeys.jentitytest.test.unit.entityInspectionTests;
 
 import static org.junit.Assert.*;
 
+import org.testmonkeys.jentitytest.comparison.property.SimpleTypeComparator;
 import org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.*;
 import org.junit.Test;
 import static org.hamcrest.CoreMatchers.*;
@@ -62,5 +63,17 @@ public class InspectionTest {
         assertThat("'id' in model", props.stream().anyMatch(x -> x.getName().equals("id")), is(true));
         PropertyDescriptor prop = props.stream().filter(x -> x.getName().equals("id")).findFirst().get();
         assertThat("comparator", model.getComparator(prop).getClass(), is(IgnoreComparatorCustom.class));
+    }
+
+    @Test
+    public void inspection_inconsistentNaming() throws Throwable {
+        ModelToComparisonMap.getInstance().setComparatorForAnnotation(IgnoreComparatorCustom.class, IgnoreComparisonCustom.class);
+        EntityInspector inspector = new EntityInspector();
+        ComparisonModel model = inspector.getComparisonModel(InconsistentNamingModel.class);
+        Set<PropertyDescriptor> props = model.getComparableProperties();
+        assertThat("'id' in model", props.stream().anyMatch(x -> x.getName().equals("id")), is(true));
+        assertThat("'it' in model", props.stream().anyMatch(x -> x.getName().equals("it")), is(false));
+        PropertyDescriptor prop = props.stream().filter(x -> x.getName().equals("id")).findFirst().get();
+        assertThat("comparator", model.getComparator(prop).getClass(), is(SimpleTypeComparator.class));
     }
 }
