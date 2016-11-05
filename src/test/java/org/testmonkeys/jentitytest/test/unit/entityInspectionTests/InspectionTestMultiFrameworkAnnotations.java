@@ -7,11 +7,9 @@ import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.property.IgnoreComparator;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 import org.testmonkeys.jentitytest.inspect.EntityInspector;
-import org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.*;
+import org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.ModelMultiAnnotated;
 
 import java.beans.IntrospectionException;
-
-
 import java.beans.PropertyDescriptor;
 import java.util.Set;
 
@@ -31,6 +29,7 @@ public class InspectionTestMultiFrameworkAnnotations {
      * initialization of EntityInspector,
      * generation of comparison model for ModelMultiAnnotated.class,
      * retrieval of comparable properties
+     *
      * @throws IntrospectionException
      */
     @Before
@@ -42,9 +41,10 @@ public class InspectionTestMultiFrameworkAnnotations {
 
     /**
      * 'Id' property descriptor is annotated at field level with
+     *
+     * @throws Throwable
      * @SimpleAnnotation and @IgnoreComparison,
      * jEntityTest should ignore SimpleAnnotation, and should use only IgnoreComparator
-     * @throws Throwable
      */
     @Test
     public void inspectionFieldLevelAnnotation() throws Throwable {
@@ -58,10 +58,10 @@ public class InspectionTestMultiFrameworkAnnotations {
 
     /**
      * 'Available' property descriptor is annotated at field level with
-     * @SimpleAnnotation
-     * and at getter level with @IgnoreComparison,
-     * jEntityTest should ignore SimpleAnnotation, and should use only IgnoreComparator
+     *
      * @throws Throwable
+     * @SimpleAnnotation and at getter level with @IgnoreComparison,
+     * jEntityTest should ignore SimpleAnnotation, and should use only IgnoreComparator
      */
     @Test
     public void inspectionIsGetterLevelAnnotation() throws Throwable {
@@ -73,9 +73,10 @@ public class InspectionTestMultiFrameworkAnnotations {
 
     /**
      * 'Age' property descriptor is annotated at getter level with
+     *
+     * @throws Throwable
      * @SimpleAnnotation and @IgnoreComparison,
      * jEntityTest should ignore SimpleAnnotation, and should use only IgnoreComparator
-     * @throws Throwable
      */
     @Test
     public void inspectionSimpleGetterLevelAnnotation() throws Throwable {

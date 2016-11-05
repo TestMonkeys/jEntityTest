@@ -8,7 +8,7 @@ import static org.junit.Assert.assertThat;
 public class RecursiveReferenceTest {
 
     @Test
-    public void edge_recursiveReference(){
+    public void edge_recursiveReference() {
         EntityParent parent1 = new EntityParent();
         EntityChild child1 = new EntityChild();
         child1.setAge(3);
@@ -25,7 +25,7 @@ public class RecursiveReferenceTest {
     }
 
     //@Test
-    public void edge_recursiveReference2(){
+    public void edge_recursiveReference2() {
         EntityParent parent1 = new EntityParent();
         EntityChild child1 = new EntityChild();
         child1.setAge(3);

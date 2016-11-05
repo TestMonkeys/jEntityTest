@@ -1,5 +1,6 @@
 package org.testmonkeys.jentitytest.comparison;
 
+import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
