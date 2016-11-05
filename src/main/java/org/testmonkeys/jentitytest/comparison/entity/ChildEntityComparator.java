@@ -25,6 +25,20 @@ public class ChildEntityComparator extends MultiResultComparator {
 
         Object actualValue=getPropertyValue(property,actual);
         Object expectedValue = getPropertyValue(property,expected);
+
+        if (actualValue==null && expectedValue==null)
+            return new ArrayList<>();
+        if (actualValue!=null && expectedValue==null || actualValue==null && expectedValue!=null) {
+            List<ComparisonResult> results= new ArrayList<>();
+            ComparisonResult result = new ComparisonResult();
+            result.setPassed(false);
+            result.setActual(actualValue==null?"null":"not null");
+            result.setExpected(expectedValue==null?"null":"not null");
+            result.setComparisonContext(context);
+            results.add(result);
+            return results;
+        }
+
         if (context.isRecursive(actualValue))
             return new ArrayList<>();
         context.setActualObj(actualValue);
