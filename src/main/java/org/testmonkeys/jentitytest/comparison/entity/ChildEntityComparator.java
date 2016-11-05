@@ -1,7 +1,7 @@
 package org.testmonkeys.jentitytest.comparison.entity;
 
-import org.testmonkeys.jentitytest.EntityComparisonDictionary;
 import org.testmonkeys.jentitytest.comparison.*;
+import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
 import java.util.LinkedList;
@@ -17,7 +17,7 @@ public class ChildEntityComparator extends MultiResultComparator {
     }
 
     @Override
-    protected List<ComparisonResult> computeComparison(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) {
+    protected List<ComparisonResult> computeComparison(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
         ComparisonContext comparisonContext=context.withProprety(property.getName());
 
         Object actualValue=getPropertyValue(property,actual);
