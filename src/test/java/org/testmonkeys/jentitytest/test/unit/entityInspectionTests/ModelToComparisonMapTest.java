@@ -4,21 +4,15 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.testmonkeys.jentitytest.comparison.ComparisonModel;
-import org.testmonkeys.jentitytest.comparison.property.IgnoreComparator;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
-import org.testmonkeys.jentitytest.inspect.EntityInspector;
 import org.testmonkeys.jentitytest.inspect.ModelToComparisonMap;
-import org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.*;
-import sun.java2d.pipe.SpanShapeRenderer;
+import org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.BadComparator;
+import org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.BadComparisonCustom;
+import org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.IgnoreComparatorCustom;
+import org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.SimpleAnnotation;
 
 import java.beans.IntrospectionException;
-import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
-import java.util.Set;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 /**
  * This class represents tests for comparison map
