@@ -2,10 +2,11 @@ package childEntityTests;
 
 import childEntityTests.models.ParentEntity;
 import childEntityTests.models.SimpleEntity;
-import noAnnotations.SimpleModel;
 import org.junit.Assert;
 import org.junit.Test;
 import org.testmonkeys.jentitytest.Entity;
+
+import java.time.LocalDateTime;
 
 public class ChildEntityTests {
 
@@ -16,11 +17,13 @@ public class ChildEntityTests {
         childExpected.setValue(3);
         ParentEntity expected = new ParentEntity();
         expected.setChild(childExpected);
+        expected.setSomeTime(LocalDateTime.now());
 
         SimpleEntity actualExpected = new SimpleEntity();
         actualExpected.setValue(3);
         ParentEntity actual = new ParentEntity();
         actual.setChild(actualExpected);
+        actual.setSomeTime(LocalDateTime.now().minusSeconds(5));
 
         Assert.assertThat(actual, Entity.isEqualTo(expected));
     }

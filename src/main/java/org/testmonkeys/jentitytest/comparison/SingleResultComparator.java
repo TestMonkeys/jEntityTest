@@ -1,34 +1,20 @@
 package org.testmonkeys.jentitytest.comparison;
 
+import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
+
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SingleResultComparator implements Comparator {
+public abstract class SingleResultComparator extends MultiResultComparator {
 
-    public List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context){
-        List<ComparisonResult> resultList =new LinkedList<>();
-
-        //TODO check if not recursive
-
-
-        resultList.add(computeComparison(property,actual,expected,context));
-
-        return resultList;
+    @Override
+    protected List<ComparisonResult> computeComparison(PropertyDescriptor property, Object actualValue, Object expectedValue, ComparisonContext context) {
+        List<ComparisonResult> result = new ArrayList<>();
+        result.add(computeSingleComparison(property, actualValue, expectedValue, context));
+        return result;
     }
 
-    protected Object getPropertyValue(PropertyDescriptor property, Object obj){
-        try {
-            //TODO: think how to handle such exceptions
-            return property.getReadMethod().invoke(obj);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
-    protected abstract ComparisonResult computeComparison(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context);
+    protected abstract ComparisonResult computeSingleComparison(PropertyDescriptor property, Object actualValue, Object expectedValue, ComparisonContext context);
 }

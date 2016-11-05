@@ -2,15 +2,12 @@ package org.testmonkeys.jentitytest.matchers;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
-import org.omg.CORBA.Environment;
 import org.testmonkeys.jentitytest.EntityComparisonDictionary;
-import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
-import org.testmonkeys.jentitytest.comparison.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.entity.EntityComparator;
+import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
+import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,13 +23,22 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
 
     @Override
     public boolean matches(Object actualItem) {
-        ComparisonModel comparisonModel = comparisonDictionary.getComparisonModel(expected.getClass());
-        List<ComparisonResult> result=new LinkedList<>();
+        ComparisonModel comparisonModel = null;
+        //TODO: think abouth the best way of throwing the exception
+        try {
+            comparisonModel = comparisonDictionary.getComparisonModel(expected.getClass());
+        } catch (JEntityTestException e) {
+            e.printStackTrace();
+        }
+        List<ComparisonResult> result = new LinkedList<>();
         EntityComparator comparator = new EntityComparator();
-        result.addAll(comparator.compare(actualItem,expected,comparisonModel));
-        StringBuilder sb=new StringBuilder();
-        for ( ComparisonResult res:result)
-        {
+        try {
+            result.addAll(comparator.compare(actualItem, expected, comparisonModel));
+        } catch (JEntityTestException e) {
+            e.printStackTrace();
+        }
+        StringBuilder sb = new StringBuilder();
+        for (ComparisonResult res : result) {
             if (res.isPassed())
                 continue;
             sb.append(res.getContext().toString()).
@@ -40,7 +46,7 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
                     append(" Actual: ").append(res.getActual()).append("" +
                     "\r\n");
         }
-        textualOutput=sb.toString();
+        textualOutput = sb.toString();
         return result.stream().allMatch(p -> p.isPassed());
     }
 
@@ -54,12 +60,12 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
     @Override
     public void describeTo(Description description) {
 
-       description.appendText("Entities have same values in properties");
+        description.appendText("Entities have same values in properties");
         //description.appendText("textValue");//description.appendText(textualOutput);
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return "test";
     }
 }

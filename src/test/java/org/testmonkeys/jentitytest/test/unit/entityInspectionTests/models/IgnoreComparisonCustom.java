@@ -1,4 +1,4 @@
-package org.testmonkeys.jentitytest.framework;
+package org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,5 +7,5 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD})
-public @interface ChildEntityComparison {
+public @interface IgnoreComparisonCustom {
 }
