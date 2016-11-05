@@ -1,10 +1,141 @@
 group 'org.testmonkeys'
-version '1.0-SNAPSHOT'
+version '0.1.0'
 
-apply plugin: 'java'
+allprojects {
+    repositories {
+        jcenter()
+    }
+    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
+    apply plugin: 'java'
+}
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'org.testmonkeys.jEntityTest'
 
+    publishedGroupId = 'org.testmonkeys'
+    libraryName = 'jEntityTest'
+    artifact = 'jentitytest'
 
+    libraryDescription = 'Entity Matchers that are able to compare objects and provide ' +
+            'explicit details of what properties are not matching'
+
+    siteUrl = 'https://github.com/TestMonkeys/jEntityTest'
+    gitUrl = 'https://github.com/TestMonkeys/jEntityTest.git'
+
+    libraryVersion = version
+
+    developerId = 'costea32'
+    developerName = 'Constantin Pascal'
+    developerEmail = 'costea32@gmail.com'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.7'
+    }
+}
+apply plugin: 'com.jfrog.bintray'
 sourceCompatibility = 1.8
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+//jar.dependsOn sourcesJar
+
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "costea32"
+            name "Constantin Pascal"
+            email "costea32@gmail.com"
+        }
+        developer{
+
+            name "Marin Onofrei"
+        }
+    }
+    scm{
+        connection "scm:git:git@github.com/TestMonkeys/jEntityTest.git"
+        developerConnection "scm:git:git@github.com/TestMonkeys/jEntityTest.git"
+        url "git@github.com/TestMonkeys/jEntityTest.git"
+    }
+}
+
+
+publishing {
+    publications {
+        MavenPub(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            groupId 'org.testmonkeys'
+            artifactId 'jentitytest'
+            version libraryVersion
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', libraryDescription)
+                root.appendNode('name',libraryName)
+                root.appendNode('url',siteUrl)
+                root.children().last() + pomConfig
+            }
+        }
+    }
+
+}
+
+// Bintray
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    publications =['MavenPub']
+    configurations = ['archives']
+    pkg {
+        repo = bintrayRepo
+        userOrg = 'testmonkeys'
+        name = bintrayName
+        desc = libraryDescription
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = allLicenses
+        publish = false
+        publicDownloadNumbers = true
+        version {
+            desc = libraryDescription
+            gpg {
+                sign = true //Determines whether to GPG sign the files. The default is false
+                passphrase = properties.getProperty("bintray.gpg.password")
+                //Optional. The passphrase for GPG signing'
+            }
+        }
+    }
+}
+
 
 repositories {
     mavenCentral()
