@@ -1,6 +1,7 @@
 package org.testmonkeys.jentitytest;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
+import org.testmonkeys.jentitytest.framework.JEntityTestException;
 import org.testmonkeys.jentitytest.inspect.EntityInspector;
 
 import java.beans.IntrospectionException;
@@ -27,7 +28,7 @@ public class EntityComparisonDictionary {
         dictionary.put(clazz, model);
     }
 
-    public ComparisonModel getComparisonModel(Class clazz) {
+    public ComparisonModel getComparisonModel(Class clazz) throws JEntityTestException {
         if (!dictionary.containsKey(clazz)) {
             try {
                 dictionary.put(clazz, inspector.getComparisonModel(clazz));

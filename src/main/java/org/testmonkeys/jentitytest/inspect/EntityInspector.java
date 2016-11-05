@@ -1,8 +1,8 @@
 package org.testmonkeys.jentitytest.inspect;
 
-import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.property.SimpleTypeComparator;
+import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -15,11 +15,11 @@ public class EntityInspector {
 
     private final ModelToComparisonMap annotationToComparator = ModelToComparisonMap.getInstance();
 
-    public ComparisonModel getComparisonModel(Object obj) throws IntrospectionException {
+    public ComparisonModel getComparisonModel(Object obj) throws IntrospectionException, JEntityTestException {
         return getComparisonModel(obj.getClass());
     }
 
-    public ComparisonModel getComparisonModel(Class clazz) throws IntrospectionException {
+    public ComparisonModel getComparisonModel(Class clazz) throws IntrospectionException, JEntityTestException {
         ComparisonModel model = new ComparisonModel();
         for (PropertyDescriptor propertyDescriptor :
                 Introspector.getBeanInfo(clazz, Object.class).getPropertyDescriptors()) {

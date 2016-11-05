@@ -1,5 +1,7 @@
 package org.testmonkeys.jentitytest.comparison;
 
+import org.testmonkeys.jentitytest.framework.JEntityTestException;
+
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
@@ -7,7 +9,7 @@ import java.util.List;
 
 public abstract class MultiResultComparator implements Comparator {
 
-    public List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context){
+    public List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
         List<ComparisonResult> resultList =new LinkedList<>();
 
         //TODO check if not recursive
@@ -30,5 +32,5 @@ public abstract class MultiResultComparator implements Comparator {
         return null;
     }
 
-    protected abstract List<ComparisonResult> computeComparison(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context);
+    protected abstract List<ComparisonResult> computeComparison(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) throws JEntityTestException;
 }

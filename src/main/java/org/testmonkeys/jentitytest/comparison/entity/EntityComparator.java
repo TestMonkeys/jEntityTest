@@ -5,9 +5,9 @@ import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.ComparisonResult;
+import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,21 +16,21 @@ public class EntityComparator{
 
     private final EntityComparisonDictionary comparisonDictionary = EntityComparisonDictionary.getInstance();
 
-    public List<ComparisonResult> compare(Object actual, Object expected){
+    public List<ComparisonResult> compare(Object actual, Object expected) throws JEntityTestException {
         ComparisonModel comparisonModel = comparisonDictionary.getComparisonModel(expected.getClass());
         return compare(actual,expected,comparisonModel);
     }
 
-    public List<ComparisonResult> compare(Object actual, Object expected, ComparisonContext context){
+    public List<ComparisonResult> compare(Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
         ComparisonModel comparisonModel = comparisonDictionary.getComparisonModel(expected.getClass());
         return compare(actual,expected,comparisonModel,context);
     }
 
-    public List<ComparisonResult> compare(Object actual, Object expected, ComparisonModel model){
+    public List<ComparisonResult> compare(Object actual, Object expected, ComparisonModel model) throws JEntityTestException {
         return compare(actual,expected,model,null);
     }
 
-    public List<ComparisonResult> compare(Object actual, Object expected, ComparisonModel model, ComparisonContext context){
+    public List<ComparisonResult> compare(Object actual, Object expected, ComparisonModel model, ComparisonContext context) throws JEntityTestException {
         List<ComparisonResult> comparisonResults=new LinkedList<>();
         for (PropertyDescriptor propertyDescriptor : model.getComparableProperties()) {
             Comparator comparator = model.getComparator(propertyDescriptor);

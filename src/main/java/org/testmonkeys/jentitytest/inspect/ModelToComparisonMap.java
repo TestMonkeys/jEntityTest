@@ -2,11 +2,11 @@ package org.testmonkeys.jentitytest.inspect;
 
 import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.entity.ChildEntityComparator;
-import org.testmonkeys.jentitytest.comparison.entity.EntityComparator;
 import org.testmonkeys.jentitytest.comparison.property.IgnoreComparator;
 import org.testmonkeys.jentitytest.comparison.property.SimpleTypeComparator;
 import org.testmonkeys.jentitytest.framework.ChildEntityComparison;
 import org.testmonkeys.jentitytest.framework.IgnoreComparison;
+import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
@@ -38,20 +38,15 @@ public class ModelToComparisonMap {
         mapping.put(annotation, comparator);
     }
 
-    public Comparator getComparatorForAnnotation(Annotation annotation) {
+    public Comparator getComparatorForAnnotation(Annotation annotation) throws JEntityTestException {
 
-        if (mapping.containsKey(annotation.annotationType()))
+        if (mapping.containsKey(annotation.annotationType())) {
             try {
                 return (Comparator) mapping.get(annotation.annotationType()).getConstructor().newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            } catch (NoSuchMethodException e) {
-                e.printStackTrace();
+            } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
+                throw new JEntityTestException("Could not create Comparator",e);
             }
+        }
         return new SimpleTypeComparator();
     }
 }
