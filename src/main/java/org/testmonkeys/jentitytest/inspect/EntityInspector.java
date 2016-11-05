@@ -1,7 +1,9 @@
 package org.testmonkeys.jentitytest.inspect;
 
+import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.property.SimpleTypeComparator;
+import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -14,11 +16,7 @@ public class EntityInspector {
 
     private final ModelToComparisonMap annotationToComparator = ModelToComparisonMap.getInstance();
 
-    public ComparisonModel getComparisonModel(Object obj) throws IntrospectionException {
-        return getComparisonModel(obj.getClass());
-    }
-
-    public ComparisonModel getComparisonModel(Class clazz) throws IntrospectionException {
+    public ComparisonModel getComparisonModel(Class clazz) throws IntrospectionException, JEntityTestException {
         ComparisonModel model = new ComparisonModel();
         for (PropertyDescriptor propertyDescriptor :
                 Introspector.getBeanInfo(clazz, Object.class).getPropertyDescriptors()) {
@@ -30,7 +28,9 @@ public class EntityInspector {
             try {
                 Field field = clazz.getDeclaredField(propertyDescriptor.getName());
                 for (Annotation annotation : field.getAnnotations()) {
-                    model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
+                    if (!annotationToComparator.mapsToComparator(annotation))
+                        continue;
+                    model.setComparisonPoint(propertyDescriptor,annotationToComparator.getComparatorForAnnotation(annotation) );
                     customComparison = true;
                     fieldLevelComparison = true;
                 }
@@ -38,8 +38,9 @@ public class EntityInspector {
 
             }
             if (!fieldLevelComparison) {
-
                 for (Annotation annotation : method.getAnnotations()) {
+                    if (!annotationToComparator.mapsToComparator(annotation))
+                        continue;
                     model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
                     customComparison = true;
                 }

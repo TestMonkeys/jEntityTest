@@ -10,7 +10,7 @@ public abstract class SingleResultComparator implements Comparator {
     public List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context){
         List<ComparisonResult> resultList =new LinkedList<>();
 
-        //TODO check if not recursive
+
 
 
         resultList.add(computeComparison(property,actual,expected,context));

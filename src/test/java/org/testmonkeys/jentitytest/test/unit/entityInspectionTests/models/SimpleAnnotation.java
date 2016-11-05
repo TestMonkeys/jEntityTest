@@ -1,4 +1,5 @@
-package entityInspectionTests.models;
+package org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models;
+
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,5 +8,5 @@ import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD, ElementType.FIELD})
-public @interface IgnoreComparisonCustom {
+public @interface SimpleAnnotation {
 }
