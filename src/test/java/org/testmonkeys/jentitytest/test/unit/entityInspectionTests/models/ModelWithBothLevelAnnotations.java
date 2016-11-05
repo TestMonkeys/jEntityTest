@@ -1,4 +1,4 @@
-package entityInspectionTests.models;
+package org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models;
 
 import org.testmonkeys.jentitytest.framework.IgnoreComparison;
 

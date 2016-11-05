@@ -1,15 +1,14 @@
-package entityInspectionTests;
+package org.testmonkeys.jentitytest.test.unit.entityInspectionTests;
 
 import static org.junit.Assert.*;
 
-import entityInspectionTests.models.*;
+import org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.*;
 import org.junit.Test;
 import static org.hamcrest.CoreMatchers.*;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.property.IgnoreComparator;
 import org.testmonkeys.jentitytest.inspect.EntityInspector;
 import org.testmonkeys.jentitytest.inspect.ModelToComparisonMap;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.beans.PropertyDescriptor;
 import java.util.Set;

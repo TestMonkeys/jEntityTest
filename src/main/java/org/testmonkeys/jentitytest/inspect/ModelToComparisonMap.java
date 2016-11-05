@@ -30,6 +30,10 @@ public class ModelToComparisonMap {
         return instance;
     }
 
+    public boolean mapsToComparator(Annotation annotation){
+        return mapping.containsKey(annotation.annotationType());
+    }
+
     public void setComparatorForAnnotation(Class<? extends Comparator> comparator, Class<?> annotation) {
         mapping.put(annotation, comparator);
     }

@@ -1,15 +1,15 @@
-package entityInspectionTests.models;
+package org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models;
 
 import org.testmonkeys.jentitytest.framework.IgnoreComparison;
 
-public class InvalidProperties {
+public class Model1 {
+
     @IgnoreComparison
     private int id;
 
     private boolean available;
 
-
-    private boolean marshmallows;
+    private int age;
 
     public int getId() {
         return id;
@@ -19,6 +19,7 @@ public class InvalidProperties {
         this.id = id;
     }
 
+    @IgnoreComparison
     public boolean isAvailable() {
         return available;
     }
@@ -27,16 +28,12 @@ public class InvalidProperties {
         this.available = available;
     }
 
-    /**
-     * invalid accessor for marshmallows field.
-     *
-     * @return
-     */
-    public boolean hasMarshmallows() {
-        return marshmallows;
+    @IgnoreComparison
+    public int getAge() {
+        return age;
     }
 
-    public void setHasMarshmallows(boolean hasMarshmallows) {
-        this.marshmallows = hasMarshmallows;
+    public void setAge(int age) {
+        this.age = age;
     }
 }
