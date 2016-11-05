@@ -8,7 +8,7 @@ import org.testmonkeys.jentitytest.Entity;
 
 import static org.junit.Assert.assertThat;
 
-public class RecursiveReferenceTest {
+public class Bug15Test {
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
