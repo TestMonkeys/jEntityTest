@@ -1,9 +1,12 @@
 group 'org.testmonkeys'
 version '0.1.0'
 
+
+
 allprojects {
     repositories {
         jcenter()
+        mavenCentral()
     }
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
@@ -136,11 +139,6 @@ bintray {
     }
 }
 
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     compile 'org.hamcrest:hamcrest-junit:2.0.0.0'
     testCompile 'junit:junit:4.11'
@@ -151,4 +149,6 @@ test {
 
     }
 }
+
+
 
