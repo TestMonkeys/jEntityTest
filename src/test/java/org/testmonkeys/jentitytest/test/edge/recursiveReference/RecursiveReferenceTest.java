@@ -1,8 +1,12 @@
 package org.testmonkeys.jentitytest.test.edge.recursiveReference;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.testmonkeys.jentitytest.Entity;
 
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertThat;
 
 public class RecursiveReferenceTest {
@@ -24,8 +28,14 @@ public class RecursiveReferenceTest {
         assertThat(child1, Entity.isEqualTo(child2));
     }
 
-    //@Test
+    @Rule
+    public ExpectedException expectedException=ExpectedException.none();
+
+    @Test
     public void edge_recursiveReference2() {
+        expectedException.expect(AssertionError.class);
+        expectedException.expectMessage("Entity.age Expected: 2 Actual: 3");
+        expectedException.expectMessage(not(containsString("Entity.dad.firstChild.age")));
         EntityParent parent1 = new EntityParent();
         EntityChild child1 = new EntityChild();
         child1.setAge(3);
