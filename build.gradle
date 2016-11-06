@@ -1,9 +1,12 @@
 group 'org.testmonkeys'
-version '0.1.0'
+version '0.1.1'
+
+
 
 allprojects {
     repositories {
         jcenter()
+        mavenCentral()
     }
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
@@ -11,10 +14,10 @@ allprojects {
 }
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'org.testmonkeys.jEntityTest'
+    bintrayName = 'org.testmonkeys.jentitytest'
 
     publishedGroupId = 'org.testmonkeys'
-    libraryName = 'jEntityTest'
+    libraryName = 'jentitytest'
     artifact = 'jentitytest'
 
     libraryDescription = 'Entity Matchers that are able to compare objects and provide ' +
@@ -108,7 +111,7 @@ publishing {
 
 // Bintray
 Properties properties = new Properties()
-//properties.load(project.rootProject.file('local.properties').newDataInputStream())
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 bintray {
     user = properties.getProperty("bintray.user")
@@ -136,11 +139,6 @@ bintray {
     }
 }
 
-
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     compile 'org.hamcrest:hamcrest-junit:2.0.0.0'
     testCompile 'junit:junit:4.11'
@@ -151,4 +149,6 @@ test {
 
     }
 }
+
+
 
