@@ -33,7 +33,7 @@ public class EntityComparisonDictionary {
             try {
                 dictionary.put(clazz, inspector.getComparisonModel(clazz));
             } catch (IntrospectionException e) {
-                e.printStackTrace();
+                throw new JEntityTestException("Could not create comparison model for class");
             }
 
         }

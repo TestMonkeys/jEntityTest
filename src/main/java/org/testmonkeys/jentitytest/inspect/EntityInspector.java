@@ -34,7 +34,7 @@ public class EntityInspector {
                     fieldLevelComparison = true;
                 }
             } catch (NoSuchFieldException nfe) {
-
+                //do nothing as this means that field was named differently than accessor methods
             }
             if (!fieldLevelComparison) {
                 for (Annotation annotation : method.getAnnotations()) {

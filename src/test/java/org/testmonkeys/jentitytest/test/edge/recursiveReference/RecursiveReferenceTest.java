@@ -11,6 +11,9 @@ import static org.junit.Assert.assertThat;
 
 public class RecursiveReferenceTest {
 
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
+
     @Test
     public void edge_recursiveReference() {
         EntityParent parent1 = new EntityParent();
@@ -27,9 +30,6 @@ public class RecursiveReferenceTest {
 
         assertThat(child1, Entity.isEqualTo(child2));
     }
-
-    @Rule
-    public ExpectedException expectedException=ExpectedException.none();
 
     @Test
     public void edge_recursiveReference2() {
