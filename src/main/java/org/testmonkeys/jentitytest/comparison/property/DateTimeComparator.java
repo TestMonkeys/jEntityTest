@@ -12,7 +12,7 @@ import java.time.temporal.Temporal;
 public class DateTimeComparator extends SingleResultComparator {
 
     private int delta = 0;
-    private ChronoUnit unit = ChronoUnit.SECONDS;
+    private ChronoUnit unit = ChronoUnit.NANOS;
 
     @Override
     protected ComparisonResult computeSingleComparison(PropertyDescriptor property, Object a, Object e, ComparisonContext context) {
@@ -32,7 +32,7 @@ public class DateTimeComparator extends SingleResultComparator {
         boolean passed = false;
 
         if (actualValue != null && expectedValue != null)
-            passed = actualValue.until(expectedValue, unit) <= delta;
+            passed = Math.abs(actualValue.until(expectedValue, unit)) <= delta;
 
         result.setPassed(passed);
         return result;
