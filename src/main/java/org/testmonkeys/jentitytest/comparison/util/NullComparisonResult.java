@@ -11,7 +11,7 @@ public class NullComparisonResult extends ComparisonResult {
         super(passed, context, actual, expected);
     }
 
-    public boolean isStopComparison() {
+    public boolean stopComparison() {
         return stopComparison;
     }
 
