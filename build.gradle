@@ -8,10 +8,14 @@ allprojects {
         jcenter()
         mavenCentral()
     }
+    apply plugin: 'jacoco'
     apply plugin: 'maven'
     apply plugin: 'maven-publish'
     apply plugin: 'java'
 }
+
+
+
 ext {
     bintrayRepo = 'maven'
     bintrayName = 'org.testmonkeys.jentitytest'
@@ -147,6 +151,12 @@ dependencies {
 test {
     useJUnit {
 
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
     }
 }
 

@@ -35,6 +35,7 @@ public class EntityComparator {
         if (context == null) {
             context = new ComparisonContext();
             context.setParentName("Entity");
+            context.setActualObj(actual);
         }
         for (PropertyDescriptor propertyDescriptor : model.getComparableProperties()) {
             Comparator comparator = model.getComparator(propertyDescriptor);

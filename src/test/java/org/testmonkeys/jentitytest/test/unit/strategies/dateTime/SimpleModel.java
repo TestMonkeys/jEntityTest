@@ -6,6 +6,7 @@ import java.util.Date;
 public class SimpleModel {
 
     private LocalDateTime localDateTime;
+    private Date date;
 
     public LocalDateTime getLocalDateTime() {
         return localDateTime;
@@ -14,8 +15,6 @@ public class SimpleModel {
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
     }
-
-    private Date date;
 
     public Date getDate() {
         return date;
