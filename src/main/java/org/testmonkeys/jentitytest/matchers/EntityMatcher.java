@@ -2,8 +2,6 @@ package org.testmonkeys.jentitytest.matchers;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
-import org.testmonkeys.jentitytest.EntityComparisonDictionary;
-import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.entity.EntityComparator;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 
@@ -13,7 +11,6 @@ import java.util.List;
 public class EntityMatcher<T> extends BaseMatcher<T> {
 
     private final Object expected;
-    private final EntityComparisonDictionary comparisonDictionary = EntityComparisonDictionary.getInstance();
     private String textualOutput;
 
     public EntityMatcher(Object expected) {
@@ -22,10 +19,9 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
 
     @Override
     public boolean matches(Object actualItem) {
-        ComparisonModel comparisonModel = comparisonDictionary.getComparisonModel(expected.getClass());
         List<ComparisonResult> result = new LinkedList<>();
         EntityComparator comparator = new EntityComparator();
-        result.addAll(comparator.compare(actualItem, expected, comparisonModel));
+        result.addAll(comparator.compare(actualItem, expected));
 
         StringBuilder sb = new StringBuilder();
         for (ComparisonResult res : result) {
