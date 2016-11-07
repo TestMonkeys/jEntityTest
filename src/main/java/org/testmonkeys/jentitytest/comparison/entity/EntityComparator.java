@@ -5,7 +5,7 @@ import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
-import org.testmonkeys.jentitytest.comparison.util.NullComparison;
+import org.testmonkeys.jentitytest.comparison.util.NullComparator;
 import org.testmonkeys.jentitytest.comparison.util.NullComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
@@ -17,7 +17,7 @@ import java.util.List;
 public class EntityComparator {
 
     private final EntityComparisonDictionary comparisonDictionary = EntityComparisonDictionary.getInstance();
-    private final NullComparison nullComparisonHelper = new NullComparison();
+    private final NullComparator nullComparatorHelper = new NullComparator();
 
     public List<ComparisonResult> compare(Object actual, Object expected) throws JEntityTestException {
 
@@ -32,8 +32,8 @@ public class EntityComparator {
             context.setActualObj(actual);
         }
 
-        NullComparisonResult nullComparisonResult = nullComparisonHelper.compareOnNulls(actual, expected, context);
-        if (!nullComparisonResult.isPassed() || nullComparisonResult.isStopComparison()) {
+        NullComparisonResult nullComparisonResult = nullComparatorHelper.compareOnNulls(actual, expected, context);
+        if (!nullComparisonResult.isPassed() || nullComparisonResult.stopComparison()) {
             comparisonResults.add(nullComparisonResult);
             return comparisonResults;
         }
