@@ -3,7 +3,8 @@ package org.testmonkeys.jentitytest.comparison.entity;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.MultiResultComparator;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
-import org.testmonkeys.jentitytest.comparison.result.FailedComparisonResult;
+import org.testmonkeys.jentitytest.comparison.util.NullComparison;
+import org.testmonkeys.jentitytest.comparison.util.NullComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
@@ -14,6 +15,7 @@ import java.util.List;
 
 public class ChildEntityComparator extends MultiResultComparator {
 
+    private final NullComparison nullComparisonHelper = new NullComparison();
     private List<ComparisonResult> comparisonResults;
 
     public ChildEntityComparator() {
@@ -23,15 +25,11 @@ public class ChildEntityComparator extends MultiResultComparator {
     @Override
     protected List<ComparisonResult> computeComparison(PropertyDescriptor property, Object actualValue, Object expectedValue, ComparisonContext context) throws JEntityTestException {
 
-        if (actualValue == null && expectedValue == null)
-            return new ArrayList<>();
-        if (actualValue != null && expectedValue == null || actualValue == null) {
-            List<ComparisonResult> results = new ArrayList<>();
-            ComparisonResult result = new FailedComparisonResult(context,
-                    actualValue == null ? "null" : "not null",
-                    expectedValue == null ? "null" : "not null");
-            results.add(result);
-            return results;
+        NullComparisonResult nullComparisonResult = nullComparisonHelper.compareOnNulls(actualValue, expectedValue, context);
+        if (!nullComparisonResult.isPassed() || nullComparisonResult.isStopComparison()) {
+            List<ComparisonResult> comparisonResults = new ArrayList<>();
+            comparisonResults.add(nullComparisonResult);
+            return comparisonResults;
         }
 
 
