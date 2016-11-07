@@ -2,7 +2,7 @@ package org.testmonkeys.jentitytest.comparison.util;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 
-public class NullComparison {
+public class NullComparator {
 
     public NullComparisonResult compareOnNulls(Object actual, Object expected, ComparisonContext context) {
         NullComparisonResult result = new NullComparisonResult(true, context, actual, expected);
