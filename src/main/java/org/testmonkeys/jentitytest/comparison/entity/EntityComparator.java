@@ -21,7 +21,7 @@ public class EntityComparator {
 
     public List<ComparisonResult> compare(Object actual, Object expected) throws JEntityTestException {
 
-        return compare(actual, expected, null);
+        return this.compare(actual, expected, null);
     }
 
     public List<ComparisonResult> compare(Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
@@ -32,13 +32,13 @@ public class EntityComparator {
             context.setActualObj(actual);
         }
 
-        NullComparisonResult nullComparisonResult = nullComparatorHelper.compareOnNulls(actual, expected, context);
+        NullComparisonResult nullComparisonResult = this.nullComparatorHelper.compareOnNulls(actual, expected, context);
         if (!nullComparisonResult.isPassed() || nullComparisonResult.stopComparison()) {
             comparisonResults.add(nullComparisonResult);
             return comparisonResults;
         }
 
-        ComparisonModel model = comparisonDictionary.getComparisonModel(expected.getClass());
+        ComparisonModel model = this.comparisonDictionary.getComparisonModel(expected.getClass());
 
 
         for (PropertyDescriptor propertyDescriptor : model.getComparableProperties()) {
@@ -46,7 +46,7 @@ public class EntityComparator {
             ComparisonContext comparisonContext;
 
 
-            comparisonContext = context.withProprety(propertyDescriptor.getName());
+            comparisonContext = context.withProperty(propertyDescriptor.getName());
 
 
             comparisonResults.addAll(comparator.areEqual(propertyDescriptor, actual, expected, comparisonContext));

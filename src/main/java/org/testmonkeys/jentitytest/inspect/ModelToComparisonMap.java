@@ -19,24 +19,24 @@ import java.util.Map;
 public class ModelToComparisonMap {
 
     private static ModelToComparisonMap instance;
-    private final Map<Class, Class> mapping;
+    private final Map<Class<?>, Class<? extends Comparator>> mapping;
 
     private ModelToComparisonMap() {
-        mapping = new HashMap<>();
-        mapping.put(IgnoreComparison.class, IgnoreComparator.class);
-        mapping.put(ChildEntityComparison.class, ChildEntityComparator.class);
-        mapping.put(DateTimeComparison.class, DateTimeComparator.class);
+        this.mapping = new HashMap<>();
+        this.mapping.put(IgnoreComparison.class, IgnoreComparator.class);
+        this.mapping.put(ChildEntityComparison.class, ChildEntityComparator.class);
+        this.mapping.put(DateTimeComparison.class, DateTimeComparator.class);
     }
 
     public static ModelToComparisonMap getInstance() {
-        if (instance == null)
-            instance = new ModelToComparisonMap();
-        return instance;
+        if (ModelToComparisonMap.instance == null)
+            ModelToComparisonMap.instance = new ModelToComparisonMap();
+        return ModelToComparisonMap.instance;
     }
 
 
     public boolean mapsToComparator(Annotation annotation) {
-        return mapping.containsKey(annotation.annotationType());
+        return this.mapping.containsKey(annotation.annotationType());
     }
 
     public void setComparatorForAnnotation(Class<? extends Comparator> comparator, Class<?> annotation) throws JEntityTestException {
@@ -44,15 +44,15 @@ public class ModelToComparisonMap {
             throw new JEntityTestException("Comparator can not be null");
         if (annotation == null)
             throw new JEntityTestException("Annotation can not be null");
-        mapping.put(annotation, comparator);
+        this.mapping.put(annotation, comparator);
     }
 
     public Comparator getComparatorForAnnotation(Annotation annotation) throws JEntityTestException {
         if (annotation == null)
             throw new JEntityTestException("Annotation can not be null");
 
-        if (mapping.containsKey(annotation.annotationType())) {
-            return initializeComparator(annotation, mapping.get(annotation.annotationType()));
+        if (this.mapping.containsKey(annotation.annotationType())) {
+            return this.initializeComparator(annotation, this.mapping.get(annotation.annotationType()));
         }
         throw new JEntityTestException("There is no comparator defined for annotation " + annotation.annotationType().getName());
     }

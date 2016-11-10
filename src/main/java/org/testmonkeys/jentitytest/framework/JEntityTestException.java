@@ -1,9 +1,9 @@
 package org.testmonkeys.jentitytest.framework;
 
+@SuppressWarnings("unused")
 public class JEntityTestException extends RuntimeException {
 
     public JEntityTestException() {
-        super();
     }
 
     public JEntityTestException(String message) {

@@ -14,29 +14,29 @@ public class EntityComparisonDictionary {
     private final EntityInspector inspector;
 
     private EntityComparisonDictionary() {
-        dictionary = new HashMap<>();
-        inspector = new EntityInspector();
+        this.dictionary = new HashMap<>();
+        this.inspector = new EntityInspector();
     }
 
     public static synchronized EntityComparisonDictionary getInstance() {
-        if (instance == null)
-            instance = new EntityComparisonDictionary();
-        return instance;
+        if (EntityComparisonDictionary.instance == null)
+            EntityComparisonDictionary.instance = new EntityComparisonDictionary();
+        return EntityComparisonDictionary.instance;
     }
 
     public void addComparisonModel(Class clazz, ComparisonModel model) {
-        dictionary.put(clazz, model);
+        this.dictionary.put(clazz, model);
     }
 
     public ComparisonModel getComparisonModel(Class clazz) throws JEntityTestException {
-        if (!dictionary.containsKey(clazz)) {
+        if (!this.dictionary.containsKey(clazz)) {
             try {
-                dictionary.put(clazz, inspector.getComparisonModel(clazz));
+                this.dictionary.put(clazz, this.inspector.getComparisonModel(clazz));
             } catch (IntrospectionException e) {
                 throw new JEntityTestException("Could not create comparison model for class");
             }
 
         }
-        return dictionary.get(clazz);
+        return this.dictionary.get(clazz);
     }
 }

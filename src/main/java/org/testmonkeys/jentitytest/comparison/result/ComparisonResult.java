@@ -12,14 +12,14 @@ public class ComparisonResult {
     }
 
     public ComparisonResult(boolean passed, ComparisonContext context, Object actual, Object expected) {
-        setPassed(passed);
-        setComparisonContext(context);
-        setActual(actual);
-        setExpected(expected);
+        this.setPassed(passed);
+        this.setComparisonContext(context);
+        this.setActual(actual);
+        this.setExpected(expected);
     }
 
     public boolean isPassed() {
-        return passed;
+        return this.passed;
     }
 
     public void setPassed(boolean passed) {
@@ -31,11 +31,11 @@ public class ComparisonResult {
     }
 
     public ComparisonContext getContext() {
-        return this.comparisonContext;
+        return comparisonContext;
     }
 
     public Object getExpected() {
-        return this.expected;
+        return expected;
     }
 
     public void setExpected(Object expected) {
@@ -43,7 +43,7 @@ public class ComparisonResult {
     }
 
     public Object getActual() {
-        return this.actual;
+        return actual;
     }
 
     public void setActual(Object actual) {
