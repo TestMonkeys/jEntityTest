@@ -21,25 +21,25 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
     public boolean matches(Object actualItem) {
         List<ComparisonResult> result = new LinkedList<>();
         EntityComparator comparator = new EntityComparator();
-        result.addAll(comparator.compare(actualItem, expected));
+        result.addAll(comparator.compare(actualItem, this.expected));
 
         StringBuilder sb = new StringBuilder();
         for (ComparisonResult res : result) {
             if (res.isPassed())
                 continue;
-            sb.append(res.getContext().toString()).
+            sb.append(res.getContext()).
                     append(" Expected: ").append(res.getExpected()).
                     append(" Actual: ").append(res.getActual()).append("" +
                     "\r\n");
         }
-        textualOutput = sb.toString();
-        return result.stream().allMatch(p -> p.isPassed());
+        this.textualOutput = sb.toString();
+        return result.stream().allMatch(ComparisonResult::isPassed);
     }
 
     @Override
     public void describeMismatch(Object item, Description description) {
 
-        description.appendText("Following properties didn't match:\r\n").appendText(textualOutput);
+        description.appendText("Following properties didn't match:\r\n").appendText(this.textualOutput);
 
     }
 

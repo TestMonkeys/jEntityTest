@@ -9,18 +9,18 @@ public class ComparisonModel {
     private final Map<PropertyDescriptor, Comparator> comparisonMap;
 
     public ComparisonModel() {
-        comparisonMap = new HashMap<>();
+        this.comparisonMap = new HashMap<>();
     }
 
     public void setComparisonPoint(PropertyDescriptor propertyDescriptor, Comparator comparator) {
-        comparisonMap.put(propertyDescriptor, comparator);
+        this.comparisonMap.put(propertyDescriptor, comparator);
     }
 
     public Set<PropertyDescriptor> getComparableProperties() {
-        return comparisonMap.keySet();
+        return this.comparisonMap.keySet();
     }
 
     public Comparator getComparator(PropertyDescriptor propertyDescriptor) {
-        return comparisonMap.get(propertyDescriptor);
+        return this.comparisonMap.get(propertyDescriptor);
     }
 }

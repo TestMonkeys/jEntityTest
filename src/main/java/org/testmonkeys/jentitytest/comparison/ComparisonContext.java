@@ -7,12 +7,12 @@ public class ComparisonContext {
     private Object actualObj;
 
     public ComparisonContext() {
-        index = -1;
+        this.index = -1;
     }
 
     public ComparisonContext(ComparisonContext parent) {
         this.parent = parent;
-        index = -1;
+        this.index = -1;
     }
 
     public void setIndex(int index) {
@@ -23,9 +23,9 @@ public class ComparisonContext {
         this.actualObj = actualObj;
     }
 
-    public ComparisonContext withProprety(String propertyName) {
+    public ComparisonContext withProperty(String propertyName) {
         ComparisonContext comparisonContext = new ComparisonContext(this);
-        comparisonContext.index = index;
+        comparisonContext.index = this.index;
         comparisonContext.parentName = propertyName;
         return comparisonContext;
     }
@@ -40,18 +40,18 @@ public class ComparisonContext {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        if (parent != null) {
-            sb.append(parent).append(".");
+        if (this.parent != null) {
+            sb.append(this.parent).append(".");
         }
-        sb.append(parentName);
-        if (index != -1)
-            sb.append("[").append(index).append("]");
+        sb.append(this.parentName);
+        if (this.index != -1)
+            sb.append("[").append(this.index).append("]");
         return sb.toString();
     }
 
     public boolean isRecursive(Object actual) {
-        if (parent == null || actual == null) return false;
-        return actual.equals(parent.actualObj) || parent.isRecursive(actual);
+        if (this.parent == null || actual == null) return false;
+        return actual.equals(this.parent.actualObj) || this.parent.isRecursive(actual);
     }
 
     public void setParentName(String parentName) {

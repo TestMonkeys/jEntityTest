@@ -27,9 +27,9 @@ public class EntityInspector {
             try {
                 Field field = clazz.getDeclaredField(propertyDescriptor.getName());
                 for (Annotation annotation : field.getAnnotations()) {
-                    if (!annotationToComparator.mapsToComparator(annotation))
+                    if (!this.annotationToComparator.mapsToComparator(annotation))
                         continue;
-                    model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
+                    model.setComparisonPoint(propertyDescriptor, this.annotationToComparator.getComparatorForAnnotation(annotation));
                     customComparison = true;
                     fieldLevelComparison = true;
                 }
@@ -38,9 +38,9 @@ public class EntityInspector {
             }
             if (!fieldLevelComparison) {
                 for (Annotation annotation : method.getAnnotations()) {
-                    if (!annotationToComparator.mapsToComparator(annotation))
+                    if (!this.annotationToComparator.mapsToComparator(annotation))
                         continue;
-                    model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
+                    model.setComparisonPoint(propertyDescriptor, this.annotationToComparator.getComparatorForAnnotation(annotation));
                     customComparison = true;
                 }
             }

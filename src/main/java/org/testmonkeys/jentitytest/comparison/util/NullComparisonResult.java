@@ -12,7 +12,7 @@ public class NullComparisonResult extends ComparisonResult {
     }
 
     public boolean stopComparison() {
-        return stopComparison;
+        return this.stopComparison;
     }
 
     public void setStopComparison(boolean stopComparison) {
