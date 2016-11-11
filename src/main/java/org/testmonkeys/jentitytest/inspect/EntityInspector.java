@@ -4,6 +4,7 @@ import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.property.SimpleTypeComparator;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
+import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -15,10 +16,11 @@ public class EntityInspector {
 
     private final ModelToComparisonMap annotationToComparator = ModelToComparisonMap.getInstance();
 
-    public ComparisonModel getComparisonModel(Class clazz) throws IntrospectionException, JEntityTestException {
+    public ComparisonModel getComparisonModel(Class clazz) throws JEntityTestException {
         ComparisonModel model = new ComparisonModel();
-        for (PropertyDescriptor propertyDescriptor :
-                Introspector.getBeanInfo(clazz, Object.class).getPropertyDescriptors()) {
+        BeanInfo beanInfo = getBeanInfo(clazz);
+
+        for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
             Method method = propertyDescriptor.getReadMethod();
             if (method == null)
                 continue;
@@ -48,5 +50,15 @@ public class EntityInspector {
                 model.setComparisonPoint(propertyDescriptor, new SimpleTypeComparator());
         }
         return model;
+    }
+
+    private BeanInfo getBeanInfo(Class clazz) {
+        BeanInfo beanInfo;
+        try {
+            beanInfo = Introspector.getBeanInfo(clazz, Object.class);
+        } catch (IntrospectionException e) {
+            throw new JEntityTestException("Could not get BeanInfo from class: " + clazz);
+        }
+        return beanInfo;
     }
 }

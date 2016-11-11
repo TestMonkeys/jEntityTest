@@ -40,7 +40,7 @@ public class ModelToComparisonMapTest {
      * Check comparisonMap will throw exception if it has no comparator for annotation
      */
     @Test
-    public void modelToComparison_noMappingForAnnotation() throws Throwable {
+    public void unit_modelToComparison_noMappingForAnnotation() throws Throwable {
         expectedEx.expect(JEntityTestException.class);
         expectedEx.expectMessage("There is no comparator defined for annotation " +
                 "org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.SimpleAnnotation");
@@ -53,7 +53,7 @@ public class ModelToComparisonMapTest {
      * Check comparisonMap will throw exception if annotation provided is null
      */
     @Test
-    public void modelToComparison_nullAnnotation() throws Throwable {
+    public void unit_modelToComparison_nullAnnotation() throws Throwable {
         expectedEx.expect(JEntityTestException.class);
         expectedEx.expectMessage("Annotation can not be null");
 
@@ -64,7 +64,7 @@ public class ModelToComparisonMapTest {
      * Bad Comparator mapping test. Comparator was implemented with parameters in constructor
      */
     @Test
-    public void modelToComparison_badComparatorImplementation() throws Throwable {
+    public void unit_modelToComparison_badComparatorImplementation() throws Throwable {
         expectedEx.expect(JEntityTestException.class);
         expectedEx.expectMessage("Could not create Comparator for annotation " +
                 "org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.BadComparisonCustom");
@@ -77,7 +77,7 @@ public class ModelToComparisonMapTest {
      * Invalid registration of null Comparator
      */
     @Test
-    public void modelToComparison_registrationNullComparator() throws Throwable {
+    public void unit_modelToComparison_registrationNullComparator() throws Throwable {
         expectedEx.expect(JEntityTestException.class);
         expectedEx.expectMessage("Comparator can not be null");
 
@@ -88,7 +88,7 @@ public class ModelToComparisonMapTest {
      * Invalid registration of null Annotation
      */
     @Test
-    public void modelToComparison_registrationNullAnnotation() throws Throwable {
+    public void unit_modelToComparison_registrationNullAnnotation() throws Throwable {
         expectedEx.expect(JEntityTestException.class);
         expectedEx.expectMessage("Annotation can not be null");
 
