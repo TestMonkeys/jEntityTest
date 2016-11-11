@@ -4,7 +4,6 @@ import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 import org.testmonkeys.jentitytest.inspect.EntityInspector;
 
-import java.beans.IntrospectionException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,12 +29,7 @@ public class EntityComparisonDictionary {
 
     public ComparisonModel getComparisonModel(Class clazz) throws JEntityTestException {
         if (!dictionary.containsKey(clazz)) {
-            try {
-                dictionary.put(clazz, inspector.getComparisonModel(clazz));
-            } catch (IntrospectionException e) {
-                throw new JEntityTestException("Could not create comparison model for class");
-            }
-
+            dictionary.put(clazz, inspector.getComparisonModel(clazz));
         }
         return dictionary.get(clazz);
     }
