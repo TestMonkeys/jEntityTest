@@ -23,7 +23,7 @@ public class ComparisonContext {
         this.actualObj = actualObj;
     }
 
-    public ComparisonContext withProprety(String propertyName) {
+    public ComparisonContext withProperty(String propertyName) {
         ComparisonContext comparisonContext = new ComparisonContext(this);
         comparisonContext.index = index;
         comparisonContext.parentName = propertyName;

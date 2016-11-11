@@ -26,12 +26,15 @@ public class DateTimeComparator extends SingleResultComparator {
             return nullComparisonResult;
         }
 
-        if (!(a instanceof Temporal) && !(e instanceof Temporal))
-            throw new JEntityTestException("Expected and Actual values must of type " + Temporal.class.getName());
+        Temporal actualValue;
+        Temporal expectedValue;
 
-        Temporal actualValue = (Temporal) a;
-        Temporal expectedValue = (Temporal) e;
-
+        try {
+            actualValue = (Temporal) a;
+            expectedValue = (Temporal) e;
+        } catch (ClassCastException castException) {
+            throw new JEntityTestException("Expected and Actual values must of type ", castException);
+        }
         boolean passed = false;
 
         if (actualValue != null && expectedValue != null)
