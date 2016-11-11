@@ -19,7 +19,7 @@ import java.util.Map;
 public class ModelToComparisonMap {
 
     private static ModelToComparisonMap instance;
-    private final Map<Class, Class> mapping;
+    private final Map<Class<?>, Class<? extends Comparator>> mapping;
 
     private ModelToComparisonMap() {
         mapping = new HashMap<>();

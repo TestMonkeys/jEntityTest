@@ -33,7 +33,7 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
                     "\r\n");
         }
         textualOutput = sb.toString();
-        return result.stream().allMatch(p -> p.isPassed());
+        return result.stream().allMatch(ComparisonResult::isPassed);
     }
 
     @Override
