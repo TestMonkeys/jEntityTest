@@ -7,7 +7,6 @@ import org.testmonkeys.jentitytest.comparison.util.NullComparator;
 import org.testmonkeys.jentitytest.comparison.util.NullComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
-import java.beans.PropertyDescriptor;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 
@@ -19,7 +18,7 @@ public class DateTimeComparator extends SingleResultComparator {
     private ChronoUnit unit = ChronoUnit.NANOS;
 
     @Override
-    protected ComparisonResult computeSingleComparison(PropertyDescriptor property, Object a, Object e, ComparisonContext context) {
+    protected ComparisonResult computeSingleComparison(Object a, Object e, ComparisonContext context) {
         ComparisonResult result = new ComparisonResult(false, context, a, e);
 
         NullComparisonResult nullComparisonResult = nullComparatorHelper.compareOnNulls(a, e, context);
