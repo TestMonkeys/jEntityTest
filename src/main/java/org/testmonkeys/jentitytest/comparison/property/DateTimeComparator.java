@@ -3,6 +3,8 @@ package org.testmonkeys.jentitytest.comparison.property;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.SingleResultComparator;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
+import org.testmonkeys.jentitytest.comparison.util.NullComparator;
+import org.testmonkeys.jentitytest.comparison.util.NullComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
@@ -11,6 +13,8 @@ import java.time.temporal.Temporal;
 
 public class DateTimeComparator extends SingleResultComparator {
 
+    private final NullComparator nullComparatorHelper = new NullComparator();
+
     private int delta = 0;
     private ChronoUnit unit = ChronoUnit.NANOS;
 
@@ -18,9 +22,9 @@ public class DateTimeComparator extends SingleResultComparator {
     protected ComparisonResult computeSingleComparison(PropertyDescriptor property, Object a, Object e, ComparisonContext context) {
         ComparisonResult result = new ComparisonResult(false, context, a, e);
 
-        if (a == null && e == null) {
-            result.setPassed(true);
-            return result;
+        NullComparisonResult nullComparisonResult = nullComparatorHelper.compareOnNulls(a, e, context);
+        if (!nullComparisonResult.isPassed() || nullComparisonResult.stopComparison()) {
+            return nullComparisonResult;
         }
 
         if (!(a instanceof Temporal) && !(e instanceof Temporal))
