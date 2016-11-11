@@ -29,21 +29,21 @@ public class EntityInspector {
             try {
                 Field field = clazz.getDeclaredField(propertyDescriptor.getName());
                 for (Annotation annotation : field.getAnnotations()) {
-                    if (!annotationToComparator.mapsToComparator(annotation))
-                        continue;
-                    model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
-                    customComparison = true;
-                    fieldLevelComparison = true;
+                    if (annotationToComparator.mapsToComparator(annotation)) {
+                        model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
+                        customComparison = true;
+                        fieldLevelComparison = true;
+                    }
                 }
             } catch (NoSuchFieldException nfe) {
                 //do nothing as this means that field was named differently than accessor methods
             }
             if (!fieldLevelComparison) {
                 for (Annotation annotation : method.getAnnotations()) {
-                    if (!annotationToComparator.mapsToComparator(annotation))
-                        continue;
-                    model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
-                    customComparison = true;
+                    if (annotationToComparator.mapsToComparator(annotation)) {
+                        model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
+                        customComparison = true;
+                    }
                 }
             }
             if (!customComparison)

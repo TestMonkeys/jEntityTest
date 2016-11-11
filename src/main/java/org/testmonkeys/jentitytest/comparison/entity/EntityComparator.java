@@ -46,7 +46,7 @@ public class EntityComparator {
             ComparisonContext comparisonContext;
 
 
-            comparisonContext = context.withProprety(propertyDescriptor.getName());
+            comparisonContext = context.withProperty(propertyDescriptor.getName());
 
 
             comparisonResults.addAll(comparator.areEqual(propertyDescriptor, actual, expected, comparisonContext));
