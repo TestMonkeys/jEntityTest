@@ -1,5 +1,5 @@
 group 'org.testmonkeys'
-version '0.1.1'
+version '0.2.1'
 
 
 
@@ -78,8 +78,10 @@ def pomConfig = {
             email "costea32@gmail.com"
         }
         developer{
-
             name "Marin Onofrei"
+        }
+        developer {
+            name "Maria Burunducova"
         }
     }
     scm{
