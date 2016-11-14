@@ -2,9 +2,9 @@ package org.testmonkeys.jentitytest.comparison.util;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 
-public class NullComparator {
+public class NullComparator implements ConditionalCheck {
 
-    public NullComparisonResult compareOnNulls(Object actual, Object expected, ComparisonContext context) {
+    public NullComparisonResult runCheck(Object actual, Object expected, ComparisonContext context) {
         NullComparisonResult result = new NullComparisonResult(true, context, actual, expected);
 
         if (actual == null && expected == null) {

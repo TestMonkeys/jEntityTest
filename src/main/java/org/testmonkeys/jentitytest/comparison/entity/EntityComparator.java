@@ -32,7 +32,7 @@ public class EntityComparator {
             context.setActualObj(actual);
         }
 
-        NullComparisonResult nullComparisonResult = nullComparatorHelper.compareOnNulls(actual, expected, context);
+        NullComparisonResult nullComparisonResult = nullComparatorHelper.runCheck(actual, expected, context);
         if (!nullComparisonResult.isPassed() || nullComparisonResult.stopComparison()) {
             comparisonResults.add(nullComparisonResult);
             return comparisonResults;
