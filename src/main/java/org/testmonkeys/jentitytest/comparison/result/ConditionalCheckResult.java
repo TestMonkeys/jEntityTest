@@ -1,13 +1,12 @@
-package org.testmonkeys.jentitytest.comparison.util;
+package org.testmonkeys.jentitytest.comparison.result;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
-import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 
-public class NullComparisonResult extends ComparisonResult {
+public class ConditionalCheckResult extends ComparisonResult {
 
     private boolean stopComparison;
 
-    public NullComparisonResult(boolean passed, ComparisonContext context, Object actual, Object expected) {
+    public ConditionalCheckResult(boolean passed, ComparisonContext context, Object actual, Object expected) {
         super(passed, context, actual, expected);
     }
 

@@ -2,9 +2,8 @@ package org.testmonkeys.jentitytest.comparison.property;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.SingleResultComparator;
+import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
-import org.testmonkeys.jentitytest.comparison.util.NullComparator;
-import org.testmonkeys.jentitytest.comparison.util.NullComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.time.temporal.ChronoUnit;
@@ -12,19 +11,16 @@ import java.time.temporal.Temporal;
 
 public class DateTimeComparator extends SingleResultComparator {
 
-    private final NullComparator nullComparatorHelper = new NullComparator();
-
     private int delta = 0;
     private ChronoUnit unit = ChronoUnit.NANOS;
+
+    public DateTimeComparator() {
+        registerPreConditionalCheck(new NullConditionalCheck());
+    }
 
     @Override
     protected ComparisonResult computeSingleComparison(Object a, Object e, ComparisonContext context) {
         ComparisonResult result = new ComparisonResult(false, context, a, e);
-
-        NullComparisonResult nullComparisonResult = nullComparatorHelper.compareOnNulls(a, e, context);
-        if (!nullComparisonResult.isPassed() || nullComparisonResult.stopComparison()) {
-            return nullComparisonResult;
-        }
 
         Temporal actualValue;
         Temporal expectedValue;
