@@ -4,9 +4,9 @@ import org.testmonkeys.jentitytest.EntityComparisonDictionary;
 import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
+import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
-import org.testmonkeys.jentitytest.comparison.util.ConditionalCheckResult;
-import org.testmonkeys.jentitytest.comparison.util.NullComparator;
+import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
@@ -17,7 +17,7 @@ import java.util.List;
 public class EntityComparator {
 
     private final EntityComparisonDictionary comparisonDictionary = EntityComparisonDictionary.getInstance();
-    private final NullComparator nullComparatorHelper = new NullComparator();
+    private final NullConditionalCheck nullComparatorHelper = new NullConditionalCheck();
 
     public List<ComparisonResult> compare(Object actual, Object expected) throws JEntityTestException {
 

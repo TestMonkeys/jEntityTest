@@ -1,7 +1,6 @@
-package org.testmonkeys.jentitytest.comparison.util;
+package org.testmonkeys.jentitytest.comparison.result;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
-import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 
 public class ConditionalCheckResult extends ComparisonResult {
 

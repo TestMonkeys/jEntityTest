@@ -1,8 +1,10 @@
-package org.testmonkeys.jentitytest.comparison.util;
+package org.testmonkeys.jentitytest.comparison.conditionalChecks;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
+import org.testmonkeys.jentitytest.comparison.ConditionalCheck;
+import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
 
-public class NullComparator implements ConditionalCheck {
+public class NullConditionalCheck implements ConditionalCheck {
 
     public ConditionalCheckResult runCheck(Object actual, Object expected, ComparisonContext context) {
         ConditionalCheckResult result = new ConditionalCheckResult(true, context, actual, expected);

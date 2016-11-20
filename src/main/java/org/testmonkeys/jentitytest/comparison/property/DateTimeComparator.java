@@ -2,8 +2,8 @@ package org.testmonkeys.jentitytest.comparison.property;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.SingleResultComparator;
+import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
-import org.testmonkeys.jentitytest.comparison.util.NullComparator;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.time.temporal.ChronoUnit;
@@ -15,7 +15,7 @@ public class DateTimeComparator extends SingleResultComparator {
     private ChronoUnit unit = ChronoUnit.NANOS;
 
     public DateTimeComparator() {
-        registerPreConditionalCheck(new NullComparator());
+        registerPreConditionalCheck(new NullConditionalCheck());
     }
 
     @Override

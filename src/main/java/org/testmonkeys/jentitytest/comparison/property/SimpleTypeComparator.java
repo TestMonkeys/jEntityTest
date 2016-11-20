@@ -2,13 +2,13 @@ package org.testmonkeys.jentitytest.comparison.property;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.SingleResultComparator;
+import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
-import org.testmonkeys.jentitytest.comparison.util.NullComparator;
 
 public class SimpleTypeComparator extends SingleResultComparator {
 
     public SimpleTypeComparator() {
-        registerPreConditionalCheck(new NullComparator());
+        registerPreConditionalCheck(new NullConditionalCheck());
     }
 
     @Override

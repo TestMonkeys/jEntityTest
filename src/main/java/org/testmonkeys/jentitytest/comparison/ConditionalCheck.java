@@ -1,6 +1,6 @@
-package org.testmonkeys.jentitytest.comparison.util;
+package org.testmonkeys.jentitytest.comparison;
 
-import org.testmonkeys.jentitytest.comparison.ComparisonContext;
+import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
 
 public interface ConditionalCheck {
 
