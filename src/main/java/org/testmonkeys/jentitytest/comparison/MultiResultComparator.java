@@ -2,7 +2,7 @@ package org.testmonkeys.jentitytest.comparison;
 
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.util.ConditionalCheck;
-import org.testmonkeys.jentitytest.comparison.util.NullComparisonResult;
+import org.testmonkeys.jentitytest.comparison.util.ConditionalCheckResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
@@ -15,10 +15,12 @@ public abstract class MultiResultComparator implements Comparator {
 
     private List<ConditionalCheck> conditionalChecks = new ArrayList<>();
 
-    public void registerCheck(ConditionalCheck conditionalCheck) {
+    @Override
+    public void registerPreConditionalCheck(ConditionalCheck conditionalCheck) {
         conditionalChecks.add(conditionalCheck);
     }
 
+    @Override
     public List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
         List<ComparisonResult> resultList = new LinkedList<>();
 
@@ -29,7 +31,7 @@ public abstract class MultiResultComparator implements Comparator {
             return resultList;
         context.setActualObj(actualValue);
 
-        List<NullComparisonResult> conditionalResults = runConditionals(actualValue, expectedValue, context);
+        List<ConditionalCheckResult> conditionalResults = runConditionals(actualValue, expectedValue, context);
         if (conditionalResults.stream().anyMatch(res -> res.stopComparison())) {
             resultList.addAll(conditionalResults);
             return resultList;
@@ -48,8 +50,8 @@ public abstract class MultiResultComparator implements Comparator {
         }
     }
 
-    protected List<NullComparisonResult> runConditionals(Object actualValue, Object expectedValue, ComparisonContext context) throws JEntityTestException {
-        List<NullComparisonResult> results = new ArrayList<>();
+    protected List<ConditionalCheckResult> runConditionals(Object actualValue, Object expectedValue, ComparisonContext context) throws JEntityTestException {
+        List<ConditionalCheckResult> results = new ArrayList<>();
         for (int i = conditionalChecks.size() - 1; i >= 0; i--) {
             ConditionalCheck check = conditionalChecks.get(i);
             results.add(check.runCheck(actualValue, expectedValue, context));

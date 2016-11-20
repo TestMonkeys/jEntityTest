@@ -8,7 +8,7 @@ import org.testmonkeys.jentitytest.comparison.util.NullComparator;
 public class SimpleTypeComparator extends SingleResultComparator {
 
     public SimpleTypeComparator() {
-        registerCheck(new NullComparator());
+        registerPreConditionalCheck(new NullComparator());
     }
 
     @Override

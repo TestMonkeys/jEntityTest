@@ -4,8 +4,8 @@ import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 
 public class NullComparator implements ConditionalCheck {
 
-    public NullComparisonResult runCheck(Object actual, Object expected, ComparisonContext context) {
-        NullComparisonResult result = new NullComparisonResult(true, context, actual, expected);
+    public ConditionalCheckResult runCheck(Object actual, Object expected, ComparisonContext context) {
+        ConditionalCheckResult result = new ConditionalCheckResult(true, context, actual, expected);
 
         if (actual == null && expected == null) {
             result.setStopComparison(true);

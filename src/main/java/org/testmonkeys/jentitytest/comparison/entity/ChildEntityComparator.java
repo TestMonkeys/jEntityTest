@@ -12,7 +12,7 @@ import java.util.List;
 public class ChildEntityComparator extends MultiResultComparator {
 
     public ChildEntityComparator() {
-        registerCheck(new NullComparator());
+        registerPreConditionalCheck(new NullComparator());
     }
 
     @Override

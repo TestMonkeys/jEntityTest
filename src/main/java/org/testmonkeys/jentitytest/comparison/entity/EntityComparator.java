@@ -5,8 +5,8 @@ import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
+import org.testmonkeys.jentitytest.comparison.util.ConditionalCheckResult;
 import org.testmonkeys.jentitytest.comparison.util.NullComparator;
-import org.testmonkeys.jentitytest.comparison.util.NullComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
@@ -32,9 +32,9 @@ public class EntityComparator {
             context.setActualObj(actual);
         }
 
-        NullComparisonResult nullComparisonResult = nullComparatorHelper.runCheck(actual, expected, context);
-        if (!nullComparisonResult.isPassed() || nullComparisonResult.stopComparison()) {
-            comparisonResults.add(nullComparisonResult);
+        ConditionalCheckResult conditionalCheckResult = nullComparatorHelper.runCheck(actual, expected, context);
+        if (!conditionalCheckResult.isPassed() || conditionalCheckResult.stopComparison()) {
+            comparisonResults.add(conditionalCheckResult);
             return comparisonResults;
         }
 

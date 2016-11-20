@@ -15,7 +15,7 @@ public class DateTimeComparator extends SingleResultComparator {
     private ChronoUnit unit = ChronoUnit.NANOS;
 
     public DateTimeComparator() {
-        registerCheck(new NullComparator());
+        registerPreConditionalCheck(new NullComparator());
     }
 
     @Override
