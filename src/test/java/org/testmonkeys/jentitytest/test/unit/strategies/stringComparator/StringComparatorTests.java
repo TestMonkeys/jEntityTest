@@ -101,10 +101,22 @@ public class StringComparatorTests {
 
 
     @Test
-    public void stringComparatorPassIgnoreSpecChars() throws IntrospectionException {
-        actual.setField("$tes t");
+    public void stringComparatorPassIgnoreSpecChars1() throws IntrospectionException {
+        actual.setField("$Ates tA");
         expected.setField("test");
-        char[] ignore = {'$', ' '};
+        char[] ignore = {'$', ' ', 'A'};
+
+        StringComparator comparator = getComparator(false, false, ignore);
+        PropertyDescriptor descriptor = new PropertyDescriptor("field", Model.class);
+        List<ComparisonResult> resultList = comparator.areEqual(descriptor, actual, expected, context);
+        assertTrue(resultList.get(0).isPassed());
+    }
+
+    @Test
+    public void stringComparatorPassIgnoreSpecChars2() throws IntrospectionException {
+        actual.setField("^tesAt$A");
+        expected.setField("test");
+        char[] ignore = {'^', '$', 'A'};
 
         StringComparator comparator = getComparator(false, false, ignore);
         PropertyDescriptor descriptor = new PropertyDescriptor("field", Model.class);

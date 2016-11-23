@@ -31,11 +31,12 @@ public class StringComparator extends SingleResultComparator {
 
         if (actual != null && expected != null) {
             for (char ignore : ignoreCharacters) {
-                String ignoreString = "\\" + String.valueOf(ignore);
-                actual = actual.replaceAll(ignoreString, "");
+
+                String ignoreString = String.valueOf(ignore);
+                actual = actual.replace(ignoreString, "");
                 expected = expected.replaceAll(ignoreString, "");
             }
-            if(ignoreTrailing){
+            if (ignoreTrailing) {
                 actual = actual.trim();
                 expected = expected.trim();
             }
