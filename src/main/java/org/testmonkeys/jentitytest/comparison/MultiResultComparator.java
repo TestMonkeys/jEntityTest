@@ -31,7 +31,7 @@ public abstract class MultiResultComparator implements Comparator {
         context.setActualObj(actualValue);
 
         List<ConditionalCheckResult> conditionalResults = runConditionals(actualValue, expectedValue, context);
-        if (conditionalResults.stream().anyMatch(res -> res.stopComparison())) {
+        if (conditionalResults.stream().anyMatch(res -> res.stopComparison() || !res.isPassed())) {
             resultList.addAll(conditionalResults);
             return resultList;
         }
