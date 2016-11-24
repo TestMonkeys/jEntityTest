@@ -29,6 +29,7 @@ public abstract class MultiResultComparator implements Comparator {
         if (context.isRecursive(actualValue))
             return resultList;
         context.setActualObj(actualValue);
+        context.setPropertyDescriptor(property);
 
         List<ConditionalCheckResult> conditionalResults = runConditionals(actualValue, expectedValue, context);
         if (conditionalResults.stream().anyMatch(res -> res.stopComparison())) {
