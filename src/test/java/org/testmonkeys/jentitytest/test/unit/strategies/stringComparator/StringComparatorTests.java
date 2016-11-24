@@ -21,7 +21,7 @@ public class StringComparatorTests {
     ComparisonContext context = new ComparisonContext();
     char[] ignore = {};
 
-    private StringComparator getComparator(boolean caseSensitive, boolean ignoreTrailing,
+    private StringComparator getComparator(boolean caseSensitive, boolean trim,
                                            char[] ignoreChars) {
         StringComparator comparator = new StringComparator();
         try {
@@ -33,9 +33,9 @@ public class StringComparatorTests {
             field.setAccessible(true);
             field.set(comparator, ignoreChars);
             field.setAccessible(false);
-            field = StringComparator.class.getDeclaredField("ignoreTrailing");
+            field = StringComparator.class.getDeclaredField("trim");
             field.setAccessible(true);
-            field.set(comparator, ignoreTrailing);
+            field.set(comparator, trim);
             field.setAccessible(false);
         } catch (Exception e) {
 

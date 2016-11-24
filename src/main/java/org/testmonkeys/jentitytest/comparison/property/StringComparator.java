@@ -8,7 +8,7 @@ import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 public class StringComparator extends SingleResultComparator {
     private boolean caseSensitive = true;
-    private boolean ignoreTrailing = false;
+    private boolean trim = false;
     private char[] ignoreCharacters = {};
 
     public StringComparator() {
@@ -31,12 +31,11 @@ public class StringComparator extends SingleResultComparator {
 
         if (actual != null && expected != null) {
             for (char ignore : ignoreCharacters) {
-
                 String ignoreString = String.valueOf(ignore);
                 actual = actual.replace(ignoreString, "");
-                expected = expected.replaceAll(ignoreString, "");
+                expected = expected.replace(ignoreString, "");
             }
-            if (ignoreTrailing) {
+            if (trim) {
                 actual = actual.trim();
                 expected = expected.trim();
             }
