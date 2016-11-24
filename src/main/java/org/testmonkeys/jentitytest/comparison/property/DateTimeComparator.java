@@ -32,12 +32,8 @@ public class DateTimeComparator extends SingleResultComparator {
             throw new JEntityTestException("Expected and Actual values must of type " + Temporal.class.getName(),
                     castException);
         }
-        boolean passed = false;
 
-        if (actualValue != null && expectedValue != null)
-            passed = Math.abs(actualValue.until(expectedValue, unit)) <= delta;
-
-        result.setPassed(passed);
+        result.setPassed(Math.abs(actualValue.until(expectedValue, unit)) <= delta);
         return result;
     }
 }

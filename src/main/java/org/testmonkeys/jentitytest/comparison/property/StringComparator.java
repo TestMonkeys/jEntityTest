@@ -29,23 +29,22 @@ public class StringComparator extends SingleResultComparator {
                     castException);
         }
 
-        if (actual != null && expected != null) {
-            for (char ignore : ignoreCharacters) {
-                String ignoreString = String.valueOf(ignore);
-                actual = actual.replace(ignoreString, "");
-                expected = expected.replace(ignoreString, "");
-            }
-            if (trim) {
-                actual = actual.trim();
-                expected = expected.trim();
-            }
-
-            if (caseSensitive) {
-                comparisonResult.setPassed(actual.equals(expected));
-            } else {
-                comparisonResult.setPassed(actual.equalsIgnoreCase(expected));
-            }
+        for (char ignore : ignoreCharacters) {
+            String ignoreString = String.valueOf(ignore);
+            actual = actual.replace(ignoreString, "");
+            expected = expected.replace(ignoreString, "");
         }
+        if (trim) {
+            actual = actual.trim();
+            expected = expected.trim();
+        }
+
+        if (caseSensitive) {
+            comparisonResult.setPassed(actual.equals(expected));
+        } else {
+            comparisonResult.setPassed(actual.equalsIgnoreCase(expected));
+        }
+
         return comparisonResult;
     }
 }
