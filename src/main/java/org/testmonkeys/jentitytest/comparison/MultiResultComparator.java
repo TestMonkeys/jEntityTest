@@ -9,10 +9,9 @@ import java.util.List;
 
 public abstract class MultiResultComparator implements Comparator {
 
-    private List<ConditionalCheck> conditionalChecks = new ArrayList<>();
+    private final List<ConditionalCheck> conditionalChecks = new ArrayList<>();
 
-    @Override
-    public void registerPreConditionalCheck(ConditionalCheck conditionalCheck) {
+    protected void registerPreConditionalCheck(ConditionalCheck conditionalCheck) {
         conditionalChecks.add(conditionalCheck);
     }
 
@@ -30,12 +29,12 @@ public abstract class MultiResultComparator implements Comparator {
         return resultList;
     }
 
-    protected List<ConditionalCheckResult> runConditionals(Object actualValue, Object expectedValue, ComparisonContext context) throws JEntityTestException {
+    private List<ConditionalCheckResult> runConditionals(Object actualValue, Object expectedValue, ComparisonContext context) throws JEntityTestException {
         List<ConditionalCheckResult> results = new ArrayList<>();
         for (int i = conditionalChecks.size() - 1; i >= 0; i--) {
             ConditionalCheck check = conditionalChecks.get(i);
             results.add(check.runCheck(actualValue, expectedValue, context));
-            if (results.stream().anyMatch(res -> res.stopComparison()))
+            if (results.stream().anyMatch(ConditionalCheckResult::stopComparison))
                 return results;
         }
         return results;

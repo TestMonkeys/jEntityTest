@@ -7,14 +7,13 @@ import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.beans.IntrospectionException;
-import java.lang.reflect.Field;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
 
 public class StringComparatorTests {
 
-    ComparisonContext context = new ComparisonContext();
+    private ComparisonContext context = new ComparisonContext();
 
     private StringComparator getComparator(boolean caseSensitive, boolean trim) {
         return getComparator(caseSensitive, trim, null);
@@ -23,45 +22,28 @@ public class StringComparatorTests {
     private StringComparator getComparator(boolean caseSensitive, boolean trim,
                                            char[] ignoreChars) {
         StringComparator comparator = new StringComparator();
-        try {
-            Field field = StringComparator.class.getDeclaredField("caseSensitive");
-            field.setAccessible(true);
-            field.set(comparator, caseSensitive);
-            field.setAccessible(false);
-            field = StringComparator.class.getDeclaredField("ignoreCharacters");
-            field.setAccessible(true);
-            field.set(comparator, ignoreChars);
-            field.setAccessible(false);
-            field = StringComparator.class.getDeclaredField("trim");
-            field.setAccessible(true);
-            field.set(comparator, trim);
-            field.setAccessible(false);
-        } catch (Exception e) {
-
-        }
+        comparator.setCaseSensitive(caseSensitive);
+        comparator.setIgnoreCharacters(ignoreChars);
+        comparator.setTrim(trim);
         return comparator;
     }
 
 
     @Test
     public void stringComparatorPassNulls() throws IntrospectionException {
-        String actual = null;
-        String expected = null;
-
         StringComparator comparator = getComparator(true, false, null);
 
-        List<ComparisonResult> resultList = comparator.areEqual(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.areEqual(null, null, context);
         assertTrue(resultList.get(0).isPassed());
     }
 
     @Test(expected = AssertionError.class)
     public void stringComparatorFailNull() throws IntrospectionException {
-        String actual = null;
         String expected = "test";
 
         StringComparator comparator = getComparator(false, false, null);
 
-        List<ComparisonResult> resultList = comparator.areEqual(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.areEqual(null, expected, context);
         assertTrue(resultList.get(0).isPassed());
     }
 

@@ -53,8 +53,8 @@ public class ComparisonContext {
     }
 
     public boolean isRecursive(Object actual) {
-        if (parent == null || actual == null) return false;
-        return actual.equals(parent.actualObj) || parent.isRecursive(actual);
+        return !(parent == null || actual == null) &&
+                (actual.equals(parent.actualObj) || parent.isRecursive(actual));
     }
 
     public void setParentName(String parentName) {

@@ -9,7 +9,6 @@ import org.testmonkeys.jentitytest.comparison.property.DateTimeComparator;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
-import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -22,7 +21,7 @@ public class DateTimeComparatorTests {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-    ComparisonContext context;
+    private ComparisonContext context;
 
 
     @Before
@@ -32,28 +31,17 @@ public class DateTimeComparatorTests {
 
     private DateTimeComparator getComparator(int delta, ChronoUnit unit) {
         DateTimeComparator comparator = new DateTimeComparator();
-        try {
-            Field field = DateTimeComparator.class.getDeclaredField("delta");
-            field.setAccessible(true);
-            field.set(comparator, delta);
-            field.setAccessible(false);
-            field = DateTimeComparator.class.getDeclaredField("unit");
-            field.setAccessible(true);
-            field.set(comparator, unit);
-            field.setAccessible(false);
-        } catch (Exception e) {
-
-        }
+        comparator.setDelta(delta);
+        comparator.setUnit(unit);
         return comparator;
     }
 
     @Test
     public void strategy_dateTimeComparator_noDelta_expectedNull() throws Throwable {
         DateTimeComparator comparator = new DateTimeComparator();
-        LocalDateTime actual = LocalDateTime.of(2016, 10, 05, 22, 33, 01, 1);
-        LocalDateTime expected = null;
+        LocalDateTime actual = LocalDateTime.of(2016, 10, 5, 22, 33, 1, 1);
 
-        List<ComparisonResult> results = comparator.areEqual(actual, expected, context);
+        List<ComparisonResult> results = comparator.areEqual(actual, null, context);
         ComparisonResult result = results.get(0);
         assertFalse(result.isPassed());
     }
@@ -61,10 +49,9 @@ public class DateTimeComparatorTests {
     @Test
     public void strategy_dateTimeComparator_noDelta_actualNull() throws Throwable {
         DateTimeComparator comparator = new DateTimeComparator();
-        LocalDateTime actual = null;
-        LocalDateTime expected = LocalDateTime.of(2016, 10, 05, 22, 33, 01, 1);
+        LocalDateTime expected = LocalDateTime.of(2016, 10, 5, 22, 33, 1, 1);
 
-        List<ComparisonResult> results = comparator.areEqual(actual, expected, context);
+        List<ComparisonResult> results = comparator.areEqual(null, expected, context);
         ComparisonResult result = results.get(0);
         assertFalse(result.isPassed());
     }
@@ -72,10 +59,9 @@ public class DateTimeComparatorTests {
     @Test
     public void strategy_dateTimeComparator_noDelta_bothNull() throws Throwable {
         DateTimeComparator comparator = new DateTimeComparator();
-        LocalDateTime actual = null;
-        LocalDateTime expected = null;
 
-        List<ComparisonResult> results = comparator.areEqual(actual, expected, context);
+
+        List<ComparisonResult> results = comparator.areEqual(null, null, context);
         ComparisonResult result = results.get(0);
         assertTrue(result.isPassed());
     }
@@ -83,8 +69,8 @@ public class DateTimeComparatorTests {
     @Test
     public void strategy_dateTimeComparator_noDelta_equal() throws Throwable {
         DateTimeComparator comparator = new DateTimeComparator();
-        LocalDateTime actual = LocalDateTime.of(2016, 10, 05, 22, 33, 01, 1);
-        LocalDateTime expected = LocalDateTime.of(2016, 10, 05, 22, 33, 01, 1);
+        LocalDateTime actual = LocalDateTime.of(2016, 10, 5, 22, 33, 1, 1);
+        LocalDateTime expected = LocalDateTime.of(2016, 10, 5, 22, 33, 1, 1);
 
         List<ComparisonResult> results = comparator.areEqual(actual, expected, context);
         ComparisonResult result = results.get(0);
@@ -178,7 +164,7 @@ public class DateTimeComparatorTests {
         LocalDateTime actual = LocalDateTime.of(2016, 10, 5, 22, 33, 2, 1);
         LocalDateTime expected = LocalDateTime.of(2016, 10, 5, 22, 33, 6, 1);
 
-        List<ComparisonResult> results = comparator.areEqual(LocalDateTime.of(2016, 10, 5, 22, 33, 2, 1), LocalDateTime.of(2016, 10, 5, 22, 33, 6, 1), context);
+        List<ComparisonResult> results = comparator.areEqual(actual, expected, context);
         ComparisonResult result = results.get(0);
         assertFalse(result.isPassed());
     }

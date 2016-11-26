@@ -7,12 +7,25 @@ import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 public class StringComparator extends SingleResultComparator {
+
     private boolean caseSensitive = true;
     private boolean trim = false;
     private char[] ignoreCharacters = {};
 
     public StringComparator() {
         registerPreConditionalCheck(new NullConditionalCheck());
+    }
+
+    public void setCaseSensitive(boolean caseSensitive) {
+        this.caseSensitive = caseSensitive;
+    }
+
+    public void setTrim(boolean trim) {
+        this.trim = trim;
+    }
+
+    public void setIgnoreCharacters(char[] ignoreCharacters) {
+        this.ignoreCharacters = ignoreCharacters;
     }
 
     public ComparisonResult computeSingleComparison(Object actualValue, Object expectedValue, ComparisonContext context) {

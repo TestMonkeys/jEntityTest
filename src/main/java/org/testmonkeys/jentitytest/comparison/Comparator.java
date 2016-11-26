@@ -7,7 +7,5 @@ import java.util.List;
 
 public interface Comparator {
 
-    void registerPreConditionalCheck(ConditionalCheck conditionalCheck);
-
     List<ComparisonResult> areEqual(Object actual, Object expected, ComparisonContext context) throws JEntityTestException;
 }
