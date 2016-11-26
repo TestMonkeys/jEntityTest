@@ -28,17 +28,11 @@ public class ComparisonContext {
 
     public ComparisonContext withProperty(String propertyName) {
         ComparisonContext comparisonContext = new ComparisonContext(this);
-        comparisonContext.index = index;
         comparisonContext.parentName = propertyName;
         return comparisonContext;
     }
 
-    public ComparisonContext withIndex(int index) {
-        ComparisonContext comparisonContext = new ComparisonContext(this);
-        comparisonContext.index = index;
-        return comparisonContext;
 
-    }
 
     @Override
     public String toString() {
@@ -59,10 +53,6 @@ public class ComparisonContext {
 
     public void setParentName(String parentName) {
         this.parentName = parentName;
-    }
-
-    public PropertyDescriptor getPropertyDescriptor() {
-        return propertyDescriptor;
     }
 
     public void setPropertyDescriptor(PropertyDescriptor propertyDescriptor) {

@@ -84,4 +84,19 @@ public class ChildEntityListComparatorTests {
         assertTrue(results.stream().allMatch(ComparisonResult::isPassed));
     }
 
+    @Test
+    public void entityCollections_Match() {
+        ChildEntityListComparator comparator = new ChildEntityListComparator();
+        List<SimpleModel> actual = new ArrayList<>();
+        List<SimpleModel> expected = new ArrayList<>();
+        actual.add(new SimpleModel(1));
+        actual.add(new SimpleModel(1));
+        expected.add(new SimpleModel(1));
+        expected.add(new SimpleModel(1));
+
+        List<ComparisonResult> results = comparator.areEqual(actual, expected, new ComparisonContext());
+
+        assertTrue(results.stream().allMatch(ComparisonResult::isPassed));
+    }
+
 }

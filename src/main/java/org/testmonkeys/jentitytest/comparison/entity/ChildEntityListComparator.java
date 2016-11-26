@@ -55,10 +55,11 @@ public class ChildEntityListComparator extends MultiResultComparator {
         for (int i = 0; i < listActual.size(); i++) {
             Object actualItem = listActual.iterator().next();
             Object expectedItem = listExpected.iterator().next();
+            context.setIndex(i);
             if (isWrapperType(actualItem)) {
-                comparisonResults.addAll(simpleTypeComparator.areEqual(actualItem, expectedItem, context.withIndex(i)));
+                comparisonResults.addAll(simpleTypeComparator.areEqual(actualItem, expectedItem, context));
             } else {
-                comparisonResults.addAll(childComparator.areEqual(actualItem, expectedItem, context.withIndex(i)));
+                comparisonResults.addAll(childComparator.areEqual(actualItem, expectedItem, context));
             }
         }
 
