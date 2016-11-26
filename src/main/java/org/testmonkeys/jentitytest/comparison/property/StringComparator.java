@@ -29,10 +29,12 @@ public class StringComparator extends SingleResultComparator {
                     castException);
         }
 
-        for (char ignore : ignoreCharacters) {
-            String ignoreString = String.valueOf(ignore);
-            actual = actual.replace(ignoreString, "");
-            expected = expected.replace(ignoreString, "");
+        if (ignoreCharacters != null) {
+            for (char ignore : ignoreCharacters) {
+                String ignoreString = String.valueOf(ignore);
+                actual = actual.replace(ignoreString, "");
+                expected = expected.replace(ignoreString, "");
+            }
         }
         if (trim) {
             actual = actual.trim();

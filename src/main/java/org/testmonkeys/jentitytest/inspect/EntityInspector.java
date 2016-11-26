@@ -3,6 +3,7 @@ package org.testmonkeys.jentitytest.inspect;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.property.SimpleTypeComparator;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
+import org.testmonkeys.jentitytest.matchers.ObjectPropertyComparator;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
@@ -30,7 +31,8 @@ public class EntityInspector {
                 Field field = clazz.getDeclaredField(propertyDescriptor.getName());
                 for (Annotation annotation : field.getAnnotations()) {
                     if (annotationToComparator.mapsToComparator(annotation)) {
-                        model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
+                        model.setComparisonPoint(propertyDescriptor,
+                                new ObjectPropertyComparator(annotationToComparator.getComparatorForAnnotation(annotation)));
                         customComparison = true;
                         fieldLevelComparison = true;
                     }
@@ -41,13 +43,14 @@ public class EntityInspector {
             if (!fieldLevelComparison) {
                 for (Annotation annotation : method.getAnnotations()) {
                     if (annotationToComparator.mapsToComparator(annotation)) {
-                        model.setComparisonPoint(propertyDescriptor, annotationToComparator.getComparatorForAnnotation(annotation));
+                        model.setComparisonPoint(propertyDescriptor,
+                                new ObjectPropertyComparator(annotationToComparator.getComparatorForAnnotation(annotation)));
                         customComparison = true;
                     }
                 }
             }
             if (!customComparison)
-                model.setComparisonPoint(propertyDescriptor, new SimpleTypeComparator());
+                model.setComparisonPoint(propertyDescriptor, new ObjectPropertyComparator(new SimpleTypeComparator()));
         }
         return model;
     }

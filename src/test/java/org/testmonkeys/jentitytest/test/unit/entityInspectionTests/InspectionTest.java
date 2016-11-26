@@ -42,7 +42,7 @@ public class InspectionTest {
         Set<PropertyDescriptor> props = model.getComparableProperties();
         assertThat("'id' in model", props.stream().anyMatch(x -> x.getName().equals("id")), is(true));
         PropertyDescriptor prop = props.stream().filter(x -> x.getName().equals("id")).findFirst().get();
-        assertThat("comparator", model.getComparator(prop).getClass(), is(IgnoreComparator.class));
+        assertThat("comparator", model.getComparator(prop).getComparator().getClass(), is(IgnoreComparator.class));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class InspectionTest {
         Set<PropertyDescriptor> props = model.getComparableProperties();
         assertThat("'available' in model", props.stream().anyMatch(x -> x.getName().equals("available")), is(true));
         PropertyDescriptor prop = props.stream().filter(x -> x.getName().equals("available")).findFirst().get();
-        assertThat("comparator", model.getComparator(prop).getClass(), is(IgnoreComparator.class));
+        assertThat("comparator", model.getComparator(prop).getComparator().getClass(), is(IgnoreComparator.class));
     }
 
     @Test
@@ -62,7 +62,7 @@ public class InspectionTest {
         Set<PropertyDescriptor> props = model.getComparableProperties();
         assertThat("'age' in model", props.stream().anyMatch(x -> x.getName().equals("age")), is(true));
         PropertyDescriptor prop = props.stream().filter(x -> x.getName().equals("age")).findFirst().get();
-        assertThat("comparator", model.getComparator(prop).getClass(), is(IgnoreComparator.class));
+        assertThat("comparator", model.getComparator(prop).getComparator().getClass(), is(IgnoreComparator.class));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class InspectionTest {
         Set<PropertyDescriptor> props = model.getComparableProperties();
         assertThat("'id' in model", props.stream().anyMatch(x -> x.getName().equals("id")), is(true));
         PropertyDescriptor prop = props.stream().filter(x -> x.getName().equals("id")).findFirst().get();
-        assertThat("comparator", model.getComparator(prop).getClass(), is(IgnoreComparatorCustom.class));
+        assertThat("comparator", model.getComparator(prop).getComparator().getClass(), is(IgnoreComparatorCustom.class));
     }
 
     @Test
@@ -85,7 +85,7 @@ public class InspectionTest {
         assertThat("'id' in model", props.stream().anyMatch(x -> x.getName().equals("id")), is(true));
         assertThat("'it' in model", props.stream().anyMatch(x -> x.getName().equals("it")), is(false));
         PropertyDescriptor prop = props.stream().filter(x -> x.getName().equals("id")).findFirst().get();
-        assertThat("comparator", model.getComparator(prop).getClass(), is(SimpleTypeComparator.class));
+        assertThat("comparator", model.getComparator(prop).getComparator().getClass(), is(SimpleTypeComparator.class));
     }
 
     @Test

@@ -5,9 +5,6 @@ import org.testmonkeys.jentitytest.comparison.MultiResultComparator;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.List;
 
@@ -16,9 +13,6 @@ public class ChildEntityListComparator extends MultiResultComparator {
 
     @Override
     protected List<ComparisonResult> computeComparison(Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
-
-        PropertyDescriptor prop = context.getPropertyDescriptor();
-        Type genericType = ((ParameterizedType) prop.getReadMethod().getGenericReturnType()).getActualTypeArguments()[0];
 
         Collection<?> listActual;
         Collection<?> listExpected;

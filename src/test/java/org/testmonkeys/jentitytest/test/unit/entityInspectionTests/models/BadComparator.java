@@ -6,7 +6,6 @@ import org.testmonkeys.jentitytest.comparison.ConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
-import java.beans.PropertyDescriptor;
 import java.util.List;
 
 public class BadComparator implements Comparator {
@@ -23,7 +22,7 @@ public class BadComparator implements Comparator {
     }
 
     @Override
-    public List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
+    public List<ComparisonResult> areEqual(Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
         return null;
     }
 }
