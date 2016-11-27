@@ -1,20 +1,18 @@
 package org.testmonkeys.jentitytest.comparison;
 
-import org.testmonkeys.jentitytest.matchers.ObjectPropertyComparator;
-
 import java.beans.PropertyDescriptor;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 public class ComparisonModel {
-    private final Map<PropertyDescriptor, ObjectPropertyComparator> comparisonMap;
+    private final Map<PropertyDescriptor, PropertyComparisonWrapper> comparisonMap;
 
     public ComparisonModel() {
         comparisonMap = new HashMap<>();
     }
 
-    public void setComparisonPoint(PropertyDescriptor propertyDescriptor, ObjectPropertyComparator comparator) {
+    public void setComparisonPoint(PropertyDescriptor propertyDescriptor, PropertyComparisonWrapper comparator) {
         comparisonMap.put(propertyDescriptor, comparator);
     }
 
@@ -22,7 +20,7 @@ public class ComparisonModel {
         return comparisonMap.keySet();
     }
 
-    public ObjectPropertyComparator getComparator(PropertyDescriptor propertyDescriptor) {
+    public PropertyComparisonWrapper getComparator(PropertyDescriptor propertyDescriptor) {
         return comparisonMap.get(propertyDescriptor);
     }
 }

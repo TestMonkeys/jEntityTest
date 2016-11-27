@@ -1,7 +1,5 @@
-package org.testmonkeys.jentitytest.matchers;
+package org.testmonkeys.jentitytest.comparison;
 
-import org.testmonkeys.jentitytest.comparison.Comparator;
-import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
@@ -10,11 +8,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 import java.util.List;
 
-public class ObjectPropertyComparator {
+public class PropertyComparisonWrapper {
 
     private Comparator comparator;
 
-    public ObjectPropertyComparator(Comparator comparator) {
+    public PropertyComparisonWrapper(Comparator comparator) {
         this.comparator = comparator;
     }
 
