@@ -2,6 +2,7 @@ package org.testmonkeys.jentitytest.inspect;
 
 import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.entity.ChildEntityComparator;
+import org.testmonkeys.jentitytest.comparison.entity.ChildEntityListComparator;
 import org.testmonkeys.jentitytest.comparison.property.DateTimeComparator;
 import org.testmonkeys.jentitytest.comparison.property.IgnoreComparator;
 import org.testmonkeys.jentitytest.comparison.property.StringComparator;
@@ -25,6 +26,7 @@ public class ModelToComparisonMap {
         mapping.put(ChildEntityComparison.class, ChildEntityComparator.class);
         mapping.put(DateTimeComparison.class, DateTimeComparator.class);
         mapping.put(StringComparison.class, StringComparator.class);
+        mapping.put(ChildEntityListComparison.class, ChildEntityListComparator.class);
     }
 
     public static ModelToComparisonMap getInstance() {

@@ -52,7 +52,7 @@ public class InspectionTestMultiFrameworkAnnotations {
 
         assertThat("'id' in model", props.stream().anyMatch(x -> x.getName().equals("id")), is(true));
         PropertyDescriptor prop = props.stream().filter(x -> x.getName().equals("id")).findFirst().get();
-        assertThat("comparator", model.getComparator(prop).getClass(), is(IgnoreComparator.class));
+        assertThat("comparator", model.getComparator(prop).getComparator().getClass(), is(IgnoreComparator.class));
     }
 
 
@@ -67,7 +67,7 @@ public class InspectionTestMultiFrameworkAnnotations {
     public void inspectionIsGetterLevelAnnotation() throws Throwable {
         assertThat("'available' in model", props.stream().anyMatch(x -> x.getName().equals("available")), is(true));
         PropertyDescriptor prop = props.stream().filter(x -> x.getName().equals("available")).findFirst().get();
-        assertThat("comparator", model.getComparator(prop).getClass(), is(IgnoreComparator.class));
+        assertThat("comparator", model.getComparator(prop).getComparator().getClass(), is(IgnoreComparator.class));
     }
 
 
@@ -82,7 +82,7 @@ public class InspectionTestMultiFrameworkAnnotations {
     public void inspectionSimpleGetterLevelAnnotation() throws Throwable {
         assertThat("'age' in model", props.stream().anyMatch(x -> x.getName().equals("age")), is(true));
         PropertyDescriptor prop = props.stream().filter(x -> x.getName().equals("age")).findFirst().get();
-        assertThat("comparator", model.getComparator(prop).getClass(), is(IgnoreComparator.class));
+        assertThat("comparator", model.getComparator(prop).getComparator().getClass(), is(IgnoreComparator.class));
     }
 
 }

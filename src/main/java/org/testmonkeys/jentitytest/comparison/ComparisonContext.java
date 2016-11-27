@@ -1,10 +1,13 @@
 package org.testmonkeys.jentitytest.comparison;
 
+import java.beans.PropertyDescriptor;
+
 public class ComparisonContext {
     private ComparisonContext parent;
     private String parentName;
     private int index;
     private Object actualObj;
+    private PropertyDescriptor propertyDescriptor;
 
     public ComparisonContext() {
         index = -1;
@@ -25,17 +28,11 @@ public class ComparisonContext {
 
     public ComparisonContext withProperty(String propertyName) {
         ComparisonContext comparisonContext = new ComparisonContext(this);
-        comparisonContext.index = index;
         comparisonContext.parentName = propertyName;
         return comparisonContext;
     }
 
-    public ComparisonContext withIndex(int index) {
-        ComparisonContext comparisonContext = new ComparisonContext(this);
-        comparisonContext.index = index;
-        return comparisonContext;
 
-    }
 
     @Override
     public String toString() {
@@ -50,11 +47,15 @@ public class ComparisonContext {
     }
 
     public boolean isRecursive(Object actual) {
-        if (parent == null || actual == null) return false;
-        return actual.equals(parent.actualObj) || parent.isRecursive(actual);
+        return !(parent == null || actual == null) &&
+                (actual.equals(parent.actualObj) || parent.isRecursive(actual));
     }
 
     public void setParentName(String parentName) {
         this.parentName = parentName;
+    }
+
+    public void setPropertyDescriptor(PropertyDescriptor propertyDescriptor) {
+        this.propertyDescriptor = propertyDescriptor;
     }
 }

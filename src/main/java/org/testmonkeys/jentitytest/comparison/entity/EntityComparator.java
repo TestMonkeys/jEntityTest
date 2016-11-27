@@ -1,9 +1,9 @@
 package org.testmonkeys.jentitytest.comparison.entity;
 
 import org.testmonkeys.jentitytest.EntityComparisonDictionary;
-import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
+import org.testmonkeys.jentitytest.comparison.PropertyComparisonWrapper;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
@@ -42,7 +42,7 @@ public class EntityComparator {
 
 
         for (PropertyDescriptor propertyDescriptor : model.getComparableProperties()) {
-            Comparator comparator = model.getComparator(propertyDescriptor);
+            PropertyComparisonWrapper comparator = model.getComparator(propertyDescriptor);
             ComparisonContext comparisonContext;
 
 

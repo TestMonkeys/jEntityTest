@@ -11,11 +11,19 @@ import java.time.temporal.Temporal;
 
 public class DateTimeComparator extends SingleResultComparator {
 
-    private int delta = 0;
+    private int delta;
     private ChronoUnit unit = ChronoUnit.NANOS;
 
     public DateTimeComparator() {
         registerPreConditionalCheck(new NullConditionalCheck());
+    }
+
+    public void setDelta(int delta) {
+        this.delta = delta;
+    }
+
+    public void setUnit(ChronoUnit unit) {
+        this.unit = unit;
     }
 
     @Override
@@ -36,4 +44,6 @@ public class DateTimeComparator extends SingleResultComparator {
         result.setPassed(Math.abs(actualValue.until(expectedValue, unit)) <= delta);
         return result;
     }
+
+
 }

@@ -6,13 +6,13 @@ import java.util.Map;
 import java.util.Set;
 
 public class ComparisonModel {
-    private final Map<PropertyDescriptor, Comparator> comparisonMap;
+    private final Map<PropertyDescriptor, PropertyComparisonWrapper> comparisonMap;
 
     public ComparisonModel() {
         comparisonMap = new HashMap<>();
     }
 
-    public void setComparisonPoint(PropertyDescriptor propertyDescriptor, Comparator comparator) {
+    public void setComparisonPoint(PropertyDescriptor propertyDescriptor, PropertyComparisonWrapper comparator) {
         comparisonMap.put(propertyDescriptor, comparator);
     }
 
@@ -20,7 +20,7 @@ public class ComparisonModel {
         return comparisonMap.keySet();
     }
 
-    public Comparator getComparator(PropertyDescriptor propertyDescriptor) {
+    public PropertyComparisonWrapper getComparator(PropertyDescriptor propertyDescriptor) {
         return comparisonMap.get(propertyDescriptor);
     }
 }

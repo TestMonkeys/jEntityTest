@@ -7,12 +7,25 @@ import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 public class StringComparator extends SingleResultComparator {
+
     private boolean caseSensitive = true;
     private boolean trim = false;
     private char[] ignoreCharacters = {};
 
     public StringComparator() {
         registerPreConditionalCheck(new NullConditionalCheck());
+    }
+
+    public void setCaseSensitive(boolean caseSensitive) {
+        this.caseSensitive = caseSensitive;
+    }
+
+    public void setTrim(boolean trim) {
+        this.trim = trim;
+    }
+
+    public void setIgnoreCharacters(char[] ignoreCharacters) {
+        this.ignoreCharacters = ignoreCharacters;
     }
 
     public ComparisonResult computeSingleComparison(Object actualValue, Object expectedValue, ComparisonContext context) {
@@ -29,10 +42,12 @@ public class StringComparator extends SingleResultComparator {
                     castException);
         }
 
-        for (char ignore : ignoreCharacters) {
-            String ignoreString = String.valueOf(ignore);
-            actual = actual.replace(ignoreString, "");
-            expected = expected.replace(ignoreString, "");
+        if (ignoreCharacters != null) {
+            for (char ignore : ignoreCharacters) {
+                String ignoreString = String.valueOf(ignore);
+                actual = actual.replace(ignoreString, "");
+                expected = expected.replace(ignoreString, "");
+            }
         }
         if (trim) {
             actual = actual.trim();
