@@ -73,4 +73,14 @@ public class StringComparisonTest {
         Assert.assertThat(actual,Entity.isEqualTo(expected));
     }
 
+    @Test
+    public void testFailingMessageSecondEntryControlChar() {
+        expectedException.expect(AssertionError.class);
+        expectedException.expectMessage("\n\tExpected: test\n\tActual: \\ttest\\t\\r\\n");
+        Model actual = new Model();
+        actual.setField("\ttest\t\r\n");
+        Model expected = new Model();
+        expected.setField("test");
+        Assert.assertThat(actual,Entity.isEqualTo(expected));
+    }
 }

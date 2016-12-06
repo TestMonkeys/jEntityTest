@@ -8,12 +8,13 @@ import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.testmonkeys.jentitytest.utils.StringUtils.showControlChars;
+
 public class EntityMatcher<T> extends BaseMatcher<T> {
 
     private final Object expected;
     private String textualOutput;
-    private final char[] controlChars = {'\n', '\t', '\r', '\0', '\b', '\f'};
-    private final String[] escControlChars = {"\\n", "\\t", "\\r", "\\0", "\\b", "\\f"};
+
 
     public EntityMatcher(Object expected) {
         this.expected = expected;
@@ -49,16 +50,4 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
     public void describeTo(Description description) {
         description.appendText("Entities have same values in properties");
     }
-
-    private StringBuilder showControlChars(Object inputObj) {
-        StringBuilder res = new StringBuilder(inputObj.toString());
-        for (int i = 0; i < controlChars.length; i++) {
-            int index = res.indexOf(String.valueOf(controlChars[i]));
-            if (index > -1) {
-                res.replace(index, index + 1, escControlChars[i]);
-            }
-        }
-        return res;
-    }
-
 }
