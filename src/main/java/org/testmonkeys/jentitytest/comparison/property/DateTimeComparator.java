@@ -37,7 +37,7 @@ public class DateTimeComparator extends SingleResultComparator {
             actualValue = (Temporal) a;
             expectedValue = (Temporal) e;
         } catch (ClassCastException castException) {
-            throw new JEntityTestException("Expected and Actual values must of type " + Temporal.class.getName(),
+            throw new JEntityTestException("Expected and Actual values must be of type " + Temporal.class.getName(),
                     castException);
         }
 

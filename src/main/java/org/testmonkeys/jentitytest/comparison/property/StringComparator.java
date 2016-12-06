@@ -38,7 +38,7 @@ public class StringComparator extends SingleResultComparator {
             actual = (String) actualValue;
             expected = (String) expectedValue;
         } catch (ClassCastException castException) {
-            throw new JEntityTestException("Expected and Actual values must of type " + String.class.getName(),
+            throw new JEntityTestException("Expected and Actual values must be of type " + String.class.getName(),
                     castException);
         }
 

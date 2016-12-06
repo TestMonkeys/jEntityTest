@@ -28,7 +28,9 @@ public class EntityComparator {
         List<ComparisonResult> comparisonResults = new LinkedList<>();
         if (context == null) {
             context = new ComparisonContext();
-            context.setParentName("Entity");
+            String parent = expected != null ? expected.getClass().getSimpleName() :
+                    (actual != null ? actual.getClass().getSimpleName() : "Entity");
+            context.setParentName(parent);
             context.setActualObj(actual);
         }
 

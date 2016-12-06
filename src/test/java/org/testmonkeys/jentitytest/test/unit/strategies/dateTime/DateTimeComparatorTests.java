@@ -216,7 +216,7 @@ public class DateTimeComparatorTests {
     @Test
     public void strategy_dateTimeComparator_err_dateField() throws Throwable {
         expectedException.expect(JEntityTestException.class);
-        expectedException.expectMessage("Expected and Actual values must of type java.time.temporal.Temporal");
+        expectedException.expectMessage("Expected and Actual values must be of type java.time.temporal.Temporal");
         DateTimeComparator comparator = getComparator(3, ChronoUnit.SECONDS);
         Date actual = new Date();
         Date expected = new Date();

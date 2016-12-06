@@ -1,10 +1,15 @@
 package org.testmonkeys.jentitytest.test.stringComparison;
 
 import org.junit.Assert;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.testmonkeys.jentitytest.Entity;
 
 public class StringComparisonTest {
+
+    @Rule
+    public ExpectedException expectedException = ExpectedException.none();
 
     @Test
     public void testPassingCase() {
@@ -55,6 +60,17 @@ public class StringComparisonTest {
         actual.setField("\ttest\n");
         Model expected = new Model();
         Assert.assertThat(actual, Entity.isEqualTo(expected));
+    }
+
+    @Test
+    public void testFailingMessage() {
+        expectedException.expect(AssertionError.class);
+        expectedException.expectMessage("\n\tExpected: test\n\tActual: \\ttest\\r\\n");
+        Model actual = new Model();
+        actual.setField("\ttest\r\n");
+        Model expected = new Model();
+        expected.setField("test");
+        Assert.assertThat(actual,Entity.isEqualTo(expected));
     }
 
 }

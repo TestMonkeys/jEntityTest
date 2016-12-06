@@ -22,15 +22,6 @@ public class TypesEntityModel {
     private Byte byteField;
 
     public TypesEntityModel(){
-        this.integerField = 1;
-        this.characterField = 'y';
-        this.floatField = 1.1f;
-        this.stringField = "test";
-        this.doubleField = 34.6;
-        this.longField = 90L;
-        this.shortField = 80;
-        this.booleanField = true;
-        this.byteField = 8;
     }
 
     public Float getFloatField() {
