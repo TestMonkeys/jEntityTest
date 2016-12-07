@@ -33,7 +33,7 @@ public class Bug15Test {
     @Test
     public void bug_15_ChildEntity_expectedNotNull_actualNull() {
         expectedEx.expect(AssertionError.class);
-        expectedEx.expectMessage(StringContains.containsString("mom Expected: not null Actual: null"));
+        expectedEx.expectMessage(StringContains.containsString("mom\n\tExpected: not null\n\tActual: null"));
         EntityParent parent1 = new EntityParent();
         EntityChild child1 = new EntityChild();
         child1.setAge(3);
@@ -52,7 +52,7 @@ public class Bug15Test {
     @Test
     public void bug_15_ChildEntity_expectedNull_actualNotNull() {
         expectedEx.expect(AssertionError.class);
-        expectedEx.expectMessage(StringContains.containsString("mom Expected: null Actual: not null"));
+        expectedEx.expectMessage(StringContains.containsString("mom\n\tExpected: null\n\tActual: not null"));
 
         EntityParent parent1 = new EntityParent();
         EntityChild child1 = new EntityChild();

@@ -28,7 +28,8 @@ public class EntityComparator {
         List<ComparisonResult> comparisonResults = new LinkedList<>();
         if (context == null) {
             context = new ComparisonContext();
-            context.setParentName("Entity");
+            String parent = getContextParentName(actual, expected);
+            context.setParentName(parent);
             context.setActualObj(actual);
         }
 
@@ -52,6 +53,16 @@ public class EntityComparator {
             comparisonResults.addAll(comparator.areEqual(propertyDescriptor, actual, expected, comparisonContext));
         }
         return comparisonResults;
+    }
+
+    private String getContextParentName(Object actual, Object expected) {
+        if(expected != null)
+            return expected.getClass().getSimpleName();
+
+        if(actual != null)
+            return actual.getClass().getSimpleName();
+
+        return "Entity";
     }
 
 }
