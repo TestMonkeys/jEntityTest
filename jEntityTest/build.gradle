@@ -1,0 +1,68 @@
+version '0.2.1'
+
+dependencies {
+
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.hamcrest:hamcrest-junit:2.0.0.0'
+}
+
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "costea32"
+            name "Constantin Pascal"
+            email "costea32@gmail.com"
+        }
+        developer{
+            name "Marin Onofrei"
+        }
+        developer {
+            name "Maria Burunducova"
+        }
+    }
+    scm{
+        connection "scm:git:git@github.com/TestMonkeys/jEntityTest.git"
+        developerConnection "scm:git:git@github.com/TestMonkeys/jEntityTest.git"
+        url "git@github.com/TestMonkeys/jEntityTest.git"
+    }
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+publishing {
+    publications {
+        MavenPub(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
+
+            groupId 'org.testmonkeys'
+            artifactId 'jentitytest'
+            version libraryVersion
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', libraryDescription)
+                root.appendNode('name',libraryName)
+                root.appendNode('url',siteUrl)
+                root.children().last() + pomConfig
+            }
+        }
+    }
+
+}

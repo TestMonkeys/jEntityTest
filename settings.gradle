@@ -1,2 +1,5 @@
-rootProject.name = 'jentitytest'
+rootProject.name='jentitytest'
+
+include 'jentitytest'
+include 'jentitytest-hamcrest'
 
