@@ -6,8 +6,9 @@ public class ConditionalCheckResult extends ComparisonResult {
 
     private boolean stopComparison;
 
-    public ConditionalCheckResult(boolean passed, ComparisonContext context, Object actual, Object expected) {
-        super(passed, context, actual, expected);
+    public ConditionalCheckResult(boolean passed, ComparisonContext context, String comparator, Object actual, Object
+            expected) {
+        super(passed, context, comparator, actual, expected);
     }
 
     public boolean stopComparison() {

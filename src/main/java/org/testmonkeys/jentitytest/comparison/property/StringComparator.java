@@ -5,6 +5,9 @@ import org.testmonkeys.jentitytest.comparison.SingleResultComparator;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
+import org.testmonkeys.jentitytest.utils.StringUtils;
+
+import static org.testmonkeys.jentitytest.utils.StringUtils.charArrayToString;
 
 public class StringComparator extends SingleResultComparator {
 
@@ -29,7 +32,8 @@ public class StringComparator extends SingleResultComparator {
     }
 
     public ComparisonResult computeSingleComparison(Object actualValue, Object expectedValue, ComparisonContext context) {
-        ComparisonResult comparisonResult = new ComparisonResult(false, context, actualValue, expectedValue);
+        ComparisonResult comparisonResult = new ComparisonResult(false, context, this.getClass().getSimpleName(),
+                actualValue, expectedValue);
 
         String actual;
         String expected;
@@ -59,7 +63,16 @@ public class StringComparator extends SingleResultComparator {
         } else {
             comparisonResult.setPassed(actual.equalsIgnoreCase(expected));
         }
+        comparisonResult.setActual(StringUtils.showControlChars(actual));
+        comparisonResult.setExpected(StringUtils.showControlChars(expected));
 
+        StringBuilder sb = new StringBuilder();
+        sb.append(comparisonResult.getComparator()).append(" (")
+                .append("case sensitive = ").append(caseSensitive)
+                .append(", trim = ").append(trim)
+                .append(", ignoring characters: ").append(charArrayToString(ignoreCharacters))
+                .append(")");
+        comparisonResult.setComparator(sb.toString());
         return comparisonResult;
     }
 }

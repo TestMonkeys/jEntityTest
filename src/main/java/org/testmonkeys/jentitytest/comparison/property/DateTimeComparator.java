@@ -28,7 +28,7 @@ public class DateTimeComparator extends SingleResultComparator {
 
     @Override
     protected ComparisonResult computeSingleComparison(Object a, Object e, ComparisonContext context) {
-        ComparisonResult result = new ComparisonResult(false, context, a, e);
+        ComparisonResult result = new ComparisonResult(false, context,this.getClass().getSimpleName(), a, e);
 
         Temporal actualValue;
         Temporal expectedValue;
@@ -42,6 +42,10 @@ public class DateTimeComparator extends SingleResultComparator {
         }
 
         result.setPassed(Math.abs(actualValue.until(expectedValue, unit)) <= delta);
+        if (delta != 0)
+            result.setExpected(expectedValue + " +/- " + delta + " " + unit);
+        else
+            result.setExpected(expectedValue + " with precision up to " + unit);
         return result;
     }
 

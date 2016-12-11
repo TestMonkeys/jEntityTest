@@ -65,7 +65,9 @@ public class StringComparisonTest {
     @Test
     public void testFailingMessage() {
         expectedException.expect(AssertionError.class);
-        expectedException.expectMessage("\n\tExpected: test\n\tActual: \\ttest\\r\\n");
+        expectedException.expectMessage("\n\tExpected: test\n\tActual: \\ttest"+
+                "\nComparison was performed using StringComparator (case sensitive = false, " +
+                "trim = false, ignoring characters: \\n, \\r ) strategy\r\n");
         Model actual = new Model();
         actual.setField("\ttest\r\n");
         Model expected = new Model();
@@ -76,7 +78,9 @@ public class StringComparisonTest {
     @Test
     public void testFailingMessageSecondEntryControlChar() {
         expectedException.expect(AssertionError.class);
-        expectedException.expectMessage("\n\tExpected: test\n\tActual: \\ttest\\t\\r\\n");
+        expectedException.expectMessage("\n\tExpected: test\n\tActual: \\ttest\\t" +
+                "\nComparison was performed using StringComparator (case sensitive = false, " +
+                "trim = false, ignoring characters: \\n, \\r ) strategy\r\n");
         Model actual = new Model();
         actual.setField("\ttest\t\r\n");
         Model expected = new Model();

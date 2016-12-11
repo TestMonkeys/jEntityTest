@@ -7,13 +7,16 @@ public class ComparisonResult {
     private Object expected;
     private Object actual;
     private boolean passed;
+    private String comparator;
 
     public ComparisonResult() {
     }
 
-    public ComparisonResult(boolean passed, ComparisonContext context, Object actual, Object expected) {
+    public ComparisonResult(boolean passed, ComparisonContext context, String comparator, Object actual, Object
+            expected) {
         setPassed(passed);
         setComparisonContext(context);
+        setComparator(comparator);
         setActual(actual);
         setExpected(expected);
     }
@@ -30,10 +33,6 @@ public class ComparisonResult {
         this.comparisonContext = comparisonContext;
     }
 
-    public ComparisonContext getContext() {
-        return this.comparisonContext;
-    }
-
     public Object getExpected() {
         return this.expected;
     }
@@ -48,5 +47,24 @@ public class ComparisonResult {
 
     public void setActual(Object actual) {
         this.actual = actual;
+    }
+
+    public void setComparator(String comparator) {
+        this.comparator = comparator;
+    }
+
+    public String getComparator() {
+        return comparator;
+    }
+
+    public String getOutput() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Property: ").append(comparisonContext).
+                append("\n\tExpected: ").append(this.getExpected()).
+                append("\n\tActual: ").append(this.getActual()).
+                append("\nComparison was performed using ").
+                append(comparator).append(" strategy\r\n");
+        return sb.toString();
+
     }
 }
