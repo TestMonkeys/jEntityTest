@@ -13,8 +13,7 @@ public class SimpleTypeComparator extends SingleResultComparator {
 
     @Override
     public ComparisonResult computeSingleComparison(Object actualValue, Object expectedValue, ComparisonContext context) {
-        ComparisonResult result = new ComparisonResult(false, context, this.getClass().getSimpleName(), actualValue,
-                expectedValue);
+        ComparisonResult result = new ComparisonResult(false, context, actualValue, expectedValue);
         result.setPassed(actualValue.equals(expectedValue));
         return result;
     }

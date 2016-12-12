@@ -29,8 +29,8 @@ public class DateTimeComparisonTests {
     @Test
     public void testFailingMessage() {
         expectedException.expect(AssertionError.class);
-        expectedException.expectMessage("Property: Model.dateField\n\tExpected: 2016-12-10 with precision up to Days\n" +
-                "\tActual: 2016-12-12\nComparison was performed using DateTimeComparator strategy");
+        expectedException.expectMessage("Property: Model.dateField\n\tExpected: 2016-12-10\n" +
+                "\tActual: 2016-12-12\nComparison was performed using DateTimeComparator with precision up to Days");
         Model expected = new Model();
         expected.setDateField(LocalDate.of(2016, 12, 10));
 
@@ -43,8 +43,8 @@ public class DateTimeComparisonTests {
     @Test
     public void testFailingMessageDelta() {
         expectedException.expect(AssertionError.class);
-        expectedException.expectMessage("Property: Model.timeField\n\tExpected: 11:45:22 +/- 10 Seconds\n" +
-                "\tActual: 11:45:33\nComparison was performed using DateTimeComparator strategy");
+        expectedException.expectMessage("Property: Model.timeField\n\tExpected: 11:45:22\n" +
+                "\tActual: 11:45:33\nComparison was performed using DateTimeComparator with delta 10 Seconds");
         Model expected = new Model();
         expected.setTimeField(LocalTime.of(11, 45, 22));
 

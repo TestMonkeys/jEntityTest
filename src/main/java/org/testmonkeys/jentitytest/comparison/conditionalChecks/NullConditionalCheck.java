@@ -7,8 +7,7 @@ import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
 public class NullConditionalCheck implements ConditionalCheck {
 
     public ConditionalCheckResult runCheck(Object actual, Object expected, ComparisonContext context) {
-        ConditionalCheckResult result = new ConditionalCheckResult(true, context, this.getClass().getSimpleName(),
-                actual, expected);
+        ConditionalCheckResult result = new ConditionalCheckResult(true, context, actual, expected);
 
         if (actual == null && expected == null) {
             result.setStopComparison(true);

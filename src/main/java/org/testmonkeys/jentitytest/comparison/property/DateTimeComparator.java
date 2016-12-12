@@ -9,6 +9,8 @@ import org.testmonkeys.jentitytest.framework.JEntityTestException;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 
+import static org.testmonkeys.jentitytest.utils.StringUtils.charArrayToString;
+
 public class DateTimeComparator extends SingleResultComparator {
 
     private int delta;
@@ -28,7 +30,7 @@ public class DateTimeComparator extends SingleResultComparator {
 
     @Override
     protected ComparisonResult computeSingleComparison(Object a, Object e, ComparisonContext context) {
-        ComparisonResult result = new ComparisonResult(false, context,this.getClass().getSimpleName(), a, e);
+        ComparisonResult result = new ComparisonResult(false, context, a, e);
 
         Temporal actualValue;
         Temporal expectedValue;
@@ -42,12 +44,17 @@ public class DateTimeComparator extends SingleResultComparator {
         }
 
         result.setPassed(Math.abs(actualValue.until(expectedValue, unit)) <= delta);
-        if (delta != 0)
-            result.setExpected(expectedValue + " +/- " + delta + " " + unit);
-        else
-            result.setExpected(expectedValue + " with precision up to " + unit);
         return result;
     }
 
-
+    @Override
+    protected String describe(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getClass().getSimpleName());
+        if (delta == 0)
+                sb.append(" with precision up to ").append(unit);
+        else
+                sb.append(" with delta ").append(delta).append(" ").append(unit);
+        return sb.toString();
+    }
 }

@@ -4,6 +4,7 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.testmonkeys.jentitytest.comparison.entity.EntityComparator;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
+import org.testmonkeys.jentitytest.utils.ResultOutput;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
         for (ComparisonResult res : result) {
             if (res.isPassed())
                 continue;
-            sb.append(res.getOutput());
+            sb.append(ResultOutput.getOutput(res.getComparisonContext(), res.getExpected(), res.getActual()));
         }
         textualOutput = sb.toString();
         return result.stream().allMatch(ComparisonResult::isPassed);
