@@ -31,10 +31,6 @@ public class StringComparator extends SingleResultComparator {
         this.ignoreCharacters = ignoreCharacters;
     }
 
-//    public String describe(){
-//        return "String Comparison, with case sensitive = false and trim.."
-//    }
-
     public ComparisonResult computeSingleComparison(Object actualValue, Object expectedValue, ComparisonContext context) {
         ComparisonResult comparisonResult = new ComparisonResult(false, context, actualValue, expectedValue);
 
