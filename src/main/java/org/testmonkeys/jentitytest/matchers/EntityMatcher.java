@@ -29,7 +29,7 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
         for (ComparisonResult res : result) {
             if (res.isPassed())
                 continue;
-            sb.append(ResultOutput.getOutput(res.getComparisonContext(), res.getExpected(), res.getActual()));
+            sb.append(ResultOutput.getOutput(res.getComparisonContext(), res));
         }
         textualOutput = sb.toString();
         return result.stream().allMatch(ComparisonResult::isPassed);
