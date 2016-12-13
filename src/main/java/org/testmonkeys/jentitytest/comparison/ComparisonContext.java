@@ -8,6 +8,7 @@ public class ComparisonContext {
     private int index;
     private Object actualObj;
     private PropertyDescriptor propertyDescriptor;
+    private String comparatorDetails;
 
     public ComparisonContext() {
         index = -1;
@@ -57,5 +58,13 @@ public class ComparisonContext {
 
     public void setPropertyDescriptor(PropertyDescriptor propertyDescriptor) {
         this.propertyDescriptor = propertyDescriptor;
+    }
+
+    public String getComparatorDetails() {
+        return comparatorDetails;
+    }
+
+    public void setComparatorDetails(String comparatorDetails) {
+        this.comparatorDetails = comparatorDetails;
     }
 }

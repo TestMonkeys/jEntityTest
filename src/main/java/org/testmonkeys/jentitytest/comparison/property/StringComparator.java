@@ -5,6 +5,9 @@ import org.testmonkeys.jentitytest.comparison.SingleResultComparator;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
+import org.testmonkeys.jentitytest.utils.StringUtils;
+
+import static org.testmonkeys.jentitytest.utils.StringUtils.charArrayToString;
 
 public class StringComparator extends SingleResultComparator {
 
@@ -59,7 +62,18 @@ public class StringComparator extends SingleResultComparator {
         } else {
             comparisonResult.setPassed(actual.equalsIgnoreCase(expected));
         }
-
+        comparisonResult.setActual(StringUtils.showControlChars(actual)); //TODO discuss
+        comparisonResult.setExpected(StringUtils.showControlChars(expected));
         return comparisonResult;
+    }
+
+    @Override
+    protected String describe(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.getClass().getSimpleName())
+                .append(" with parameters: case sensitive = ").append(caseSensitive)
+                .append(", trim = ").append(trim)
+                .append(", ignoring characters: ").append(charArrayToString(ignoreCharacters));
+        return sb.toString();
     }
 }

@@ -16,4 +16,14 @@ public class StringUtils {
         }
         return res;
     }
+
+    public static String charArrayToString(char[] array){
+        if (array == null || array.length == 0)
+            return null;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < array.length; i++){
+            sb.append(showControlChars(array[i]).append(", "));
+        }
+        return sb.deleteCharAt(sb.lastIndexOf(",")).toString();
+    }
 }

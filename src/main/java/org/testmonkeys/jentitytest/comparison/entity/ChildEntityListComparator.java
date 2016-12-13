@@ -47,7 +47,8 @@ public class ChildEntityListComparator extends MultiResultComparator {
             throw new JEntityTestException("Actual and Expected should be Generic Collections");
         }
         if (listActual.size() != listExpected.size()) {
-            comparisonResults.add(new ComparisonResult(false, context.withProperty("Size"), listActual, listExpected));
+            comparisonResults.add(new ComparisonResult(false, context.withProperty("Size"),
+                    listActual, listExpected));
             return comparisonResults;
         }
         ChildEntityComparator childComparator = new ChildEntityComparator();

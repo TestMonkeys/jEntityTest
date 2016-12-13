@@ -4,11 +4,10 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.testmonkeys.jentitytest.comparison.entity.EntityComparator;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
+import org.testmonkeys.jentitytest.utils.ResultOutput;
 
 import java.util.LinkedList;
 import java.util.List;
-
-import static org.testmonkeys.jentitytest.utils.StringUtils.showControlChars;
 
 public class EntityMatcher<T> extends BaseMatcher<T> {
 
@@ -30,10 +29,7 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
         for (ComparisonResult res : result) {
             if (res.isPassed())
                 continue;
-            sb.append("Property: ").append(res.getContext().toString()).
-                    append("\n\tExpected: ").append(showControlChars(res.getExpected())).
-                    append("\n\tActual: ").append(showControlChars(res.getActual()))
-                    .append("\r\n");
+            sb.append(ResultOutput.getOutput(res.getComparisonContext(), res));
         }
         textualOutput = sb.toString();
         return result.stream().allMatch(ComparisonResult::isPassed);

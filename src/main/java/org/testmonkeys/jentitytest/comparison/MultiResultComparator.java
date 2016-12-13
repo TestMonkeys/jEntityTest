@@ -25,6 +25,7 @@ public abstract class MultiResultComparator implements Comparator {
             return resultList;
         }
 
+        context.setComparatorDetails(describe());
         resultList.addAll(computeComparison(actualValue, expectedValue, context));
         return resultList;
     }
@@ -41,4 +42,7 @@ public abstract class MultiResultComparator implements Comparator {
     }
 
     protected abstract List<ComparisonResult> computeComparison(Object actual, Object expected, ComparisonContext context) throws JEntityTestException;
+    protected String describe(){
+        return this.getClass().getSimpleName();
+    }
 }
