@@ -25,9 +25,6 @@ public class PropertyComparisonWrapper {
         if (context.isRecursive(actualValue))
             return resultList;
         context.setActualObj(actualValue);
-        context.setPropertyDescriptor(property);
-
-
         resultList.addAll(comparator.areEqual(actualValue, expectedValue, context));
 
         return resultList;
@@ -43,9 +40,5 @@ public class PropertyComparisonWrapper {
 
     public Comparator getComparator() {
         return comparator;
-    }
-
-    public void setComparator(Comparator comparator) {
-        this.comparator = comparator;
     }
 }

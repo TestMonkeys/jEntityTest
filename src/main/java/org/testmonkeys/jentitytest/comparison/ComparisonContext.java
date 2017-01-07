@@ -1,13 +1,10 @@
 package org.testmonkeys.jentitytest.comparison;
 
-import java.beans.PropertyDescriptor;
-
 public class ComparisonContext {
     private ComparisonContext parent;
     private String parentName;
     private int index;
     private Object actualObj;
-    private PropertyDescriptor propertyDescriptor;
     private String comparatorDetails;
 
     public ComparisonContext() {
@@ -54,10 +51,6 @@ public class ComparisonContext {
 
     public void setParentName(String parentName) {
         this.parentName = parentName;
-    }
-
-    public void setPropertyDescriptor(PropertyDescriptor propertyDescriptor) {
-        this.propertyDescriptor = propertyDescriptor;
     }
 
     public String getComparatorDetails() {

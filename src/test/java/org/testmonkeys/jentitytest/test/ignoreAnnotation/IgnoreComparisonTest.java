@@ -1,4 +1,4 @@
-package ignoreAnnotation;
+package org.testmonkeys.jentitytest.test.ignoreAnnotation;
 
 import org.junit.Assert;
 import org.junit.Test;

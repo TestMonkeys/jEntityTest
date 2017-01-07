@@ -8,9 +8,6 @@ public class ComparisonResult {
     private Object actual;
     private boolean passed;
 
-    public ComparisonResult() {
-    }
-
     public ComparisonResult(boolean passed, ComparisonContext context, Object actual, Object
             expected) {
         setPassed(passed);

@@ -1,4 +1,4 @@
-package noAnnotations;
+package org.testmonkeys.jentitytest.test.noAnnotations;
 
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package childEntityTests.models;
+package org.testmonkeys.jentitytest.test.childEntityTests.models;
 
 public class SimpleEntity {
 

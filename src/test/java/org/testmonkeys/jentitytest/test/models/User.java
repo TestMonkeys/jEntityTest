@@ -1,4 +1,4 @@
-package models;
+package org.testmonkeys.jentitytest.test.models;
 
 public class User {
 

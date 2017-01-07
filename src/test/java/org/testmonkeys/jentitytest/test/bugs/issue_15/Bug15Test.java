@@ -1,4 +1,4 @@
-package org.testmonkeys.jentitytest.test.bugs.issue15;
+package org.testmonkeys.jentitytest.test.bugs.issue_15;
 
 import org.hamcrest.core.StringContains;
 import org.junit.Rule;

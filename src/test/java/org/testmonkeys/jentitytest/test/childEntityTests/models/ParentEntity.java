@@ -1,4 +1,4 @@
-package childEntityTests.models;
+package org.testmonkeys.jentitytest.test.childEntityTests.models;
 
 import org.testmonkeys.jentitytest.framework.ChildEntityComparison;
 import org.testmonkeys.jentitytest.framework.DateTimeComparison;

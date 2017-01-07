@@ -62,7 +62,7 @@ public class StringComparator extends SingleResultComparator {
         } else {
             comparisonResult.setPassed(actual.equalsIgnoreCase(expected));
         }
-        comparisonResult.setActual(StringUtils.showControlChars(actual)); //TODO discuss
+        comparisonResult.setActual(StringUtils.showControlChars(actual));
         comparisonResult.setExpected(StringUtils.showControlChars(expected));
         return comparisonResult;
     }

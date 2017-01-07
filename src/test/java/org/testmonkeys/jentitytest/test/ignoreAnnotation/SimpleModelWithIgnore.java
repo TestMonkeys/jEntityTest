@@ -1,15 +1,18 @@
-package noAnnotations;
+package org.testmonkeys.jentitytest.test.ignoreAnnotation;
 
-public class SimpleModel {
+import org.testmonkeys.jentitytest.framework.IgnoreComparison;
+
+public class SimpleModelWithIgnore {
 
     private String name;
     private int age;
 
-    public SimpleModel(String name, int age) {
+    public SimpleModelWithIgnore(String name, int age) {
         this.name = name;
         this.age = age;
     }
 
+    @IgnoreComparison
     public int getAge() {
         return age;
     }

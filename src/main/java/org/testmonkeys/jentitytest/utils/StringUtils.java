@@ -1,6 +1,6 @@
 package org.testmonkeys.jentitytest.utils;
 
-public class StringUtils {
+public final class StringUtils {
 
     private static final char[] controlChars = {'\n', '\t', '\r', '\0', '\b', '\f'};
     private static final String[] escControlChars = {"\\n", "\\t", "\\r", "\\0", "\\b", "\\f"};

@@ -3,7 +3,8 @@ package org.testmonkeys.jentitytest.utils;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 
-public class ResultOutput {
+public final class ResultOutput {
+
     public static String getOutput(ComparisonContext context, ComparisonResult result){
         StringBuilder sb = new StringBuilder();
         sb.append("Property: ").append(context).

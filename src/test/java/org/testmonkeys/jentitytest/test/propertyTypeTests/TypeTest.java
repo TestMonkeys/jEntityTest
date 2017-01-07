@@ -1,186 +1,207 @@
-package propertyTypeTests;
+package org.testmonkeys.jentitytest.test.propertyTypeTests;
 
+import org.testmonkeys.jentitytest.test.propertyTypeTests.models.TypesEntityModel;
 import org.junit.Assert;
 import org.junit.Test;
 import org.testmonkeys.jentitytest.Entity;
-import propertyTypeTests.models.TypesEntityModel;
 
-public class PrimitiveTypeTest {
+public class TypeTest {
 
     @Test
-    public void intPosTest(){
+    public void integerPosTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setIntField(2);
+        actualEntity.setIntegerField(new Integer(9));
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setIntField(2);
+        expectedEntity.setIntegerField(new Integer(9));
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test(expected = AssertionError.class)
-    public void intNegTest(){
+    public void integerNegTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setIntField(2);
+        actualEntity.setIntegerField(new Integer(9));
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setIntField(4);
+        expectedEntity.setIntegerField(new Integer(90));
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test
-    public void charPosTest(){
+    public void characterPosTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setCharField('t');
+        actualEntity.setCharacterField('o');
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setCharField('t');
+        expectedEntity.setCharacterField('o');
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test(expected = AssertionError.class)
-    public void charNegTest(){
+    public void characterNegTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setCharField('s');
+        actualEntity.setCharacterField('i');
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setCharField('t');
+        expectedEntity.setCharacterField('r');
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test
-    public void primFloatPosTest(){
+    public void floatPosTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setPrimFloatField(9.9f);
+        actualEntity.setFloatField(new Float(10.5));
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setPrimFloatField(9.9f);
+        expectedEntity.setFloatField(new Float(10.5));
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test(expected = AssertionError.class)
-    public void primFloatNegTest(){
+    public void floatNegTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setPrimFloatField(0.9f);
+        actualEntity.setFloatField(new Float(10.5));
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setPrimFloatField(1.3f);
+        expectedEntity.setFloatField(new Float(15.5));
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test
-    public void primDoublePosTest(){
+    public void stringPosTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setPrimDoubleField(0.9);
+        actualEntity.setStringField("jentity");
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setPrimDoubleField(0.9);
+        expectedEntity.setStringField("jentity");
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test(expected = AssertionError.class)
-    public void primDoubleNegTest(){
+    public void stringNegTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setPrimDoubleField(1.8);
+        actualEntity.setStringField("jentity");
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setPrimDoubleField(1.89);
+        expectedEntity.setStringField("Jentity");
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test
-    public void primLongPosTest(){
+    public void doublePosTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setPrimLongField(15);
+        actualEntity.setDoubleField(new Double(25.8));
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setPrimLongField(15);
+        expectedEntity.setDoubleField(new Double(25.8));
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test(expected = AssertionError.class)
-    public void primLongNegTest(){
+    public void doubleNegTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setPrimLongField(78);
+        actualEntity.setDoubleField(new Double(85.8));
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setPrimLongField(79);
+        expectedEntity.setDoubleField(new Double(78.8));
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test
-    public void primShortPosTest(){
+    public void longPosTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setPrimShortField((short) 3);
+        actualEntity.setLongField(new Long(78));
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setPrimShortField((short)3);
+        expectedEntity.setLongField(new Long(78));
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test(expected = AssertionError.class)
-    public void primShortNegTest(){
+    public void longNegTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setPrimShortField((short)7);
+        actualEntity.setLongField(new Long(56));
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setPrimShortField((short)8);
+        expectedEntity.setLongField(new Long(55));
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test
-    public void primBooleanPosTest(){
+    public void shortPosTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setPrimBooleanField(false);
+        actualEntity.setShortField(new Short("7"));
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setPrimBooleanField(false);
+        expectedEntity.setShortField(new Short("7"));
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test(expected = AssertionError.class)
-    public void primBooleanNegTest(){
+    public void shortNegTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setPrimBooleanField(false);
+        actualEntity.setShortField(new Short("8"));
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setPrimBooleanField(true);
+        expectedEntity.setShortField(new Short("9"));
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test
-    public void primBytePosTest(){
+    public void booleanPosTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setPrimByteField((byte) 4);
+        actualEntity.setBooleanField(new Boolean(true));
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setPrimByteField((byte) 4);
+        expectedEntity.setBooleanField(new Boolean(true));
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
     @Test(expected = AssertionError.class)
-    public void primByteNegTest(){
+    public void booleanNegTypeTest(){
         TypesEntityModel actualEntity = new TypesEntityModel();
-        actualEntity.setPrimByteField((byte) 8);
+        actualEntity.setBooleanField(new Boolean(true));
 
         TypesEntityModel expectedEntity = new TypesEntityModel();
-        expectedEntity.setPrimByteField((byte) 7);
+        expectedEntity.setBooleanField(new Boolean(false));
 
         Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
     }
 
+    @Test
+    public void bytePosTypeTest(){
+        TypesEntityModel actualEntity = new TypesEntityModel();
+        actualEntity.setByteField(new Byte("7"));
+
+        TypesEntityModel expectedEntity = new TypesEntityModel();
+        expectedEntity.setByteField(new Byte("7"));
+
+        Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
+    }
+
+    @Test(expected = AssertionError.class)
+    public void byteNegTypeTest(){
+        TypesEntityModel actualEntity = new TypesEntityModel();
+        actualEntity.setByteField(new Byte("9"));
+
+        TypesEntityModel expectedEntity = new TypesEntityModel();
+        expectedEntity.setByteField(new Byte("8"));
+
+        Assert.assertThat(actualEntity, Entity.isEqualTo(expectedEntity));
+    }
 }

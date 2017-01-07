@@ -1,4 +1,4 @@
-package issue_38;
+package org.testmonkeys.jentitytest.test.bugs.issue_38;
 
 import org.junit.Assert;
 import org.junit.Test;

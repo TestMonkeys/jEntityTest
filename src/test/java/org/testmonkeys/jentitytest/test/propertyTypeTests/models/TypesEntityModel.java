@@ -1,4 +1,4 @@
-package propertyTypeTests.models;
+package org.testmonkeys.jentitytest.test.propertyTypeTests.models;
 
 
 public class TypesEntityModel {

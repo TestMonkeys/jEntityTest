@@ -1,7 +1,7 @@
-package childEntityTests;
+package org.testmonkeys.jentitytest.test.childEntityTests;
 
-import childEntityTests.models.ParentEntity;
-import childEntityTests.models.SimpleEntity;
+import org.testmonkeys.jentitytest.test.childEntityTests.models.ParentEntity;
+import org.testmonkeys.jentitytest.test.childEntityTests.models.SimpleEntity;
 import org.junit.Assert;
 import org.junit.Test;
 import org.testmonkeys.jentitytest.Entity;

@@ -40,7 +40,6 @@ public class StringComparatorTests {
     @Test(expected = AssertionError.class)
     public void stringComparatorFailNull() throws IntrospectionException {
         String expected = "test";
-
         StringComparator comparator = getComparator(false, false, null);
 
         List<ComparisonResult> resultList = comparator.areEqual(null, expected, context);
@@ -133,8 +132,8 @@ public class StringComparatorTests {
     public void stringComparatorPassIgnoreTrailing() throws IntrospectionException {
         String actual = "\t\ntest\r";
         String expected = " test \r\n";
-
-        StringComparator comparator = getComparator(false, true);
+        char empty [] = {};
+        StringComparator comparator = getComparator(false, true, empty);
 
         List<ComparisonResult> resultList = comparator.areEqual(actual, expected, context);
         assertTrue(resultList.get(0).isPassed());
