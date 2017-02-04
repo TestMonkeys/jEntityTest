@@ -5,7 +5,6 @@ import org.testmonkeys.jentitytest.comparison.MultiResultComparator;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
-
 import java.util.List;
 
 
@@ -17,6 +16,7 @@ public class ChildEntityComparator extends MultiResultComparator {
 
     @Override
     protected List<ComparisonResult> computeComparison(Object actualValue, Object expectedValue, ComparisonContext context) throws JEntityTestException {
+
         EntityComparator comparator = new EntityComparator();
         return comparator.compare(actualValue, expectedValue, context);
     }

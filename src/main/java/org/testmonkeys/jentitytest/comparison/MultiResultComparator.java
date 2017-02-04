@@ -19,11 +19,13 @@ public abstract class MultiResultComparator implements Comparator {
     public List<ComparisonResult> areEqual(Object actualValue, Object expectedValue, ComparisonContext context) {
         List<ComparisonResult> resultList = new ArrayList<>();
 
+
         List<ConditionalCheckResult> conditionalResults = runConditionals(actualValue, expectedValue, context);
         if (conditionalResults.stream().anyMatch(res -> res.stopComparison() || !res.isPassed())) {
             resultList.addAll(conditionalResults);
             return resultList;
         }
+
 
         context.setComparatorDetails(describe());
         resultList.addAll(computeComparison(actualValue, expectedValue, context));
@@ -42,7 +44,9 @@ public abstract class MultiResultComparator implements Comparator {
     }
 
     protected abstract List<ComparisonResult> computeComparison(Object actual, Object expected, ComparisonContext context) throws JEntityTestException;
+
     protected String describe(){
         return this.getClass().getSimpleName();
     }
+
 }

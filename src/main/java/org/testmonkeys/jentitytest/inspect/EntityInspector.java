@@ -31,8 +31,10 @@ public class EntityInspector {
                 Field field = clazz.getDeclaredField(propertyDescriptor.getName());
                 for (Annotation annotation : field.getAnnotations()) {
                     if (annotationToComparator.mapsToComparator(annotation)) {
+
                         model.setComparisonPoint(propertyDescriptor,
                                 new PropertyComparisonWrapper(annotationToComparator.getComparatorForAnnotation(annotation)));
+
                         customComparison = true;
                         fieldLevelComparison = true;
                     }
@@ -45,6 +47,7 @@ public class EntityInspector {
                     if (annotationToComparator.mapsToComparator(annotation)) {
                         model.setComparisonPoint(propertyDescriptor,
                                 new PropertyComparisonWrapper(annotationToComparator.getComparatorForAnnotation(annotation)));
+
                         customComparison = true;
                     }
                 }

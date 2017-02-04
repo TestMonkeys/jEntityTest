@@ -36,6 +36,7 @@ public class EntityComparator {
         ConditionalCheckResult conditionalCheckResult = nullComparatorHelper.runCheck(actual, expected, context);
         if (!conditionalCheckResult.isPassed() || conditionalCheckResult.stopComparison()) {
             comparisonResults.add(conditionalCheckResult);
+
             return comparisonResults;
         }
 

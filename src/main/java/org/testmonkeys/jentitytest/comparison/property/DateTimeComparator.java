@@ -4,6 +4,8 @@ import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.SingleResultComparator;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
+import org.testmonkeys.jentitytest.comparison.util.NullComparator;
+import org.testmonkeys.jentitytest.comparison.util.NullComparisonResult;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.time.temporal.ChronoUnit;
@@ -34,6 +36,7 @@ public class DateTimeComparator extends SingleResultComparator {
 
         Temporal actualValue;
         Temporal expectedValue;
+
 
         try {
             actualValue = (Temporal) a;

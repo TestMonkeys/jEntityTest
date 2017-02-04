@@ -15,6 +15,7 @@ public class SimpleTypeComparator extends SingleResultComparator {
     public ComparisonResult computeSingleComparison(Object actualValue, Object expectedValue, ComparisonContext context) {
         ComparisonResult result = new ComparisonResult(false, context, actualValue, expectedValue);
         result.setPassed(actualValue.equals(expectedValue));
+
         return result;
     }
 }

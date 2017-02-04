@@ -21,5 +21,6 @@ public class EntityComparatorTests {
     public void unit_strategy_entityComparator_bothNull() {
         EntityComparator comparator = new EntityComparator();
         comparator.compare(null, null);
+
     }
 }
