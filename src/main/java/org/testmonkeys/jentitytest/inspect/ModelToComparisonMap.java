@@ -2,12 +2,11 @@ package org.testmonkeys.jentitytest.inspect;
 
 import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.entity.ChildEntityComparator;
+import org.testmonkeys.jentitytest.comparison.entity.ChildEntityListComparator;
 import org.testmonkeys.jentitytest.comparison.property.DateTimeComparator;
 import org.testmonkeys.jentitytest.comparison.property.IgnoreComparator;
-import org.testmonkeys.jentitytest.framework.ChildEntityComparison;
-import org.testmonkeys.jentitytest.framework.DateTimeComparison;
-import org.testmonkeys.jentitytest.framework.IgnoreComparison;
-import org.testmonkeys.jentitytest.framework.JEntityTestException;
+import org.testmonkeys.jentitytest.comparison.property.StringComparator;
+import org.testmonkeys.jentitytest.framework.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -26,6 +25,8 @@ public class ModelToComparisonMap {
         mapping.put(IgnoreComparison.class, IgnoreComparator.class);
         mapping.put(ChildEntityComparison.class, ChildEntityComparator.class);
         mapping.put(DateTimeComparison.class, DateTimeComparator.class);
+        mapping.put(StringComparison.class, StringComparator.class);
+        mapping.put(ChildEntityListComparison.class, ChildEntityListComparator.class);
     }
 
     public static ModelToComparisonMap getInstance() {

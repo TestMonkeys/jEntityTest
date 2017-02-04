@@ -4,6 +4,7 @@ import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.testmonkeys.jentitytest.comparison.entity.EntityComparator;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
+import org.testmonkeys.jentitytest.utils.ResultOutput;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
 
     private final Object expected;
     private String textualOutput;
+
 
     public EntityMatcher(Object expected) {
         this.expected = expected;
@@ -27,10 +29,7 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
         for (ComparisonResult res : result) {
             if (res.isPassed())
                 continue;
-            sb.append(res.getContext().toString()).
-                    append(" Expected: ").append(res.getExpected()).
-                    append(" Actual: ").append(res.getActual()).append("" +
-                    "\r\n");
+            sb.append(ResultOutput.getOutput(res.getComparisonContext(), res));
         }
         textualOutput = sb.toString();
         return result.stream().allMatch(ComparisonResult::isPassed);
@@ -47,5 +46,4 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
     public void describeTo(Description description) {
         description.appendText("Entities have same values in properties");
     }
-
 }

@@ -34,8 +34,8 @@ public class RecursiveReferenceTest {
     @Test
     public void edge_recursiveReference2() {
         expectedException.expect(AssertionError.class);
-        expectedException.expectMessage("Entity.age Expected: 2 Actual: 3");
-        expectedException.expectMessage(not(containsString("Entity.dad.firstChild.age")));
+        expectedException.expectMessage("age\n\tExpected: 2\n\tActual: 3");
+        expectedException.expectMessage(not(containsString("dad.firstChild.age")));
         EntityParent parent1 = new EntityParent();
         EntityChild child1 = new EntityChild();
         child1.setAge(3);
