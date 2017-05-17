@@ -1,6 +1,6 @@
-package org.testmonkeys.jentitytest;
+package org.testmonkeys.jentitytest.junit;
 
-import org.testmonkeys.jentitytest.matchers.EntityMatcher;
+import org.testmonkeys.jentitytest.junit.matchers.EntityMatcher;
 
 public final class Entity {
 

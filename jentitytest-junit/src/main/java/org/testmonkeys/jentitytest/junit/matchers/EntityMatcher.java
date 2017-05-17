@@ -1,4 +1,4 @@
-package org.testmonkeys.jentitytest.matchers;
+package org.testmonkeys.jentitytest.junit.matchers;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
