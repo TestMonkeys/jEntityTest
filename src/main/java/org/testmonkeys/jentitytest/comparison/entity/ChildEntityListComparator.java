@@ -1,15 +1,16 @@
 package org.testmonkeys.jentitytest.comparison.entity;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
-import org.testmonkeys.jentitytest.comparison.MultiResultComparator;
+import org.testmonkeys.jentitytest.comparison.AbstractComparator;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.property.SimpleTypeComparator;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
+import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.util.*;
 
-public class ChildEntityListComparator extends MultiResultComparator {
+public class ChildEntityListComparator extends AbstractComparator {
 
     public ChildEntityListComparator() {
         registerPreConditionalCheck(new NullConditionalCheck());
@@ -34,9 +35,16 @@ public class ChildEntityListComparator extends MultiResultComparator {
         return ret;
     }
 
+    /**
+     * @param actual
+     * @param expected
+     * @param context
+     * @return
+     * @throws JEntityTestException
+     */
     @Override
-    protected List<ComparisonResult> computeComparison(Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
-        List<ComparisonResult> comparisonResults = new ArrayList<>();
+    protected ResultSet computeComparison(Object actual, Object expected, ComparisonContext context) {
+        ResultSet comparisonResults = new ResultSet();
 
         Collection<?> listActual;
         Collection<?> listExpected;
@@ -58,9 +66,9 @@ public class ChildEntityListComparator extends MultiResultComparator {
             Object expectedItem = listExpected.iterator().next();
             context.setIndex(i);
             if (isWrapperType(actualItem)) {
-                comparisonResults.addAll(simpleTypeComparator.areEqual(actualItem, expectedItem, context));
+                comparisonResults.addAll(simpleTypeComparator.compare(actualItem, expectedItem, context));
             } else {
-                comparisonResults.addAll(childComparator.areEqual(actualItem, expectedItem, context));
+                comparisonResults.addAll(childComparator.compare(actualItem, expectedItem, context));
             }
         }
 

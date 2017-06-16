@@ -2,12 +2,13 @@ package org.testmonkeys.jentitytest.comparison;
 
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
+import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class MultiResultComparator implements Comparator {
+public abstract class AbstractComparator implements Comparator {
 
     private final List<PreComparisonCheck> preComparisonChecks = new ArrayList<>();
 
@@ -16,16 +17,14 @@ public abstract class MultiResultComparator implements Comparator {
     }
 
     @Override
-    public List<ComparisonResult> compare(Object actualValue, Object expectedValue, ComparisonContext context) {
-        List<ComparisonResult> resultList = new ArrayList<>();
-
+    public ResultSet compare(Object actualValue, Object expectedValue, ComparisonContext context) {
+        ResultSet resultList = new ResultSet();
 
         List<ConditionalCheckResult> conditionalResults = runConditionals(actualValue, expectedValue, context);
         if (conditionalResults.stream().anyMatch(res -> res.isComparisonFinished() || !res.isPassed())) {
             resultList.addAll(conditionalResults);
             return resultList;
         }
-
 
         context.setComparatorDetails(describe());
         resultList.addAll(computeComparison(actualValue, expectedValue, context));
@@ -57,7 +56,7 @@ public abstract class MultiResultComparator implements Comparator {
      * @return
      * @throws JEntityTestException
      */
-    protected abstract List<ComparisonResult> computeComparison(Object actual, Object expected, ComparisonContext context);
+    protected abstract ResultSet computeComparison(Object actual, Object expected, ComparisonContext context);
 
     protected String describe(){
         return this.getClass().getSimpleName();

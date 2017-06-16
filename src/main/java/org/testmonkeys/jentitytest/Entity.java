@@ -1,4 +1,4 @@
-package org.testmonkeys.jentitytest.hamcrest;
+package org.testmonkeys.jentitytest;
 
 import org.testmonkeys.jentitytest.hamcrest.matchers.EntityMatcher;
 

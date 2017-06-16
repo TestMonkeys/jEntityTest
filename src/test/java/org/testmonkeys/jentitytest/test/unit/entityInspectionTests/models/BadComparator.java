@@ -3,6 +3,7 @@ package org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models;
 import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
+import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class BadComparator implements Comparator {
 
 
     @Override
-    public List<ComparisonResult> areEqual(Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
+    public ResultSet compare(Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
         return null;
     }
 }

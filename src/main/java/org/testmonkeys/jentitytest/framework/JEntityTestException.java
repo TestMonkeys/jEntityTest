@@ -1,5 +1,6 @@
 package org.testmonkeys.jentitytest.framework;
 
+@SuppressWarnings("UncheckedExceptionClass")
 public class JEntityTestException extends RuntimeException {
 
     public JEntityTestException(String message) {

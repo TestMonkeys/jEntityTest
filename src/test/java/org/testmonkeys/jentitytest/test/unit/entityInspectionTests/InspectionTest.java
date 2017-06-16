@@ -3,12 +3,12 @@ package org.testmonkeys.jentitytest.test.unit.entityInspectionTests;
 import org.hamcrest.junit.ExpectedException;
 import org.junit.Rule;
 import org.junit.Test;
-import org.testmonkeys.jentitytest.comparison.ComparisonModel;
+import org.testmonkeys.jentitytest.model.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.property.IgnoreComparator;
 import org.testmonkeys.jentitytest.comparison.property.SimpleTypeComparator;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
-import org.testmonkeys.jentitytest.inspect.EntityInspector;
-import org.testmonkeys.jentitytest.inspect.ModelToComparisonMap;
+import org.testmonkeys.jentitytest.model.EntityInspector;
+import org.testmonkeys.jentitytest.model.AnnotationToComparatorDictionary;
 import org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.*;
 
 import java.beans.PropertyDescriptor;
@@ -67,7 +67,7 @@ public class InspectionTest {
 
     @Test
     public void unit_inspection_TakesFiledAnnotationInsteadOfGetter() throws Throwable {
-        ModelToComparisonMap.getInstance().setComparatorForAnnotation(IgnoreComparatorCustom.class, IgnoreComparisonCustom.class);
+        AnnotationToComparatorDictionary.getInstance().setComparatorForAnnotation(IgnoreComparatorCustom.class, IgnoreComparisonCustom.class);
         EntityInspector inspector = new EntityInspector();
         ComparisonModel model = inspector.getComparisonModel(ModelWithBothLevelAnnotations.class);
         Set<PropertyDescriptor> props = model.getComparableProperties();
@@ -78,7 +78,7 @@ public class InspectionTest {
 
     @Test
     public void unit_inspection_inconsistentNaming() throws Throwable {
-        ModelToComparisonMap.getInstance().setComparatorForAnnotation(IgnoreComparatorCustom.class, IgnoreComparisonCustom.class);
+        AnnotationToComparatorDictionary.getInstance().setComparatorForAnnotation(IgnoreComparatorCustom.class, IgnoreComparisonCustom.class);
         EntityInspector inspector = new EntityInspector();
         ComparisonModel model = inspector.getComparisonModel(InconsistentNamingModel.class);
         Set<PropertyDescriptor> props = model.getComparableProperties();

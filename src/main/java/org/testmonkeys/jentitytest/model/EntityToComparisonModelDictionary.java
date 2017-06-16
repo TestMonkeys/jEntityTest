@@ -1,8 +1,6 @@
-package org.testmonkeys.jentitytest.repo;
+package org.testmonkeys.jentitytest.model;
 
-import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
-import org.testmonkeys.jentitytest.inspect.EntityInspector;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -5,7 +5,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
-import org.testmonkeys.jentitytest.inspect.ModelToComparisonMap;
+import org.testmonkeys.jentitytest.model.AnnotationToComparatorDictionary;
 import org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.BadComparator;
 import org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.BadComparisonCustom;
 import org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.IgnoreComparatorCustom;
@@ -17,11 +17,11 @@ import java.lang.annotation.Annotation;
 /**
  * This class represents tests for comparison map
  */
-public class ModelToComparisonMapTest {
+public class AnnotationToComparatorDictionaryTest {
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
-    private ModelToComparisonMap comparisonMap;
+    private AnnotationToComparatorDictionary comparisonMap;
 
     /**
      * initialization of EntityInspector,
@@ -32,7 +32,7 @@ public class ModelToComparisonMapTest {
      */
     @Before
     public void background() throws IntrospectionException, JEntityTestException {
-        comparisonMap = ModelToComparisonMap.getInstance();
+        comparisonMap = AnnotationToComparatorDictionary.getInstance();
         comparisonMap.setComparatorForAnnotation(BadComparator.class, BadComparisonCustom.class);
     }
 

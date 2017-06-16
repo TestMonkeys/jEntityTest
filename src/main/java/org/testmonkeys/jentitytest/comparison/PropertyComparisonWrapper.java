@@ -10,13 +10,21 @@ import java.util.List;
 
 public class PropertyComparisonWrapper {
 
-    private Comparator comparator;
+    private final Comparator comparator;
 
     public PropertyComparisonWrapper(Comparator comparator) {
         this.comparator = comparator;
     }
 
-    public List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
+    /**
+     * @param property
+     * @param actual
+     * @param expected
+     * @param context
+     * @return
+     * @throws JEntityTestException
+     */
+    public List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) {
         List<ComparisonResult> resultList = new LinkedList<>();
 
         Object actualValue = getPropertyValue(property, actual);
@@ -25,7 +33,7 @@ public class PropertyComparisonWrapper {
         if (context.isRecursive(actualValue))
             return resultList;
         context.setActualObj(actualValue);
-        resultList.addAll(comparator.areEqual(actualValue, expectedValue, context));
+        resultList.addAll(comparator.compare(actualValue, expectedValue, context));
 
         return resultList;
     }

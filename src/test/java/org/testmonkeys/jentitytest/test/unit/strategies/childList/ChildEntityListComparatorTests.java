@@ -23,7 +23,7 @@ public class ChildEntityListComparatorTests {
         expectedException.expect(JEntityTestException.class);
         expectedException.expectMessage("Actual and Expected should be Generic Collections");
         ChildEntityListComparator comparator = new ChildEntityListComparator();
-        comparator.areEqual("a string", new ArrayList<String>(), new ComparisonContext());
+        comparator.compare("a string", new ArrayList<String>(), new ComparisonContext());
     }
 
     @Test
@@ -31,13 +31,13 @@ public class ChildEntityListComparatorTests {
         expectedException.expect(JEntityTestException.class);
         expectedException.expectMessage("Actual and Expected should be Generic Collections");
         ChildEntityListComparator comparator = new ChildEntityListComparator();
-        comparator.areEqual(new ArrayList<String>(), "a string", new ComparisonContext());
+        comparator.compare(new ArrayList<String>(), "a string", new ComparisonContext());
     }
 
     @Test
     public void emptyCollections() {
         ChildEntityListComparator comparator = new ChildEntityListComparator();
-        List<ComparisonResult> results = comparator.areEqual(new ArrayList<String>(), new ArrayList<String>(), new ComparisonContext());
+        List<ComparisonResult> results = comparator.compare(new ArrayList<String>(), new ArrayList<String>(), new ComparisonContext());
 
         assertTrue(results.stream().allMatch(ComparisonResult::isPassed));
     }
@@ -50,7 +50,7 @@ public class ChildEntityListComparatorTests {
         actual.add("Line1Actual");
         expected.add("Line1Expected");
 
-        List<ComparisonResult> results = comparator.areEqual(actual, expected, new ComparisonContext());
+        List<ComparisonResult> results = comparator.compare(actual, expected, new ComparisonContext());
 
         assertTrue(results.stream().anyMatch(res -> !res.isPassed()));
     }
@@ -64,7 +64,7 @@ public class ChildEntityListComparatorTests {
         actual.add("Line2Actual");
         expected.add("Line1Actual");
 
-        List<ComparisonResult> results = comparator.areEqual(actual, expected, new ComparisonContext());
+        List<ComparisonResult> results = comparator.compare(actual, expected, new ComparisonContext());
 
         assertTrue(results.stream().anyMatch(res -> !res.isPassed()));
     }
@@ -79,7 +79,7 @@ public class ChildEntityListComparatorTests {
         expected.add("Line1Actual");
         expected.add("Line2Actual");
 
-        List<ComparisonResult> results = comparator.areEqual(actual, expected, new ComparisonContext());
+        List<ComparisonResult> results = comparator.compare(actual, expected, new ComparisonContext());
 
         assertTrue(results.stream().allMatch(ComparisonResult::isPassed));
     }
@@ -94,7 +94,7 @@ public class ChildEntityListComparatorTests {
         expected.add(new SimpleModel(1));
         expected.add(new SimpleModel(1));
 
-        List<ComparisonResult> results = comparator.areEqual(actual, expected, new ComparisonContext());
+        List<ComparisonResult> results = comparator.compare(actual, expected, new ComparisonContext());
 
         assertTrue(results.stream().allMatch(ComparisonResult::isPassed));
     }

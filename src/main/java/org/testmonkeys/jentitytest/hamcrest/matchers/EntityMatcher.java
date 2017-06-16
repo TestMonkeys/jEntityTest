@@ -1,14 +1,18 @@
-package org.testmonkeys.jentitytest.matchers;
+package org.testmonkeys.jentitytest.hamcrest.matchers;
 
 import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
-import org.testmonkeys.jentitytest.comparison.entity.EntityComparator;
+import org.testmonkeys.jentitytest.EntityComparator;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.utils.ResultOutput;
 
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Hamcrest Entity Type matcher for type <T>
+ * @param <T> type of entity to be matched
+ */
 public class EntityMatcher<T> extends BaseMatcher<T> {
 
     private final Object expected;
@@ -19,6 +23,11 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
         this.expected = expected;
     }
 
+    /**
+     * Performs matching using the EntityComparator between the actualItem and expected
+     * @param actualItem
+     * @return
+     */
     @Override
     public boolean matches(Object actualItem) {
         List<ComparisonResult> result = new LinkedList<>();
@@ -37,9 +46,7 @@ public class EntityMatcher<T> extends BaseMatcher<T> {
 
     @Override
     public void describeMismatch(Object item, Description description) {
-
         description.appendText("Following properties didn't match:\r\n").appendText(textualOutput);
-
     }
 
     @Override

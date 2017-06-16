@@ -1,4 +1,4 @@
-package org.testmonkeys.jentitytest.repo;
+package org.testmonkeys.jentitytest.model;
 
 import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.entity.ChildEntityComparator;

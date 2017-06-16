@@ -1,7 +1,7 @@
 package org.testmonkeys.jentitytest.test.unit.strategies.entityComparator;
 
 import org.junit.Test;
-import org.testmonkeys.jentitytest.comparison.entity.EntityComparator;
+import org.testmonkeys.jentitytest.EntityComparator;
 
 public class EntityComparatorTests {
 

@@ -5,6 +5,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.testmonkeys.jentitytest.Entity;
 
+@SuppressWarnings({"BooleanConstructorCall", "UnnecessaryBoxing"})
 public class TypeTest {
 
     @Test

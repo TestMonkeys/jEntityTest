@@ -3,10 +3,10 @@ package org.testmonkeys.jentitytest.test.unit.entityInspectionTests;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.testmonkeys.jentitytest.comparison.ComparisonModel;
+import org.testmonkeys.jentitytest.model.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.property.IgnoreComparator;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
-import org.testmonkeys.jentitytest.inspect.EntityInspector;
+import org.testmonkeys.jentitytest.model.EntityInspector;
 import org.testmonkeys.jentitytest.test.unit.entityInspectionTests.models.ModelMultiAnnotated;
 
 import java.beans.IntrospectionException;

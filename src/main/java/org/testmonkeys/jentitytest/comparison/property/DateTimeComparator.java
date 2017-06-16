@@ -1,19 +1,15 @@
 package org.testmonkeys.jentitytest.comparison.property;
 
+import org.testmonkeys.jentitytest.comparison.AbstractComparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
-import org.testmonkeys.jentitytest.comparison.SingleResultComparator;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
-import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
-import org.testmonkeys.jentitytest.comparison.util.NullComparator;
-import org.testmonkeys.jentitytest.comparison.util.NullComparisonResult;
+import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 
-import static org.testmonkeys.jentitytest.utils.StringUtils.charArrayToString;
-
-public class DateTimeComparator extends SingleResultComparator {
+public class DateTimeComparator extends AbstractComparator {
 
     private int delta;
     private ChronoUnit unit = ChronoUnit.NANOS;
@@ -31,9 +27,7 @@ public class DateTimeComparator extends SingleResultComparator {
     }
 
     @Override
-    protected ComparisonResult computeSingleComparison(Object a, Object e, ComparisonContext context) {
-        ComparisonResult result = new ComparisonResult(false, context, a, e);
-
+    protected ResultSet computeComparison(Object a, Object e, ComparisonContext context) {
         Temporal actualValue;
         Temporal expectedValue;
 
@@ -46,8 +40,8 @@ public class DateTimeComparator extends SingleResultComparator {
                     castException);
         }
 
-        result.setPassed(Math.abs(actualValue.until(expectedValue, unit)) <= delta);
-        return result;
+        boolean passed = Math.abs(actualValue.until(expectedValue, unit)) <= delta;
+        return new ResultSet(passed,context, a, e);
     }
 
     @Override

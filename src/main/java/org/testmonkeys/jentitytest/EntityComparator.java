@@ -1,8 +1,9 @@
-package org.testmonkeys.jentitytest.comparison.entity;
+package org.testmonkeys.jentitytest;
 
+import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.model.EntityToComparisonModelDictionary;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
-import org.testmonkeys.jentitytest.comparison.ComparisonModel;
+import org.testmonkeys.jentitytest.model.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.PropertyComparisonWrapper;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
@@ -25,7 +26,7 @@ public class EntityComparator {
      * @return
      * @throws JEntityTestException
      */
-    public List<ComparisonResult> compare(Object actual, Object expected) {
+    public ResultSet compare(Object actual, Object expected) {
 
         return compare(actual, expected, null);
     }
@@ -37,8 +38,8 @@ public class EntityComparator {
      * @return
      * @throws JEntityTestException
      */
-    public List<ComparisonResult> compare(Object actual, Object expected, ComparisonContext context) {
-        List<ComparisonResult> comparisonResults = new LinkedList<>();
+    public ResultSet compare(Object actual, Object expected, ComparisonContext context) {
+        ResultSet comparisonResults = new ResultSet();
         if (context == null) {
             context = new ComparisonContext();
             String parent = getContextParentName(actual, expected);
@@ -47,7 +48,7 @@ public class EntityComparator {
         }
 
         ConditionalCheckResult conditionalCheckResult = nullComparatorHelper.runCheck(actual, expected, context);
-        if (!conditionalCheckResult.isPassed() || conditionalCheckResult.stopComparison()) {
+        if (!conditionalCheckResult.isPassed() || conditionalCheckResult.isComparisonFinished()) {
             comparisonResults.add(conditionalCheckResult);
 
             return comparisonResults;

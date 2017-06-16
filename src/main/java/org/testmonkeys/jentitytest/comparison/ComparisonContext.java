@@ -26,27 +26,38 @@ public class ComparisonContext {
 
     public ComparisonContext withProperty(String propertyName) {
         ComparisonContext comparisonContext = new ComparisonContext(this);
-        comparisonContext.parentName = propertyName;
+        comparisonContext.setParentName(propertyName);
         return comparisonContext;
     }
 
-
-
+    /**
+     * Generates the full path for current comparison
+     * @return
+     */
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (parent != null) {
             sb.append(parent).append(".");
         }
-        sb.append(parentName);
+        sb.append(getParentName());
         if (index != -1)
             sb.append("[").append(index).append("]");
         return sb.toString();
     }
 
+    /**
+     * Checks if the object was present before in the ComparisonContext tree
+     * @param actual
+     * @return
+     */
     public boolean isRecursive(Object actual) {
-        return !(parent == null || actual == null) &&
-                (actual.equals(parent.actualObj) || parent.isRecursive(actual));
+        return canBeRecursive(actual) &&
+                (actual.equals(parent.getActualObj()) || parent.isRecursive(actual));
+    }
+
+    private boolean canBeRecursive(Object actual){
+        return parent !=null && actual !=null;
     }
 
     public void setParentName(String parentName) {
@@ -59,5 +70,13 @@ public class ComparisonContext {
 
     public void setComparatorDetails(String comparatorDetails) {
         this.comparatorDetails = comparatorDetails;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
+
+    public Object getActualObj() {
+        return actualObj;
     }
 }

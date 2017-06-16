@@ -29,7 +29,7 @@ public class ComparisonResult {
     }
 
     public Object getExpected() {
-        return this.expected;
+        return expected;
     }
 
     public void setExpected(Object expected) {
@@ -37,7 +37,7 @@ public class ComparisonResult {
     }
 
     public Object getActual() {
-        return this.actual;
+        return actual;
     }
 
     public void setActual(Object actual) {

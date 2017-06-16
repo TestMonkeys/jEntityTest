@@ -1,4 +1,6 @@
-package org.testmonkeys.jentitytest.comparison;
+package org.testmonkeys.jentitytest.model;
+
+import org.testmonkeys.jentitytest.comparison.PropertyComparisonWrapper;
 
 import java.beans.PropertyDescriptor;
 import java.util.HashMap;

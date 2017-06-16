@@ -33,7 +33,7 @@ public class StringComparatorTests {
     public void stringComparatorPassNulls() throws IntrospectionException {
         StringComparator comparator = getComparator(true, false, null);
 
-        List<ComparisonResult> resultList = comparator.areEqual(null, null, context);
+        List<ComparisonResult> resultList = comparator.compare(null, null, context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -42,7 +42,7 @@ public class StringComparatorTests {
         String expected = "test";
         StringComparator comparator = getComparator(false, false, null);
 
-        List<ComparisonResult> resultList = comparator.areEqual(null, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(null, expected, context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -53,7 +53,7 @@ public class StringComparatorTests {
 
         StringComparator comparator = getComparator(true, false);
 
-        List<ComparisonResult> resultList = comparator.areEqual(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -65,7 +65,7 @@ public class StringComparatorTests {
 
         StringComparator comparator = getComparator(true, false);
 
-        List<ComparisonResult> resultList = comparator.areEqual(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -76,7 +76,7 @@ public class StringComparatorTests {
 
         StringComparator comparator = getComparator(false, false);
 
-        List<ComparisonResult> resultList = comparator.areEqual(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -90,7 +90,7 @@ public class StringComparatorTests {
 
         StringComparator comparator = getComparator(false, false, ignore);
 
-        List<ComparisonResult> resultList = comparator.areEqual(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -102,7 +102,7 @@ public class StringComparatorTests {
 
         StringComparator comparator = getComparator(false, false, ignore);
 
-        List<ComparisonResult> resultList = comparator.areEqual(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -114,7 +114,7 @@ public class StringComparatorTests {
 
         StringComparator comparator = getComparator(false, false, ignore);
 
-        List<ComparisonResult> resultList = comparator.areEqual(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -125,7 +125,7 @@ public class StringComparatorTests {
 
         StringComparator comparator = getComparator(false, false);
 
-        List<ComparisonResult> results = comparator.areEqual(actual, expected, context);
+        List<ComparisonResult> results = comparator.compare(actual, expected, context);
     }
 
     @Test
@@ -135,7 +135,7 @@ public class StringComparatorTests {
         char empty [] = {};
         StringComparator comparator = getComparator(false, true, empty);
 
-        List<ComparisonResult> resultList = comparator.areEqual(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -147,7 +147,7 @@ public class StringComparatorTests {
 
         StringComparator comparator = getComparator(false, true);
 
-        List<ComparisonResult> resultList = comparator.areEqual(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
         assertTrue(resultList.get(0).isPassed());
     }
 }

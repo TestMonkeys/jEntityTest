@@ -1,18 +1,18 @@
 package org.testmonkeys.jentitytest.comparison.property;
 
+import org.testmonkeys.jentitytest.comparison.AbstractComparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
-import org.testmonkeys.jentitytest.comparison.SingleResultComparator;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
-import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
+import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.framework.JEntityTestException;
 import org.testmonkeys.jentitytest.utils.StringUtils;
 
 import static org.testmonkeys.jentitytest.utils.StringUtils.charArrayToString;
 
-public class StringComparator extends SingleResultComparator {
+public class StringComparator extends AbstractComparator {
 
     private boolean caseSensitive = true;
-    private boolean trim = false;
+    private boolean trim;
     private char[] ignoreCharacters = {};
 
     public StringComparator() {
@@ -31,9 +31,7 @@ public class StringComparator extends SingleResultComparator {
         this.ignoreCharacters = ignoreCharacters;
     }
 
-    public ComparisonResult computeSingleComparison(Object actualValue, Object expectedValue, ComparisonContext context) {
-        ComparisonResult comparisonResult = new ComparisonResult(false, context, actualValue, expectedValue);
-
+    public ResultSet computeComparison(Object actualValue, Object expectedValue, ComparisonContext context) {
         String actual;
         String expected;
 
@@ -57,14 +55,13 @@ public class StringComparator extends SingleResultComparator {
             expected = expected.trim();
         }
 
+        boolean passed;
         if (caseSensitive) {
-            comparisonResult.setPassed(actual.equals(expected));
+            passed=actual.equals(expected);
         } else {
-            comparisonResult.setPassed(actual.equalsIgnoreCase(expected));
+            passed = actual.equalsIgnoreCase(expected);
         }
-        comparisonResult.setActual(StringUtils.showControlChars(actual));
-        comparisonResult.setExpected(StringUtils.showControlChars(expected));
-        return comparisonResult;
+        return new ResultSet(passed, context, StringUtils.showControlChars(actual), StringUtils.showControlChars(expected));
     }
 
     @Override
