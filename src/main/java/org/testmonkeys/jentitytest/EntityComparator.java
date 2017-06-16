@@ -1,6 +1,6 @@
 package org.testmonkeys.jentitytest.comparison.entity;
 
-import org.testmonkeys.jentitytest.EntityComparisonDictionary;
+import org.testmonkeys.jentitytest.model.EntityToComparisonModelDictionary;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.PropertyComparisonWrapper;
@@ -16,15 +16,28 @@ import java.util.List;
 
 public class EntityComparator {
 
-    private final EntityComparisonDictionary comparisonDictionary = EntityComparisonDictionary.getInstance();
+    private final EntityToComparisonModelDictionary comparisonDictionary = EntityToComparisonModelDictionary.getInstance();
     private final NullConditionalCheck nullComparatorHelper = new NullConditionalCheck();
 
-    public List<ComparisonResult> compare(Object actual, Object expected) throws JEntityTestException {
+    /**
+     * @param actual
+     * @param expected
+     * @return
+     * @throws JEntityTestException
+     */
+    public List<ComparisonResult> compare(Object actual, Object expected) {
 
         return compare(actual, expected, null);
     }
 
-    public List<ComparisonResult> compare(Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
+    /**
+     * @param actual
+     * @param expected
+     * @param context
+     * @return
+     * @throws JEntityTestException
+     */
+    public List<ComparisonResult> compare(Object actual, Object expected, ComparisonContext context) {
         List<ComparisonResult> comparisonResults = new LinkedList<>();
         if (context == null) {
             context = new ComparisonContext();
