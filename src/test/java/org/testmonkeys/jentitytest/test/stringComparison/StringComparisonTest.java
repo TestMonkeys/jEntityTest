@@ -4,7 +4,7 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.testmonkeys.jentitytest.Entity;
+import org.testmonkeys.jentitytest.hamcrest.Entity;
 
 public class StringComparisonTest {
 
@@ -64,8 +64,8 @@ public class StringComparisonTest {
 
     @Test
     public void testFailingMessage() {
-        expectedException.expect(AssertionError.class);
-        expectedException.expectMessage("\n\tExpected: test\n\tActual: \\ttest"+
+        this.expectedException.expect(AssertionError.class);
+        this.expectedException.expectMessage("\n\tExpected: test\n\tActual: \\ttest" +
                 "\nComparison was performed using StringComparator with parameters: case sensitive = false, " +
                 "trim = false, ignoring characters: \\n, \\r");
         Model actual = new Model();
@@ -77,8 +77,8 @@ public class StringComparisonTest {
 
     @Test
     public void testFailingMessageSecondEntryControlChar() {
-        expectedException.expect(AssertionError.class);
-        expectedException.expectMessage("\n\tExpected: test\n\tActual: \\ttest\\t" +
+        this.expectedException.expect(AssertionError.class);
+        this.expectedException.expectMessage("\n\tExpected: test\n\tActual: \\ttest\\t" +
                 "\nComparison was performed using StringComparator with parameters: case sensitive = false, " +
                 "trim = false, ignoring characters: \\n, \\r");
         Model actual = new Model();

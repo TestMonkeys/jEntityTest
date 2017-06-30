@@ -4,9 +4,9 @@ import org.hamcrest.junit.ExpectedException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
-import org.testmonkeys.jentitytest.comparison.entity.ChildEntityListComparator;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
-import org.testmonkeys.jentitytest.framework.JEntityTestException;
+import org.testmonkeys.jentitytest.comparison.strategies.ChildEntityListComparator;
+import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +20,16 @@ public class ChildEntityListComparatorTests {
 
     @Test
     public void actualNotCollection() {
-        expectedException.expect(JEntityTestException.class);
-        expectedException.expectMessage("Actual and Expected should be Generic Collections");
+        this.expectedException.expect(JEntityTestException.class);
+        this.expectedException.expectMessage("Actual and Expected should be Generic Collections");
         ChildEntityListComparator comparator = new ChildEntityListComparator();
         comparator.compare("a string", new ArrayList<String>(), new ComparisonContext());
     }
 
     @Test
     public void expectedNotCollection() {
-        expectedException.expect(JEntityTestException.class);
-        expectedException.expectMessage("Actual and Expected should be Generic Collections");
+        this.expectedException.expect(JEntityTestException.class);
+        this.expectedException.expectMessage("Actual and Expected should be Generic Collections");
         ChildEntityListComparator comparator = new ChildEntityListComparator();
         comparator.compare(new ArrayList<String>(), "a string", new ComparisonContext());
     }
@@ -68,6 +68,7 @@ public class ChildEntityListComparatorTests {
 
         assertTrue(results.stream().anyMatch(res -> !res.isPassed()));
     }
+
 
     @Test
     public void stringCollections_Match() {

@@ -2,9 +2,9 @@ package org.testmonkeys.jentitytest.test.unit.strategies.stringComparator;
 
 import org.junit.Test;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
-import org.testmonkeys.jentitytest.comparison.property.StringComparator;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
-import org.testmonkeys.jentitytest.framework.JEntityTestException;
+import org.testmonkeys.jentitytest.comparison.strategies.StringComparator;
+import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
 import java.beans.IntrospectionException;
 import java.util.List;
@@ -13,10 +13,10 @@ import static org.junit.Assert.assertTrue;
 
 public class StringComparatorTests {
 
-    private ComparisonContext context = new ComparisonContext();
+    private final ComparisonContext context = new ComparisonContext();
 
     private StringComparator getComparator(boolean caseSensitive, boolean trim) {
-        return getComparator(caseSensitive, trim, null);
+        return this.getComparator(caseSensitive, trim, null);
     }
 
     private StringComparator getComparator(boolean caseSensitive, boolean trim,
@@ -31,18 +31,18 @@ public class StringComparatorTests {
 
     @Test
     public void stringComparatorPassNulls() throws IntrospectionException {
-        StringComparator comparator = getComparator(true, false, null);
+        StringComparator comparator = this.getComparator(true, false, null);
 
-        List<ComparisonResult> resultList = comparator.compare(null, null, context);
+        List<ComparisonResult> resultList = comparator.compare(null, null, this.context);
         assertTrue(resultList.get(0).isPassed());
     }
 
     @Test(expected = AssertionError.class)
     public void stringComparatorFailNull() throws IntrospectionException {
         String expected = "test";
-        StringComparator comparator = getComparator(false, false, null);
+        StringComparator comparator = this.getComparator(false, false, null);
 
-        List<ComparisonResult> resultList = comparator.compare(null, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(null, expected, this.context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -51,9 +51,9 @@ public class StringComparatorTests {
         String actual = "test";
         String expected = "test";
 
-        StringComparator comparator = getComparator(true, false);
+        StringComparator comparator = this.getComparator(true, false);
 
-        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, this.context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -63,9 +63,9 @@ public class StringComparatorTests {
         String expected = "test";
 
 
-        StringComparator comparator = getComparator(true, false);
+        StringComparator comparator = this.getComparator(true, false);
 
-        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, this.context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -74,9 +74,9 @@ public class StringComparatorTests {
         String actual = "Test";
         String expected = "test";
 
-        StringComparator comparator = getComparator(false, false);
+        StringComparator comparator = this.getComparator(false, false);
 
-        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, this.context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -88,9 +88,9 @@ public class StringComparatorTests {
 
         char[] ignore = {'$', ' ', 'A'};
 
-        StringComparator comparator = getComparator(false, false, ignore);
+        StringComparator comparator = this.getComparator(false, false, ignore);
 
-        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, this.context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -100,9 +100,9 @@ public class StringComparatorTests {
         String expected = "test";
         char[] ignore = {'^', '$', 'A'};
 
-        StringComparator comparator = getComparator(false, false, ignore);
+        StringComparator comparator = this.getComparator(false, false, ignore);
 
-        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, this.context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -112,9 +112,9 @@ public class StringComparatorTests {
         String expected = "test";
         char[] ignore = {'\t', '$'};
 
-        StringComparator comparator = getComparator(false, false, ignore);
+        StringComparator comparator = this.getComparator(false, false, ignore);
 
-        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, this.context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -123,9 +123,9 @@ public class StringComparatorTests {
         int actual = 1;
         int expected = 1;
 
-        StringComparator comparator = getComparator(false, false);
+        StringComparator comparator = this.getComparator(false, false);
 
-        List<ComparisonResult> results = comparator.compare(actual, expected, context);
+        List<ComparisonResult> results = comparator.compare(actual, expected, this.context);
     }
 
     @Test
@@ -133,9 +133,9 @@ public class StringComparatorTests {
         String actual = "\t\ntest\r";
         String expected = " test \r\n";
         char empty [] = {};
-        StringComparator comparator = getComparator(false, true, empty);
+        StringComparator comparator = this.getComparator(false, true, empty);
 
-        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, this.context);
         assertTrue(resultList.get(0).isPassed());
     }
 
@@ -145,9 +145,9 @@ public class StringComparatorTests {
         String expected = " test \r\n";
 
 
-        StringComparator comparator = getComparator(false, true);
+        StringComparator comparator = this.getComparator(false, true);
 
-        List<ComparisonResult> resultList = comparator.compare(actual, expected, context);
+        List<ComparisonResult> resultList = comparator.compare(actual, expected, this.context);
         assertTrue(resultList.get(0).isPassed());
     }
 }

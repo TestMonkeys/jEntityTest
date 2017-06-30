@@ -1,10 +1,10 @@
 package org.testmonkeys.jentitytest.test.childEntityTests;
 
-import org.testmonkeys.jentitytest.test.childEntityTests.models.ParentEntity;
-import org.testmonkeys.jentitytest.test.childEntityTests.models.SimpleEntity;
 import org.junit.Assert;
 import org.junit.Test;
-import org.testmonkeys.jentitytest.Entity;
+import org.testmonkeys.jentitytest.hamcrest.Entity;
+import org.testmonkeys.jentitytest.test.childEntityTests.models.ParentEntity;
+import org.testmonkeys.jentitytest.test.childEntityTests.models.SimpleEntity;
 
 import java.time.LocalDateTime;
 

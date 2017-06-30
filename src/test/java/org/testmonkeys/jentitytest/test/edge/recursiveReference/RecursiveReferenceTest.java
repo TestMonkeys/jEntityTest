@@ -3,7 +3,7 @@ package org.testmonkeys.jentitytest.test.edge.recursiveReference;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.testmonkeys.jentitytest.Entity;
+import org.testmonkeys.jentitytest.hamcrest.Entity;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.not;
@@ -33,9 +33,9 @@ public class RecursiveReferenceTest {
 
     @Test
     public void edge_recursiveReference2() {
-        expectedException.expect(AssertionError.class);
-        expectedException.expectMessage("age\n\tExpected: 2\n\tActual: 3");
-        expectedException.expectMessage(not(containsString("dad.firstChild.age")));
+        this.expectedException.expect(AssertionError.class);
+        this.expectedException.expectMessage("age\n\tExpected: 2\n\tActual: 3");
+        this.expectedException.expectMessage(not(containsString("dad.firstChild.age")));
         EntityParent parent1 = new EntityParent();
         EntityChild child1 = new EntityChild();
         child1.setAge(3);

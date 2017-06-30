@@ -2,7 +2,7 @@ package org.testmonkeys.jentitytest.test.bugs.issue_38;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.testmonkeys.jentitytest.Entity;
+import org.testmonkeys.jentitytest.hamcrest.Entity;
 import org.testmonkeys.jentitytest.test.unit.strategies.dateTime.SimpleModel;
 
 public class Issue38test {

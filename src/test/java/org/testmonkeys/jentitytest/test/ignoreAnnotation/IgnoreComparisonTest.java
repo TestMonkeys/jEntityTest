@@ -2,7 +2,7 @@ package org.testmonkeys.jentitytest.test.ignoreAnnotation;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.testmonkeys.jentitytest.Entity;
+import org.testmonkeys.jentitytest.hamcrest.Entity;
 
 public class IgnoreComparisonTest {
 

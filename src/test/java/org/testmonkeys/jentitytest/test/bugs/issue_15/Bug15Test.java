@@ -4,7 +4,7 @@ import org.hamcrest.core.StringContains;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.testmonkeys.jentitytest.Entity;
+import org.testmonkeys.jentitytest.hamcrest.Entity;
 
 import static org.junit.Assert.assertThat;
 
@@ -32,8 +32,8 @@ public class Bug15Test {
 
     @Test
     public void bug_15_ChildEntity_expectedNotNull_actualNull() {
-        expectedEx.expect(AssertionError.class);
-        expectedEx.expectMessage(StringContains.containsString("mom\n\tExpected: not null\n\tActual: null"));
+        this.expectedEx.expect(AssertionError.class);
+        this.expectedEx.expectMessage(StringContains.containsString("mom\n\tExpected: not null\n\tActual: null"));
         EntityParent parent1 = new EntityParent();
         EntityChild child1 = new EntityChild();
         child1.setAge(3);
@@ -51,8 +51,8 @@ public class Bug15Test {
 
     @Test
     public void bug_15_ChildEntity_expectedNull_actualNotNull() {
-        expectedEx.expect(AssertionError.class);
-        expectedEx.expectMessage(StringContains.containsString("mom\n\tExpected: null\n\tActual: not null"));
+        this.expectedEx.expect(AssertionError.class);
+        this.expectedEx.expectMessage(StringContains.containsString("mom\n\tExpected: null\n\tActual: not null"));
 
         EntityParent parent1 = new EntityParent();
         EntityChild child1 = new EntityChild();

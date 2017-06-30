@@ -9,17 +9,13 @@ import java.util.ArrayList;
  */
 public class ResultSet extends ArrayList<ComparisonResult> {
 
-    public ResultSet(boolean passed, ComparisonContext context, Object actual, Object
-            expected) {
-        add(new ComparisonResult(passed,context,actual,expected));
-    }
-
     public ResultSet(){
 
     }
 
-    public void add(boolean passed, ComparisonContext context, Object actual, Object
+    public ResultSet with(boolean passed, ComparisonContext context, Object actual, Object
             expected){
-        add(new ComparisonResult(passed,context,actual,expected));
+        this.add(new ComparisonResult(passed, context, actual, expected));
+        return this;
     }
 }

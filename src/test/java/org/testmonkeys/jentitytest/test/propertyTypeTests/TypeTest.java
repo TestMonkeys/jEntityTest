@@ -1,9 +1,9 @@
 package org.testmonkeys.jentitytest.test.propertyTypeTests;
 
-import org.testmonkeys.jentitytest.test.propertyTypeTests.models.TypesEntityModel;
 import org.junit.Assert;
 import org.junit.Test;
-import org.testmonkeys.jentitytest.Entity;
+import org.testmonkeys.jentitytest.hamcrest.Entity;
+import org.testmonkeys.jentitytest.test.propertyTypeTests.models.TypesEntityModel;
 
 @SuppressWarnings({"BooleanConstructorCall", "UnnecessaryBoxing"})
 public class TypeTest {

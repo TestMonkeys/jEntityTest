@@ -1,18 +1,15 @@
 package org.testmonkeys.jentitytest;
 
-import org.testmonkeys.jentitytest.comparison.result.ResultSet;
-import org.testmonkeys.jentitytest.model.EntityToComparisonModelDictionary;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
-import org.testmonkeys.jentitytest.model.ComparisonModel;
 import org.testmonkeys.jentitytest.comparison.PropertyComparisonWrapper;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
-import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
-import org.testmonkeys.jentitytest.framework.JEntityTestException;
+import org.testmonkeys.jentitytest.comparison.result.ResultSet;
+import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
+import org.testmonkeys.jentitytest.model.ComparisonModel;
+import org.testmonkeys.jentitytest.model.EntityToComparisonModelDictionary;
 
 import java.beans.PropertyDescriptor;
-import java.util.LinkedList;
-import java.util.List;
 
 
 public class EntityComparator {
@@ -28,7 +25,7 @@ public class EntityComparator {
      */
     public ResultSet compare(Object actual, Object expected) {
 
-        return compare(actual, expected, null);
+        return this.compare(actual, expected, null);
     }
 
     /**
@@ -42,19 +39,19 @@ public class EntityComparator {
         ResultSet comparisonResults = new ResultSet();
         if (context == null) {
             context = new ComparisonContext();
-            String parent = getContextParentName(actual, expected);
+            String parent = this.getContextParentName(actual, expected);
             context.setParentName(parent);
             context.setActualObj(actual);
         }
 
-        ConditionalCheckResult conditionalCheckResult = nullComparatorHelper.runCheck(actual, expected, context);
+        ConditionalCheckResult conditionalCheckResult = this.nullComparatorHelper.runCheck(actual, expected, context);
         if (!conditionalCheckResult.isPassed() || conditionalCheckResult.isComparisonFinished()) {
             comparisonResults.add(conditionalCheckResult);
 
             return comparisonResults;
         }
 
-        ComparisonModel model = comparisonDictionary.getComparisonModel(expected.getClass());
+        ComparisonModel model = this.comparisonDictionary.getComparisonModel(expected.getClass());
 
 
         for (PropertyDescriptor propertyDescriptor : model.getComparableProperties()) {

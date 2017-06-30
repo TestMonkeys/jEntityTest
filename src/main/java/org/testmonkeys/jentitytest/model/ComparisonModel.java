@@ -8,23 +8,23 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Describes comparison model for an entity.
+ * Describes comparison model for an strategies.
  * Can provide the list of comparable properties and comparator for those properties.
  */
 public class ComparisonModel {
     private final Map<PropertyDescriptor, PropertyComparisonWrapper> comparisonMap;
 
     public ComparisonModel() {
-        comparisonMap = new HashMap<>();
+        this.comparisonMap = new HashMap<>();
     }
 
     /**
-     * Adds comparison point for entity
+     * Adds comparison point for strategies
      * @param propertyDescriptor property to add to the comparison
      * @param comparator comparator used for this property
      */
     public void setComparisonPoint(PropertyDescriptor propertyDescriptor, PropertyComparisonWrapper comparator) {
-        comparisonMap.put(propertyDescriptor, comparator);
+        this.comparisonMap.put(propertyDescriptor, comparator);
     }
 
     /**
@@ -32,7 +32,7 @@ public class ComparisonModel {
      * @return
      */
     public Set<PropertyDescriptor> getComparableProperties() {
-        return comparisonMap.keySet();
+        return this.comparisonMap.keySet();
     }
 
     /**
@@ -41,6 +41,6 @@ public class ComparisonModel {
      * @return
      */
     public PropertyComparisonWrapper getComparator(PropertyDescriptor propertyDescriptor) {
-        return comparisonMap.get(propertyDescriptor);
+        return this.comparisonMap.get(propertyDescriptor);
     }
 }

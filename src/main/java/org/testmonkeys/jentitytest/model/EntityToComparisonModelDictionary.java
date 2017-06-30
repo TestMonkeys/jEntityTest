@@ -1,6 +1,6 @@
 package org.testmonkeys.jentitytest.model;
 
-import org.testmonkeys.jentitytest.framework.JEntityTestException;
+import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,8 +14,8 @@ public final class EntityToComparisonModelDictionary {
     private final EntityInspector inspector;
 
     private EntityToComparisonModelDictionary() {
-        dictionary = new HashMap<>();
-        inspector = new EntityInspector();
+        this.dictionary = new HashMap<>();
+        this.inspector = new EntityInspector();
     }
 
     /**
@@ -23,19 +23,19 @@ public final class EntityToComparisonModelDictionary {
      * @return <code>EntityToComparisonModelDictionary</code>
      */
     public static synchronized EntityToComparisonModelDictionary getInstance() {
-        if (instance == null)
-            instance = new EntityToComparisonModelDictionary();
-        return instance;
+        if (EntityToComparisonModelDictionary.instance == null)
+            EntityToComparisonModelDictionary.instance = new EntityToComparisonModelDictionary();
+        return EntityToComparisonModelDictionary.instance;
     }
 
     /**
-     * Registers or overwrites Comparison Model for a given entity type
+     * Registers or overwrites Comparison Model for a given strategies type
      *
      * @param clazz Entity class
      * @param model ComparisonModel
      */
     public void addComparisonModel(Class clazz, ComparisonModel model) {
-        dictionary.put(clazz, model);
+        this.dictionary.put(clazz, model);
     }
 
     /**
@@ -46,9 +46,9 @@ public final class EntityToComparisonModelDictionary {
      * @throws JEntityTestException in the event that the class can not be inspected for generating the ComparisonModel
      */
     public ComparisonModel getComparisonModel(Class clazz) {
-        if (!dictionary.containsKey(clazz)) {
-            dictionary.put(clazz, inspector.getComparisonModel(clazz));
+        if (!this.dictionary.containsKey(clazz)) {
+            this.dictionary.put(clazz, this.inspector.getComparisonModel(clazz));
         }
-        return dictionary.get(clazz);
+        return this.dictionary.get(clazz);
     }
 }

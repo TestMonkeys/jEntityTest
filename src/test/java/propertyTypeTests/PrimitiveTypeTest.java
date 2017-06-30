@@ -2,7 +2,7 @@ package propertyTypeTests;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.testmonkeys.jentitytest.Entity;
+import org.testmonkeys.jentitytest.hamcrest.Entity;
 import propertyTypeTests.models.TypesEntityModel;
 
 public class PrimitiveTypeTest {

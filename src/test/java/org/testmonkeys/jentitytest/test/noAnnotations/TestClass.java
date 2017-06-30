@@ -2,7 +2,7 @@ package org.testmonkeys.jentitytest.test.noAnnotations;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.testmonkeys.jentitytest.Entity;
+import org.testmonkeys.jentitytest.hamcrest.Entity;
 import org.testmonkeys.jentitytest.hamcrest.matchers.EntityMatcher;
 
 public class TestClass {

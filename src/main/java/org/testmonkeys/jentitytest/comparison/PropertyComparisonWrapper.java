@@ -1,7 +1,7 @@
 package org.testmonkeys.jentitytest.comparison;
 
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
-import org.testmonkeys.jentitytest.framework.JEntityTestException;
+import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
@@ -27,13 +27,13 @@ public class PropertyComparisonWrapper {
     public List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) {
         List<ComparisonResult> resultList = new LinkedList<>();
 
-        Object actualValue = getPropertyValue(property, actual);
-        Object expectedValue = getPropertyValue(property, expected);
+        Object actualValue = this.getPropertyValue(property, actual);
+        Object expectedValue = this.getPropertyValue(property, expected);
 
         if (context.isRecursive(actualValue))
             return resultList;
         context.setActualObj(actualValue);
-        resultList.addAll(comparator.compare(actualValue, expectedValue, context));
+        resultList.addAll(this.comparator.compare(actualValue, expectedValue, context));
 
         return resultList;
     }
@@ -47,6 +47,6 @@ public class PropertyComparisonWrapper {
     }
 
     public Comparator getComparator() {
-        return comparator;
+        return this.comparator;
     }
 }
