@@ -20,6 +20,15 @@ public class ComparisonContext {
         this.index = index;
     }
 
+    public ComparisonContext withIndex(int index){
+        ComparisonContext newContext=new ComparisonContext(parent);
+        newContext.setIndex(index);
+        newContext.setParentName(this.getParentName());
+        newContext.setActualObj(this.getActualObj());
+        newContext.setComparatorDetails(this.getComparatorDetails());
+        return newContext;
+    }
+
     public void setActualObj(Object actualObj) {
         this.actualObj = actualObj;
     }

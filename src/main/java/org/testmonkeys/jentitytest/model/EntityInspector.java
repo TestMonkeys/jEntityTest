@@ -9,8 +9,11 @@ import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EntityInspector {
 
@@ -23,40 +26,30 @@ public class EntityInspector {
      */
     public ComparisonModel getComparisonModel(Class clazz) {
         ComparisonModel model = new ComparisonModel();
-        BeanInfo beanInfo = this.getBeanInfo(clazz);
+        BeanInfo beanInfo = getBeanInfo(clazz);
 
         for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
             Method method = propertyDescriptor.getReadMethod();
             if (method == null)
                 continue;
-            boolean customComparison = false;
-            boolean fieldLevelComparison = false;
-            try {
-                Field field = clazz.getDeclaredField(propertyDescriptor.getName());
-                for (Annotation annotation : field.getAnnotations()) {
-                    if (this.annotationToComparator.hasComparatorAssinged(annotation)) {
+            Field field = getField(clazz, propertyDescriptor);
 
-                        model.setComparisonPoint(propertyDescriptor,
-                                new PropertyComparisonWrapper(this.annotationToComparator.getComparatorForAnnotation(annotation)));
-
-                        customComparison = true;
-                        fieldLevelComparison = true;
-                    }
-                }
-            } catch (NoSuchFieldException nfe) {
-                //do nothing as this means that field was named differently than accessor methods
-            }
-            if (!fieldLevelComparison) {
-                for (Annotation annotation : method.getAnnotations()) {
-                    if (this.annotationToComparator.hasComparatorAssinged(annotation)) {
-                        model.setComparisonPoint(propertyDescriptor,
-                                new PropertyComparisonWrapper(this.annotationToComparator.getComparatorForAnnotation(annotation)));
-
-                        customComparison = true;
-                    }
+            //Field level processing
+            if (field!=null) {
+                for (Annotation annotation : getKnownAnnotations(field)) {
+                    model.setComparisonPoint(propertyDescriptor, getPropertyComparator(annotation));
+                    break;
                 }
             }
-            if (!customComparison)
+            //Method level processing
+            if (!model.hasComparisonPoint(propertyDescriptor)) {
+                for (Annotation annotation : getKnownAnnotations(method)) {
+                    model.setComparisonPoint(propertyDescriptor, getPropertyComparator(annotation));
+                    break;
+                }
+            }
+            //Default (in case no annotations were used)
+            if (!model.hasComparisonPoint(propertyDescriptor))
                 model.setComparisonPoint(propertyDescriptor, new PropertyComparisonWrapper(new SimpleTypeComparator()));
         }
         return model;
@@ -70,5 +63,29 @@ public class EntityInspector {
             throw new JEntityTestException("Could not get BeanInfo from class: " + clazz);
         }
         return beanInfo;
+    }
+
+    private List<Annotation> getKnownAnnotations(AnnotatedElement member) {
+        List<Annotation> knownAnnotations = new ArrayList<>();
+        for (Annotation candidate : member.getAnnotations()) {
+            if (this.annotationToComparator.hasComparatorAssinged(candidate)) {
+                knownAnnotations.add(candidate);
+            }
+        }
+        return knownAnnotations;
+    }
+
+    private PropertyComparisonWrapper getPropertyComparator(Annotation annotation){
+        return new PropertyComparisonWrapper(this.annotationToComparator.getComparatorForAnnotation(annotation));
+    }
+
+    private Field getField(Class clazz, PropertyDescriptor propertyDescriptor){
+        Field field=null;
+        try {
+            field = clazz.getDeclaredField(propertyDescriptor.getName());
+        } catch (NoSuchFieldException nfe) {
+            //do nothing as this means that field was named differently than accessor methods
+        }
+        return field;
     }
 }

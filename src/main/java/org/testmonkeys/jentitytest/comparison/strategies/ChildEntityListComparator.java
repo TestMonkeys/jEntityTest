@@ -1,6 +1,7 @@
 package org.testmonkeys.jentitytest.comparison.strategies;
 
 import org.testmonkeys.jentitytest.comparison.AbstractComparator;
+import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
@@ -9,16 +10,17 @@ import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class ChildEntityListComparator extends AbstractComparator {
 
     public ChildEntityListComparator() {
-        this.registerPreConditionalCheck(new NullConditionalCheck());
+        registerPreConditionalCheck(new NullConditionalCheck());
     }
 
     private static boolean isWrapperType(Object obj) {
-        return ChildEntityListComparator.getWrapperTypes().contains(obj.getClass());
+        return getWrapperTypes().contains(obj.getClass());
     }
 
     private static Set<Class<?>> getWrapperTypes() {
@@ -47,32 +49,38 @@ public class ChildEntityListComparator extends AbstractComparator {
     protected ResultSet computeComparison(Object actual, Object expected, ComparisonContext context) {
         ResultSet comparisonResults = new ResultSet();
 
-        Collection<?> listActual;
-        Collection<?> listExpected;
-        try {
-            listActual = (Collection<?>) actual;
-            listExpected = (Collection<?>) expected;
-        } catch (ClassCastException ex) {
-            throw new JEntityTestException("Actual and Expected should be Generic Collections");
-        }
+        Collection<?> listActual = castToCollection(actual);
+        Collection<?> listExpected = castToCollection(expected);
+
         if (listActual.size() != listExpected.size()) {
             comparisonResults.add(new ComparisonResult(false, context.withProperty("Size"),
-                    listActual, listExpected));
+                    listActual.size(), listExpected.size()));
             return comparisonResults;
         }
-        ChildEntityComparator childComparator = new ChildEntityComparator();
-        SimpleTypeComparator simpleTypeComparator = new SimpleTypeComparator();
+
+        Comparator elementComparator;
+        if (!listExpected.isEmpty() && isWrapperType(listExpected.iterator().next()))
+            elementComparator = new SimpleTypeComparator();
+        else
+            elementComparator = new ChildEntityComparator();
+
+        Iterator<?> actualIterator = listActual.iterator();
+        Iterator<?> expectedIterator = listExpected.iterator();
         for (int i = 0; i < listActual.size(); i++) {
-            Object actualItem = listActual.iterator().next();
-            Object expectedItem = listExpected.iterator().next();
-            context.setIndex(i);
-            if (ChildEntityListComparator.isWrapperType(actualItem)) {
-                comparisonResults.addAll(simpleTypeComparator.compare(actualItem, expectedItem, context));
-            } else {
-                comparisonResults.addAll(childComparator.compare(actualItem, expectedItem, context));
-            }
+            comparisonResults.addAll(elementComparator.compare(
+                    actualIterator.next(),
+                    expectedIterator.next(),
+                    context.withIndex(i)));
         }
 
         return comparisonResults;
+    }
+
+    private Collection<?> castToCollection(Object object) {
+        try {
+            return (Collection<?>) object;
+        } catch (ClassCastException ex) {
+            throw new JEntityTestException("Actual and Expected should be Generic Collections",ex);
+        }
     }
 }

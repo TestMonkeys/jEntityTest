@@ -27,6 +27,10 @@ public class ComparisonModel {
         this.comparisonMap.put(propertyDescriptor, comparator);
     }
 
+    public boolean hasComparisonPoint(PropertyDescriptor propertyDescriptor){
+        return comparisonMap.containsKey(propertyDescriptor);
+    }
+
     /**
      * Gets the set of properties that this model contains
      * @return
