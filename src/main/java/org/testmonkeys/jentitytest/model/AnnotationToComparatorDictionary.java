@@ -1,24 +1,26 @@
 package org.testmonkeys.jentitytest.model;
 
 import org.testmonkeys.jentitytest.comparison.Comparator;
-import org.testmonkeys.jentitytest.comparison.entity.ChildEntityComparator;
-import org.testmonkeys.jentitytest.comparison.entity.ChildEntityListComparator;
-import org.testmonkeys.jentitytest.comparison.property.DateTimeComparator;
-import org.testmonkeys.jentitytest.comparison.property.IgnoreComparator;
-import org.testmonkeys.jentitytest.comparison.property.StringComparator;
+import org.testmonkeys.jentitytest.comparison.strategies.ChildEntityComparator;
+import org.testmonkeys.jentitytest.comparison.strategies.ChildEntityListComparator;
+import org.testmonkeys.jentitytest.comparison.strategies.DateTimeComparator;
+import org.testmonkeys.jentitytest.comparison.strategies.IgnoreComparator;
+import org.testmonkeys.jentitytest.comparison.strategies.StringComparator;
+import org.testmonkeys.jentitytest.exceptions.ComparatorIllegalAccessException;
+import org.testmonkeys.jentitytest.exceptions.ComparatorInstantiationException;
+import org.testmonkeys.jentitytest.exceptions.ComparatorInvocationTargetException;
+import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.framework.*;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Annotation to comparator mapping class. This class is used during Entity inspection, and based on
  * registered mappings will provide the comparators for annotations used in the Entity.
- *
+ * <p>
  * Contains default comparisons but can register new annotations to comparator mappings at runtime.
  */
 public final class AnnotationToComparatorDictionary {
@@ -43,6 +45,7 @@ public final class AnnotationToComparatorDictionary {
 
     /**
      * Checks if provided annotation is linked to a comparator
+     *
      * @param annotation annotation to check
      * @return boolean result of verification
      */
@@ -52,6 +55,7 @@ public final class AnnotationToComparatorDictionary {
 
     /**
      * Register or overwrite a mapping between an annotation and a comparator
+     *
      * @param comparator comparator to register
      * @param annotation annotation to register
      * @throws JEntityTestException in case the comparator or annotation is null
@@ -89,21 +93,25 @@ public final class AnnotationToComparatorDictionary {
      * @throws JEntityTestException
      */
     private Comparator initializeComparator(Annotation annotation, Class<? extends Comparator> type) {
+        Constructor[] constructors = type.getDeclaredConstructors();
+        Constructor annotationConstructor = null;
+        for (Constructor candidate : constructors) {
+            if (candidate.getParameterCount() == 1 && (annotation.annotationType().isAssignableFrom(candidate.getParameterTypes()[0]))) {
+                annotationConstructor = candidate;
+                break;
+            }
+        }
         try {
-
-            Method[] methods = annotation.annotationType().getDeclaredMethods();
-
-            Comparator comparator = type.newInstance();
-            for (Method method : methods) {
-                Field field = type.getDeclaredField(method.getName());
-                field.setAccessible(true);
-                field.set(comparator, method.invoke(annotation));
-                field.setAccessible(false);
-            } 
-
-            return comparator;
-        } catch (InvocationTargetException | IllegalAccessException | InstantiationException | NoSuchFieldException e) {
-            throw new JEntityTestException("Could not create Comparator for annotation " + annotation.annotationType().getName(), e);
+            if (annotationConstructor != null)
+                return (Comparator) annotationConstructor.newInstance(annotation);
+            else
+                return type.newInstance();
+        } catch (InstantiationException e) {
+            throw new ComparatorInstantiationException(type, annotation, e);
+        } catch (IllegalAccessException e) {
+            throw new ComparatorIllegalAccessException(type, annotation, e);
+        } catch (Exception e){
+            throw new ComparatorInvocationTargetException(type, annotation, e);
         }
     }
 

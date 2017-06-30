@@ -1,11 +1,12 @@
-package org.testmonkeys.jentitytest.utils;
+package org.testmonkeys.jentitytest.hamcrest.matchers;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 
-public final class ResultOutput {
+public class DefaultResultOutput implements ResultProcessor {
 
-    public static String getOutput(ComparisonContext context, ComparisonResult result){
+    @Override
+    public String getOutput(ComparisonContext context, ComparisonResult result){
         StringBuilder sb = new StringBuilder();
         sb.append("Property: ").append(context).
                 append("\n\tExpected: ").append(result.getExpected()).

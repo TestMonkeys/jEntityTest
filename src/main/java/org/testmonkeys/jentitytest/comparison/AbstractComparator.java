@@ -1,10 +1,10 @@
 package org.testmonkeys.jentitytest.comparison;
 
-import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
-import org.testmonkeys.jentitytest.framework.JEntityTestException;
+import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +14,13 @@ public abstract class AbstractComparator implements Comparator {
 
     protected void registerPreConditionalCheck(PreComparisonCheck preComparisonCheck) {
         preComparisonChecks.add(preComparisonCheck);
+    }
+
+    public AbstractComparator(Annotation annotation){
+
+    }
+
+    public AbstractComparator(){
     }
 
     @Override
