@@ -1,12 +1,13 @@
 package org.testmonkeys.jentitytest.hamcrest.matchers;
 
-import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.testmonkeys.jentitytest.EntityComparator;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import static org.testmonkeys.jentitytest.comparison.result.Status.Passed;
 
 /**
  * Hamcrest Entity Type matcher for type <T>
@@ -18,29 +19,28 @@ public class EntityMatcher<T> extends AbstractJEntityMatcher<T> {
     private String textualOutput;
 
     public EntityMatcher(Object expected) {
-        super();
         this.expected = expected;
     }
 
     /**
      * Performs matching using the EntityComparator between the actualItem and expected
-     * @param actualItem
+     * @param item
      * @return
      */
     @Override
-    public boolean matches(Object actualItem) {
+    public boolean matches(Object item) {
         List<ComparisonResult> result = new LinkedList<>();
         EntityComparator comparator = new EntityComparator();
-        result.addAll(comparator.compare(actualItem, expected));
+        result.addAll(comparator.compare(item, expected));
 
         StringBuilder sb = new StringBuilder();
         for (ComparisonResult res : result) {
-            if (res.isPassed())
+            if (res.getStatus() == Passed)
                 continue;
             sb.append(resultProcessor.getOutput(res.getComparisonContext(), res));
         }
         textualOutput = sb.toString();
-        return result.stream().allMatch(ComparisonResult::isPassed);
+        return result.stream().allMatch(r -> r.getStatus() == Passed);
     }
 
     @Override

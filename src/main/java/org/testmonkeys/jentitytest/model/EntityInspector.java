@@ -35,22 +35,23 @@ public class EntityInspector {
             Field field = getField(clazz, propertyDescriptor);
 
             //Field level processing
-            if (field!=null) {
-                for (Annotation annotation : getKnownAnnotations(field)) {
+            if (field != null) {
+                Annotation annotation = getComparisonAnnotation(field);
+                if (annotation != null) {
                     model.setComparisonPoint(propertyDescriptor, getPropertyComparator(annotation));
-                    break;
+                    continue;
                 }
             }
+
             //Method level processing
-            if (!model.hasComparisonPoint(propertyDescriptor)) {
-                for (Annotation annotation : getKnownAnnotations(method)) {
-                    model.setComparisonPoint(propertyDescriptor, getPropertyComparator(annotation));
-                    break;
-                }
+            Annotation annotation = getComparisonAnnotation(method);
+            if (annotation != null) {
+                model.setComparisonPoint(propertyDescriptor, getPropertyComparator(annotation));
+                continue;
             }
+
             //Default (in case no annotations were used)
-            if (!model.hasComparisonPoint(propertyDescriptor))
-                model.setComparisonPoint(propertyDescriptor, new PropertyComparisonWrapper(new SimpleTypeComparator()));
+            model.setComparisonPoint(propertyDescriptor, new PropertyComparisonWrapper(new SimpleTypeComparator()));
         }
         return model;
     }
@@ -65,25 +66,30 @@ public class EntityInspector {
         return beanInfo;
     }
 
-    private List<Annotation> getKnownAnnotations(AnnotatedElement member) {
+    private Annotation getComparisonAnnotation(AnnotatedElement member) {
         List<Annotation> knownAnnotations = new ArrayList<>();
         for (Annotation candidate : member.getAnnotations()) {
-            if (this.annotationToComparator.hasComparatorAssinged(candidate)) {
+            if (annotationToComparator.hasComparatorAssigned(candidate)) {
                 knownAnnotations.add(candidate);
             }
         }
-        return knownAnnotations;
+        if (knownAnnotations.size() > 1)
+            throw new JEntityTestException("There should be only one Comparison Annotation on your model");
+        if (knownAnnotations.size() == 1)
+            return knownAnnotations.get(0);
+        else
+            return null;
     }
 
-    private PropertyComparisonWrapper getPropertyComparator(Annotation annotation){
-        return new PropertyComparisonWrapper(this.annotationToComparator.getComparatorForAnnotation(annotation));
+    private PropertyComparisonWrapper getPropertyComparator(Annotation annotation) {
+        return new PropertyComparisonWrapper(annotationToComparator.getComparatorForAnnotation(annotation));
     }
 
-    private Field getField(Class clazz, PropertyDescriptor propertyDescriptor){
-        Field field=null;
+    private Field getField(Class clazz, PropertyDescriptor propertyDescriptor) {
+        Field field = null;
         try {
             field = clazz.getDeclaredField(propertyDescriptor.getName());
-        } catch (NoSuchFieldException nfe) {
+        } catch (NoSuchFieldException ignored) {
             //do nothing as this means that field was named differently than accessor methods
         }
         return field;

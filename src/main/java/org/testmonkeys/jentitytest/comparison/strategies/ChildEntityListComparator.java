@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
+
 public class ChildEntityListComparator extends AbstractComparator {
 
     public ChildEntityListComparator() {
@@ -53,7 +55,7 @@ public class ChildEntityListComparator extends AbstractComparator {
         Collection<?> listExpected = castToCollection(expected);
 
         if (listActual.size() != listExpected.size()) {
-            comparisonResults.add(new ComparisonResult(false, context.withProperty("Size"),
+            comparisonResults.add(new ComparisonResult(Failed, context.withProperty("Size"),
                     listActual.size(), listExpected.size()));
             return comparisonResults;
         }

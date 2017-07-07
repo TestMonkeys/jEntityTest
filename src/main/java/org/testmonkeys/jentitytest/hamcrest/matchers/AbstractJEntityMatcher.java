@@ -9,7 +9,7 @@ public abstract class AbstractJEntityMatcher<T> extends BaseMatcher<T> {
     protected ResultProcessor resultProcessor;
 
     protected AbstractJEntityMatcher() {
-        this.resultProcessor = new DefaultResultOutput();
+        resultProcessor = new DefaultResultOutput();
     }
 
     public void setResultProcessor(ResultProcessor resultProcessor) {

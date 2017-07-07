@@ -14,18 +14,18 @@ public final class EntityToComparisonModelDictionary {
     private final EntityInspector inspector;
 
     private EntityToComparisonModelDictionary() {
-        this.dictionary = new HashMap<>();
-        this.inspector = new EntityInspector();
+        dictionary = new HashMap<>();
+        inspector = new EntityInspector();
     }
 
     /**
-     * Gets the instance of <code>EntityToComparisonModelDictionary</code>
-     * @return <code>EntityToComparisonModelDictionary</code>
+     * Gets the instance of {@code EntityToComparisonModelDictionary}
+     * @return {@code EntityToComparisonModelDictionary}
      */
     public static synchronized EntityToComparisonModelDictionary getInstance() {
-        if (EntityToComparisonModelDictionary.instance == null)
-            EntityToComparisonModelDictionary.instance = new EntityToComparisonModelDictionary();
-        return EntityToComparisonModelDictionary.instance;
+        if (instance == null)
+            instance = new EntityToComparisonModelDictionary();
+        return instance;
     }
 
     /**
@@ -34,8 +34,9 @@ public final class EntityToComparisonModelDictionary {
      * @param clazz Entity class
      * @param model ComparisonModel
      */
+    @SuppressWarnings("NonBooleanMethodNameMayNotStartWithQuestion")
     public void addComparisonModel(Class clazz, ComparisonModel model) {
-        this.dictionary.put(clazz, model);
+        dictionary.put(clazz, model);
     }
 
     /**
@@ -46,9 +47,9 @@ public final class EntityToComparisonModelDictionary {
      * @throws JEntityTestException in the event that the class can not be inspected for generating the ComparisonModel
      */
     public ComparisonModel getComparisonModel(Class clazz) {
-        if (!this.dictionary.containsKey(clazz)) {
-            this.dictionary.put(clazz, this.inspector.getComparisonModel(clazz));
+        if (!dictionary.containsKey(clazz)) {
+            dictionary.put(clazz, inspector.getComparisonModel(clazz));
         }
-        return this.dictionary.get(clazz);
+        return dictionary.get(clazz);
     }
 }

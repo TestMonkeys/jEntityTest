@@ -11,20 +11,20 @@ import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 public class ChildEntityComparator extends AbstractComparator {
 
     public ChildEntityComparator() {
-        this.registerPreConditionalCheck(new NullConditionalCheck());
+        registerPreConditionalCheck(new NullConditionalCheck());
     }
 
     /**
-     * @param actualValue
-     * @param expectedValue
+     * @param actual
+     * @param expected
      * @param context
      * @return
      * @throws JEntityTestException
      */
     @Override
-    protected ResultSet computeComparison(Object actualValue, Object expectedValue, ComparisonContext context) {
+    protected ResultSet computeComparison(Object actual, Object expected, ComparisonContext context) {
 
         EntityComparator comparator = new EntityComparator();
-        return comparator.compare(actualValue, expectedValue, context);
+        return comparator.compare(actual, expected, context);
     }
 }

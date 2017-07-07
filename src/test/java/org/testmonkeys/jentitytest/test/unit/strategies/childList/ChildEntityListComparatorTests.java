@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
+import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
+import static org.testmonkeys.jentitytest.comparison.result.Status.Passed;
 
 public class ChildEntityListComparatorTests {
 
@@ -20,16 +22,16 @@ public class ChildEntityListComparatorTests {
 
     @Test
     public void actualNotCollection() {
-        this.expectedException.expect(JEntityTestException.class);
-        this.expectedException.expectMessage("Actual and Expected should be Generic Collections");
+        expectedException.expect(JEntityTestException.class);
+        expectedException.expectMessage("Actual and Expected should be Generic Collections");
         ChildEntityListComparator comparator = new ChildEntityListComparator();
         comparator.compare("a string", new ArrayList<String>(), new ComparisonContext());
     }
 
     @Test
     public void expectedNotCollection() {
-        this.expectedException.expect(JEntityTestException.class);
-        this.expectedException.expectMessage("Actual and Expected should be Generic Collections");
+        expectedException.expect(JEntityTestException.class);
+        expectedException.expectMessage("Actual and Expected should be Generic Collections");
         ChildEntityListComparator comparator = new ChildEntityListComparator();
         comparator.compare(new ArrayList<String>(), "a string", new ComparisonContext());
     }
@@ -39,7 +41,7 @@ public class ChildEntityListComparatorTests {
         ChildEntityListComparator comparator = new ChildEntityListComparator();
         List<ComparisonResult> results = comparator.compare(new ArrayList<String>(), new ArrayList<String>(), new ComparisonContext());
 
-        assertTrue(results.stream().allMatch(ComparisonResult::isPassed));
+        assertTrue(results.stream().allMatch(r -> r.getStatus() == Passed));
     }
 
     @Test
@@ -52,7 +54,7 @@ public class ChildEntityListComparatorTests {
 
         List<ComparisonResult> results = comparator.compare(actual, expected, new ComparisonContext());
 
-        assertTrue(results.stream().anyMatch(res -> !res.isPassed()));
+        assertTrue(results.stream().anyMatch(res -> res.getStatus() == Failed));
     }
 
     @Test
@@ -66,7 +68,7 @@ public class ChildEntityListComparatorTests {
 
         List<ComparisonResult> results = comparator.compare(actual, expected, new ComparisonContext());
 
-        assertTrue(results.stream().anyMatch(res -> !res.isPassed()));
+        assertTrue(results.stream().anyMatch(res -> res.getStatus() == Failed));
     }
 
 
@@ -82,7 +84,7 @@ public class ChildEntityListComparatorTests {
 
         List<ComparisonResult> results = comparator.compare(actual, expected, new ComparisonContext());
 
-        assertTrue(results.stream().allMatch(ComparisonResult::isPassed));
+        assertTrue(results.stream().allMatch(r -> r.getStatus() == Passed));
     }
 
     @Test
@@ -97,7 +99,7 @@ public class ChildEntityListComparatorTests {
 
         List<ComparisonResult> results = comparator.compare(actual, expected, new ComparisonContext());
 
-        assertTrue(results.stream().allMatch(ComparisonResult::isPassed));
+        assertTrue(results.stream().allMatch(r -> r.getStatus() == Passed));
     }
 
 }

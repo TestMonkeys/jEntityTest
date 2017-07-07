@@ -12,7 +12,7 @@ public final class Entity {
     private static ResultProcessor resultProcessor;
 
     static {
-        Entity.resultProcessor = new DefaultResultOutput();
+        resultProcessor = new DefaultResultOutput();
     }
 
     public static void setResultProcessor(ResultProcessor resultProcessor) {
@@ -28,9 +28,10 @@ public final class Entity {
      * @param <T>
      * @return
      */
-    public static <T> EntityMatcher<T> isEqualTo(Object expected) {
+    @SuppressWarnings("NonBooleanMethodNameMayNotStartWithQuestion")
+    public static synchronized <T> EntityMatcher<T> isEqualTo(Object expected) {
         EntityMatcher<T> matcher = new EntityMatcher<>(expected);
-        matcher.setResultProcessor(Entity.resultProcessor);
+        matcher.setResultProcessor(resultProcessor);
         return matcher;
     }
 }

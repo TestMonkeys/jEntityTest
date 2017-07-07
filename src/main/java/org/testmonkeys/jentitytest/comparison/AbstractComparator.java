@@ -4,9 +4,10 @@ import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
-import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
 
 public abstract class AbstractComparator implements Comparator {
 
@@ -16,25 +17,18 @@ public abstract class AbstractComparator implements Comparator {
         preComparisonChecks.add(preComparisonCheck);
     }
 
-    public AbstractComparator(Annotation annotation){
-
-    }
-
-    public AbstractComparator(){
-    }
-
     @Override
-    public ResultSet compare(Object actualValue, Object expectedValue, ComparisonContext context) {
+    public ResultSet compare(Object actual, Object expected, ComparisonContext context) {
         ResultSet resultList = new ResultSet();
 
-        List<ConditionalCheckResult> conditionalResults = runConditionals(actualValue, expectedValue, context);
-        if (conditionalResults.stream().anyMatch(res -> res.isComparisonFinished() || !res.isPassed())) {
+        List<ConditionalCheckResult> conditionalResults = runConditionals(actual, expected, context);
+        if (conditionalResults.stream().anyMatch(res -> res.isComparisonFinished() || (res.getStatus() == Failed))) {
             resultList.addAll(conditionalResults);
             return resultList;
         }
 
         context.setComparatorDetails(describe());
-        resultList.addAll(computeComparison(actualValue, expectedValue, context));
+        resultList.addAll(computeComparison(actual, expected, context));
         return resultList;
     }
 
@@ -66,7 +60,7 @@ public abstract class AbstractComparator implements Comparator {
     protected abstract ResultSet computeComparison(Object actual, Object expected, ComparisonContext context);
 
     protected String describe(){
-        return this.getClass().getSimpleName();
+        return getClass().getSimpleName();
     }
 
 }

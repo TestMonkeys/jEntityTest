@@ -32,8 +32,8 @@ public class AnnotationToComparatorDictionaryTest {
      */
     @Before
     public void background() throws IntrospectionException, JEntityTestException {
-        this.comparisonMap = AnnotationToComparatorDictionary.getInstance();
-        this.comparisonMap.setComparatorForAnnotation(BadComparator.class, BadComparisonCustom.class);
+        comparisonMap = AnnotationToComparatorDictionary.getInstance();
+        comparisonMap.setComparatorForAnnotation(BadComparator.class, BadComparisonCustom.class);
     }
 
     /**
@@ -41,12 +41,12 @@ public class AnnotationToComparatorDictionaryTest {
      */
     @Test
     public void unit_modelToComparison_noMappingForAnnotation() throws Throwable {
-        this.expectedException.expect(JEntityTestException.class);
-        this.expectedException.expectMessage("There is no comparator defined for annotation " +
+        expectedException.expect(JEntityTestException.class);
+        expectedException.expectMessage("There is no comparator defined for annotation " +
                 "org.testmonkeys.jentitytest.test.unit.model.util.SimpleAnnotation");
 
         Annotation an = () -> SimpleAnnotation.class;
-        this.comparisonMap.getComparatorForAnnotation(an);
+        comparisonMap.getComparatorForAnnotation(an);
     }
 
     /**
@@ -54,10 +54,10 @@ public class AnnotationToComparatorDictionaryTest {
      */
     @Test
     public void unit_modelToComparison_nullAnnotation() throws Throwable {
-        this.expectedException.expect(JEntityTestException.class);
-        this.expectedException.expectMessage("Annotation can not be null");
+        expectedException.expect(JEntityTestException.class);
+        expectedException.expectMessage("Annotation can not be null");
 
-        this.comparisonMap.getComparatorForAnnotation(null);
+        comparisonMap.getComparatorForAnnotation(null);
     }
 
 
@@ -66,10 +66,10 @@ public class AnnotationToComparatorDictionaryTest {
      */
     @Test
     public void unit_modelToComparison_registrationNullComparator() throws Throwable {
-        this.expectedException.expect(JEntityTestException.class);
-        this.expectedException.expectMessage("Comparator can not be null");
+        expectedException.expect(JEntityTestException.class);
+        expectedException.expectMessage("Comparator can not be null");
 
-        this.comparisonMap.setComparatorForAnnotation(null, SimpleAnnotation.class);
+        comparisonMap.setComparatorForAnnotation(null, SimpleAnnotation.class);
     }
 
     /**
@@ -77,17 +77,17 @@ public class AnnotationToComparatorDictionaryTest {
      */
     @Test
     public void unit_modelToComparison_registrationNullAnnotation() throws Throwable {
-        this.expectedException.expect(JEntityTestException.class);
-        this.expectedException.expectMessage("Annotation can not be null");
+        expectedException.expect(JEntityTestException.class);
+        expectedException.expectMessage("Annotation can not be null");
 
-        this.comparisonMap.setComparatorForAnnotation(IgnoreComparatorCustom.class, null);
+        comparisonMap.setComparatorForAnnotation(IgnoreComparatorCustom.class, null);
     }
 
     @Test
     public void annotationToComparatoryDictionary_bad_initCtrAnn_privateConstructor() {
-        this.expectedException.expect(ComparatorIllegalAccessException.class);
+        expectedException.expect(ComparatorIllegalAccessException.class);
         AnnotationToComparatorDictionary dictionary = AnnotationToComparatorDictionary.getInstance();
-        dictionary.setComparatorForAnnotation(BadComparatorPrivateConstructor.class, AnnotationToComparatorDictionaryTest.BadComparatorAnnotation.class);
+        dictionary.setComparatorForAnnotation(BadComparatorPrivateConstructor.class, BadComparatorAnnotation.class);
         dictionary.getComparatorForAnnotation(new BadComparatorAnnotationImp());
     }
 
@@ -95,7 +95,7 @@ public class AnnotationToComparatorDictionaryTest {
     public void annotationToComparatoryDictionary_bad_initCtrAnn_abstractComparator() {
         expectedException.expect(ComparatorInstantiationException.class);
         AnnotationToComparatorDictionary dictionary = AnnotationToComparatorDictionary.getInstance();
-        dictionary.setComparatorForAnnotation(BadComparatorAbstract.class, AnnotationToComparatorDictionaryTest.BadComparatorAnnotation.class);
+        dictionary.setComparatorForAnnotation(BadComparatorAbstract.class, BadComparatorAnnotation.class);
         dictionary.getComparatorForAnnotation(new BadComparatorAnnotationImp());
     }
 
@@ -103,15 +103,15 @@ public class AnnotationToComparatorDictionaryTest {
     public void annotationToComparatoryDictionary_bad_initCtrAnn_exceptionTrhown() {
         expectedException.expect(ComparatorInvocationTargetException.class);
         AnnotationToComparatorDictionary dictionary = AnnotationToComparatorDictionary.getInstance();
-        dictionary.setComparatorForAnnotation(BadComparatorErrInConstructor.class, AnnotationToComparatorDictionaryTest.BadComparatorAnnotation.class);
+        dictionary.setComparatorForAnnotation(BadComparatorErrInConstructor.class, BadComparatorAnnotation.class);
         dictionary.getComparatorForAnnotation(new BadComparatorAnnotationImp());
     }
 
     @Test
     public void annotationToComparatoryDictionary_bad_initCtrDefault_privateConstructor() {
-        expectedException.expect(ComparatorIllegalAccessException.class);
+        expectedException.expect(ComparatorInvocationTargetException.class);
         AnnotationToComparatorDictionary dictionary = AnnotationToComparatorDictionary.getInstance();
-        dictionary.setComparatorForAnnotation(BadComparatorPrivateDefaultConstructor.class, AnnotationToComparatorDictionaryTest.BadComparatorAnnotation.class);
+        dictionary.setComparatorForAnnotation(BadComparatorPrivateDefaultConstructor.class, BadComparatorAnnotation.class);
         dictionary.getComparatorForAnnotation(new BadComparatorAnnotationImp());
     }
 
@@ -119,7 +119,7 @@ public class AnnotationToComparatorDictionaryTest {
     public void annotationToComparatoryDictionary_bad_initCtrDefault_abstractComparator() {
         expectedException.expect(ComparatorInstantiationException.class);
         AnnotationToComparatorDictionary dictionary = AnnotationToComparatorDictionary.getInstance();
-        dictionary.setComparatorForAnnotation(BadComparatorAbstractDefaultCtr.class, AnnotationToComparatorDictionaryTest.BadComparatorAnnotation.class);
+        dictionary.setComparatorForAnnotation(BadComparatorAbstractDefaultCtr.class, BadComparatorAnnotation.class);
         dictionary.getComparatorForAnnotation(new BadComparatorAnnotationImp());
     }
 
@@ -127,7 +127,7 @@ public class AnnotationToComparatorDictionaryTest {
     public void annotationToComparatoryDictionary_bad_initCtrDefault_exceptionTrhown() {
         expectedException.expect(ComparatorInvocationTargetException.class);
         AnnotationToComparatorDictionary dictionary = AnnotationToComparatorDictionary.getInstance();
-        dictionary.setComparatorForAnnotation(BadComparatorErrInDefaultConstructor.class, AnnotationToComparatorDictionaryTest.BadComparatorAnnotation.class);
+        dictionary.setComparatorForAnnotation(BadComparatorErrInDefaultConstructor.class, BadComparatorAnnotation.class);
         dictionary.getComparatorForAnnotation(new BadComparatorAnnotationImp());
     }
 

@@ -22,20 +22,16 @@ public class ComparisonContext {
 
     public ComparisonContext withIndex(int index){
         ComparisonContext newContext=new ComparisonContext(parent);
-        newContext.setIndex(index);
-        newContext.setParentName(this.getParentName());
-        newContext.setActualObj(this.getActualObj());
-        newContext.setComparatorDetails(this.getComparatorDetails());
+        newContext.index = index;
+        newContext.parentName = parentName;
+        newContext.actualObj = actualObj;
+        newContext.comparatorDetails = comparatorDetails;
         return newContext;
-    }
-
-    public void setActualObj(Object actualObj) {
-        this.actualObj = actualObj;
     }
 
     public ComparisonContext withProperty(String propertyName) {
         ComparisonContext comparisonContext = new ComparisonContext(this);
-        comparisonContext.setParentName(propertyName);
+        comparisonContext.parentName = propertyName;
         return comparisonContext;
     }
 
@@ -49,7 +45,7 @@ public class ComparisonContext {
         if (parent != null) {
             sb.append(parent).append(".");
         }
-        sb.append(getParentName());
+        sb.append(parentName);
         if (index != -1)
             sb.append("[").append(index).append("]");
         return sb.toString();
@@ -62,15 +58,11 @@ public class ComparisonContext {
      */
     public boolean isRecursive(Object actual) {
         return canBeRecursive(actual) &&
-                (actual.equals(parent.getActualObj()) || parent.isRecursive(actual));
+                (actual.equals(parent.actualObj) || parent.isRecursive(actual));
     }
 
     private boolean canBeRecursive(Object actual){
-        return parent !=null && actual !=null;
-    }
-
-    public void setParentName(String parentName) {
-        this.parentName = parentName;
+        return (parent != null) && (actual != null);
     }
 
     public String getComparatorDetails() {
@@ -85,7 +77,15 @@ public class ComparisonContext {
         return parentName;
     }
 
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
     public Object getActualObj() {
         return actualObj;
+    }
+
+    public void setActualObj(Object actualObj) {
+        this.actualObj = actualObj;
     }
 }

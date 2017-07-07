@@ -15,7 +15,7 @@ public class ComparisonModel {
     private final Map<PropertyDescriptor, PropertyComparisonWrapper> comparisonMap;
 
     public ComparisonModel() {
-        this.comparisonMap = new HashMap<>();
+        comparisonMap = new HashMap<>();
     }
 
     /**
@@ -24,11 +24,7 @@ public class ComparisonModel {
      * @param comparator comparator used for this property
      */
     public void setComparisonPoint(PropertyDescriptor propertyDescriptor, PropertyComparisonWrapper comparator) {
-        this.comparisonMap.put(propertyDescriptor, comparator);
-    }
-
-    public boolean hasComparisonPoint(PropertyDescriptor propertyDescriptor){
-        return comparisonMap.containsKey(propertyDescriptor);
+        comparisonMap.put(propertyDescriptor, comparator);
     }
 
     /**
@@ -36,7 +32,7 @@ public class ComparisonModel {
      * @return
      */
     public Set<PropertyDescriptor> getComparableProperties() {
-        return this.comparisonMap.keySet();
+        return comparisonMap.keySet();
     }
 
     /**
@@ -45,6 +41,6 @@ public class ComparisonModel {
      * @return
      */
     public PropertyComparisonWrapper getComparator(PropertyDescriptor propertyDescriptor) {
-        return this.comparisonMap.get(propertyDescriptor);
+        return comparisonMap.get(propertyDescriptor);
     }
 }

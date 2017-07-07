@@ -6,7 +6,7 @@ import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 public class DefaultResultOutput implements ResultProcessor {
 
     @Override
-    public String getOutput(ComparisonContext context, ComparisonResult result){
+    public synchronized String getOutput(ComparisonContext context, ComparisonResult result) {
         StringBuilder sb = new StringBuilder();
         sb.append("Property: ").append(context).
                 append("\n\tExpected: ").append(result.getExpected()).

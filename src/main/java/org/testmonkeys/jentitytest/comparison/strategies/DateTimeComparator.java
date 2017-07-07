@@ -4,6 +4,7 @@ import org.testmonkeys.jentitytest.comparison.AbstractComparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
+import org.testmonkeys.jentitytest.comparison.result.Status;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.framework.DateTimeComparison;
 
@@ -16,14 +17,13 @@ public class DateTimeComparator extends AbstractComparator {
     private ChronoUnit unit = ChronoUnit.NANOS;
 
     public DateTimeComparator() {
-        this.registerPreConditionalCheck(new NullConditionalCheck());
+        registerPreConditionalCheck(new NullConditionalCheck());
     }
 
     public DateTimeComparator(DateTimeComparison annotation) {
-        super(annotation);
-        this.registerPreConditionalCheck(new NullConditionalCheck());
-        this.setDelta(annotation.delta());
-        this.setUnit(annotation.unit());
+        registerPreConditionalCheck(new NullConditionalCheck());
+        delta = annotation.delta();
+        unit = annotation.unit();
     }
 
     public void setDelta(int delta) {
@@ -35,31 +35,31 @@ public class DateTimeComparator extends AbstractComparator {
     }
 
     @Override
-    protected ResultSet computeComparison(Object a, Object e, ComparisonContext context) {
+    protected ResultSet computeComparison(Object actual, Object expected, ComparisonContext context) {
         Temporal actualValue;
         Temporal expectedValue;
 
 
         try {
-            actualValue = (Temporal) a;
-            expectedValue = (Temporal) e;
+            actualValue = (Temporal) actual;
+            expectedValue = (Temporal) expected;
         } catch (ClassCastException castException) {
             throw new JEntityTestException("Expected and Actual values must be of type " + Temporal.class.getName(),
                     castException);
         }
 
-        boolean passed = Math.abs(actualValue.until(expectedValue, this.unit)) <= this.delta;
-        return new ResultSet().with(passed, context, a, e);
+        Status status = Status.valueOf(Math.abs(actualValue.until(expectedValue, unit)) <= delta);
+        return new ResultSet().with(status, context, actual, expected);
     }
 
     @Override
     protected String describe() {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName());
-        if (this.delta == 0)
-            sb.append(" with precision up to ").append(this.unit);
+        if (delta == 0)
+            sb.append(" with precision up to ").append(unit);
         else
-            sb.append(" with delta ").append(this.delta).append(" ").append(this.unit);
+            sb.append(" with delta ").append(delta).append(" ").append(unit);
         return sb.toString();
     }
 }

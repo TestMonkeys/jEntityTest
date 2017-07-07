@@ -6,9 +6,9 @@ public class ConditionalCheckResult extends ComparisonResult {
 
     private boolean comparisonFinished;
 
-    public ConditionalCheckResult(boolean passed, ComparisonContext context, Object actual, Object
+    public ConditionalCheckResult(Status status, ComparisonContext context, Object actual, Object
             expected) {
-        super(passed, context, actual, expected);
+        super(status, context, actual, expected);
     }
 
     public boolean isComparisonFinished() {

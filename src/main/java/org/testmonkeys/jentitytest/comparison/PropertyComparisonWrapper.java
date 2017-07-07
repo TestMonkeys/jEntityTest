@@ -1,12 +1,10 @@
 package org.testmonkeys.jentitytest.comparison;
 
-import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
+import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedList;
-import java.util.List;
 
 public class PropertyComparisonWrapper {
 
@@ -24,16 +22,16 @@ public class PropertyComparisonWrapper {
      * @return
      * @throws JEntityTestException
      */
-    public List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) {
-        List<ComparisonResult> resultList = new LinkedList<>();
+    public ResultSet compare(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) {
+        ResultSet resultList = new ResultSet();
 
-        Object actualValue = this.getPropertyValue(property, actual);
-        Object expectedValue = this.getPropertyValue(property, expected);
+        Object actualValue = getPropertyValue(property, actual);
+        Object expectedValue = getPropertyValue(property, expected);
 
         if (context.isRecursive(actualValue))
             return resultList;
         context.setActualObj(actualValue);
-        resultList.addAll(this.comparator.compare(actualValue, expectedValue, context));
+        resultList.addAll(comparator.compare(actualValue, expectedValue, context));
 
         return resultList;
     }
@@ -47,6 +45,6 @@ public class PropertyComparisonWrapper {
     }
 
     public Comparator getComparator() {
-        return this.comparator;
+        return comparator;
     }
 }

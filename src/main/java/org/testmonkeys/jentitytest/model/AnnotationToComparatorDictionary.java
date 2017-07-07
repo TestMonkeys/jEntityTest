@@ -1,11 +1,7 @@
 package org.testmonkeys.jentitytest.model;
 
 import org.testmonkeys.jentitytest.comparison.Comparator;
-import org.testmonkeys.jentitytest.comparison.strategies.ChildEntityComparator;
-import org.testmonkeys.jentitytest.comparison.strategies.ChildEntityListComparator;
-import org.testmonkeys.jentitytest.comparison.strategies.DateTimeComparator;
-import org.testmonkeys.jentitytest.comparison.strategies.IgnoreComparator;
-import org.testmonkeys.jentitytest.comparison.strategies.StringComparator;
+import org.testmonkeys.jentitytest.comparison.strategies.*;
 import org.testmonkeys.jentitytest.exceptions.ComparatorIllegalAccessException;
 import org.testmonkeys.jentitytest.exceptions.ComparatorInstantiationException;
 import org.testmonkeys.jentitytest.exceptions.ComparatorInvocationTargetException;
@@ -37,7 +33,7 @@ public final class AnnotationToComparatorDictionary {
         mapping.put(ChildEntityListComparison.class, ChildEntityListComparator.class);
     }
 
-    public static AnnotationToComparatorDictionary getInstance() {
+    public static synchronized AnnotationToComparatorDictionary getInstance() {
         if (instance == null)
             instance = new AnnotationToComparatorDictionary();
         return instance;
@@ -49,7 +45,7 @@ public final class AnnotationToComparatorDictionary {
      * @param annotation annotation to check
      * @return boolean result of verification
      */
-    public boolean hasComparatorAssinged(Annotation annotation) {
+    public boolean hasComparatorAssigned(Annotation annotation) {
         return mapping.containsKey(annotation.annotationType());
     }
 
@@ -96,7 +92,7 @@ public final class AnnotationToComparatorDictionary {
         Constructor[] constructors = type.getDeclaredConstructors();
         Constructor annotationConstructor = null;
         for (Constructor candidate : constructors) {
-            if (candidate.getParameterCount() == 1 && (annotation.annotationType().isAssignableFrom(candidate.getParameterTypes()[0]))) {
+            if ((candidate.getParameterCount() == 1) && (annotation.annotationType().isAssignableFrom(candidate.getParameterTypes()[0]))) {
                 annotationConstructor = candidate;
                 break;
             }
@@ -105,12 +101,12 @@ public final class AnnotationToComparatorDictionary {
             if (annotationConstructor != null)
                 return (Comparator) annotationConstructor.newInstance(annotation);
             else
-                return type.newInstance();
+                return type.getConstructor().newInstance();
         } catch (InstantiationException e) {
             throw new ComparatorInstantiationException(type, annotation, e);
         } catch (IllegalAccessException e) {
             throw new ComparatorIllegalAccessException(type, annotation, e);
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new ComparatorInvocationTargetException(type, annotation, e);
         }
     }

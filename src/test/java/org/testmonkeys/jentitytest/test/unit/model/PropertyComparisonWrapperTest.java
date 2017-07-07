@@ -21,8 +21,8 @@ public class PropertyComparisonWrapperTest {
 
     @Test
     public void throwIllegalAccessExceptionTest() throws IntrospectionException {
-        this.expectedException.expect(JEntityTestException.class);
-        this.expectedException.expectMessage("Could not read property from object");
+        expectedException.expect(JEntityTestException.class);
+        expectedException.expectMessage("Could not read property from object");
         PropertyComparisonWrapper propertyComparison = new PropertyComparisonWrapper(new SimpleTypeComparator());
         BeanInfo beanInfo = getBeanInfo(Model.class);
         PropertyDescriptor descriptor = null;
@@ -30,13 +30,13 @@ public class PropertyComparisonWrapperTest {
             if(d.getName().equals("illegalAccess"))
                 descriptor = d;
         }
-        propertyComparison.areEqual(descriptor, new Model(), new Model(), new ComparisonContext());
+        propertyComparison.compare(descriptor, new Model(), new Model(), new ComparisonContext());
     }
 
     @Test
     public void throwInvocationTargetExceptionTest() throws IntrospectionException {
-        this.expectedException.expect(JEntityTestException.class);
-        this.expectedException.expectMessage("Could not read property from object");
+        expectedException.expect(JEntityTestException.class);
+        expectedException.expectMessage("Could not read property from object");
         PropertyComparisonWrapper propertyComparison = new PropertyComparisonWrapper(new SimpleTypeComparator());
         BeanInfo beanInfo = getBeanInfo(Model.class);
         PropertyDescriptor descriptor = null;
@@ -44,6 +44,6 @@ public class PropertyComparisonWrapperTest {
             if(d.getName().equals("invocationTarget"))
                 descriptor = d;
         }
-        propertyComparison.areEqual(descriptor, new Model(), new Model(), new ComparisonContext());
+        propertyComparison.compare(descriptor, new Model(), new Model(), new ComparisonContext());
     }
 }
