@@ -1,10 +1,17 @@
 package org.testmonkeys.jentitytest;
 
 import java.util.ResourceBundle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@SuppressWarnings("ClassWithTooManyDependents")
+@SuppressWarnings({"ClassWithTooManyDependents", "NonFinalUtilityClass"})
 public class Resources {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Resources.class);
+
+    @SuppressWarnings("HardCodedStringLiteral")
     private static final ResourceBundle bundle=ResourceBundle.getBundle("jentityStrings");
+
     public static final String ERR_NO_COMPARATOR_DEFINED_FOR_ANNOTATION="err_no_comparator_defined_for_annotation";
     public static final String err_creating_comparator_for_annotation="err_creating_comparator_for_annotation";
     public static final String err_actual_and_expected_must_be_generic_Collections=
@@ -23,11 +30,15 @@ public class Resources {
 
     public static final String desc_datetime_precision = "desc_datetime_precision";
     public static final String desc_datetime_delta = "desc_datetime_delta";
-
+    public static final String desc_following_props_did_not_match="desc_following_props_did_not_match";
+    public static final String desc_entities_same="desc_entities_same";
+    public static final String desc_string_ignoring_chars="desc_string_ignoring_chars";
+    public static final String desc_string="desc_string";
     public static final String comp_result="comp_result";
 
 
     public static synchronized String getString(String key){
+        LOG.trace("fetching localized string '{}'",key); //LOG
         return bundle.getString(key);
     }
 }

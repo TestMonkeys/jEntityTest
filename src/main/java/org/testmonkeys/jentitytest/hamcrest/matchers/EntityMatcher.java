@@ -2,11 +2,14 @@ package org.testmonkeys.jentitytest.hamcrest.matchers;
 
 import org.hamcrest.Description;
 import org.testmonkeys.jentitytest.EntityComparator;
+import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 
 import java.util.LinkedList;
 import java.util.List;
 
+import static org.testmonkeys.jentitytest.Resources.desc_entities_same;
+import static org.testmonkeys.jentitytest.Resources.desc_following_props_did_not_match;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Passed;
 
 /**
@@ -45,11 +48,11 @@ public class EntityMatcher<T> extends AbstractJEntityMatcher<T> {
 
     @Override
     public void describeMismatch(Object item, Description description) {
-        description.appendText("Following properties didn't match:\r\n").appendText(textualOutput);
+        description.appendText(Resources.getString(desc_following_props_did_not_match)).appendText(textualOutput);
     }
 
     @Override
     public void describeTo(Description description) {
-        description.appendText("Entities have same values in properties");
+        description.appendText(Resources.getString(desc_entities_same));
     }
 }

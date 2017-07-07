@@ -43,15 +43,16 @@ public class ComparisonContext {
      * Generates the full path for current comparison
      * @return
      */
+    @SuppressWarnings("MagicCharacter")
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (parent != null) {
-            sb.append(parent).append(".");
+            sb.append(parent).append('.');
         }
         sb.append(parentName);
         if (index != -1)
-            sb.append("[").append(index).append("]");
+            sb.append('[').append(index).append(']');
         return sb.toString();
     }
 

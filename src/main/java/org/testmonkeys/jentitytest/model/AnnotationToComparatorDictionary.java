@@ -1,5 +1,7 @@
 package org.testmonkeys.jentitytest.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.strategies.*;
@@ -21,16 +23,19 @@ import java.util.Map;
 
 public final class AnnotationToComparatorDictionary {
 
+    private static final Logger LOG = LoggerFactory.getLogger(AnnotationToComparatorDictionary.class);
+
     private static AnnotationToComparatorDictionary instance;
     private final Map<Class<?>, Class<? extends Comparator>> mapping;
 
     private AnnotationToComparatorDictionary() {
+        LOG.info("Initializing Annotation to Comparator Dictionary"); //LOG
         mapping = new HashMap<>();
-        mapping.put(IgnoreComparison.class, IgnoreComparator.class);
-        mapping.put(ChildEntityComparison.class, ChildEntityComparator.class);
-        mapping.put(DateTimeComparison.class, DateTimeComparator.class);
-        mapping.put(StringComparison.class, StringComparator.class);
-        mapping.put(ChildEntityListComparison.class, ChildEntityListComparator.class);
+        setComparatorForAnnotation(IgnoreComparator.class,IgnoreComparison.class);
+        setComparatorForAnnotation(ChildEntityComparator.class,ChildEntityComparison.class);
+        setComparatorForAnnotation(DateTimeComparator.class,DateTimeComparison.class);
+        setComparatorForAnnotation(StringComparator.class,StringComparison.class);
+        setComparatorForAnnotation(ChildEntityListComparator.class,ChildEntityListComparison.class);
     }
 
     public static synchronized AnnotationToComparatorDictionary getInstance() {
@@ -46,6 +51,7 @@ public final class AnnotationToComparatorDictionary {
      * @return boolean result of verification
      */
     public boolean hasComparatorAssigned(Annotation annotation) {
+        LOG.trace("Checking if {} has a comparator assigned",annotation); //LOG
         return mapping.containsKey(annotation.annotationType());
     }
 
@@ -57,6 +63,7 @@ public final class AnnotationToComparatorDictionary {
      * @throws JEntityTestException in case the comparator or annotation is null
      */
     public void setComparatorForAnnotation(Class<? extends Comparator> comparator, Class<?> annotation) {
+        LOG.info("Registering Comparator {} for Annotation {}",comparator,annotation); //LOG
         if (comparator == null)
             throw new IllegalArgumentException(Resources.getString(Resources.err_comparator_null));
         if (annotation == null)
@@ -72,6 +79,7 @@ public final class AnnotationToComparatorDictionary {
      * @throws JEntityTestException in case comparator could not be provided
      */
     public Comparator getComparatorForAnnotation(Annotation annotation) {
+        LOG.trace("Getting comparator for Annotation {}",annotation); //LOG
         if (annotation == null)
             throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
 
@@ -91,6 +99,7 @@ public final class AnnotationToComparatorDictionary {
      * @throws JEntityTestException
      */
     private Comparator initializeComparator(Annotation annotation, Class<? extends Comparator> type) {
+        LOG.trace("Starting initialization for comparator {}",type); //LOG
         Constructor[] constructors = type.getDeclaredConstructors();
         Constructor annotationConstructor = null;
         for (Constructor candidate : constructors) {
@@ -102,10 +111,13 @@ public final class AnnotationToComparatorDictionary {
         }
         //noinspection OverlyBroadCatchBlock
         try {
-            if (annotationConstructor != null)
+            if (annotationConstructor != null) {
+                LOG.trace("Initializing comparator {} using constructor with annotation parameter", type); //LOG
                 return (Comparator) annotationConstructor.newInstance(annotation);
-            else
+            } else {
+                LOG.trace("Initializing comparator {} using default constructor", type); //LOG
                 return type.getConstructor().newInstance();
+            }
         } catch (InstantiationException e) {
             throw new ComparatorInstantiationException(type, annotation, e);
         } catch (IllegalAccessException e) {

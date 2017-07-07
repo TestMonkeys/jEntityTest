@@ -1,5 +1,7 @@
 package org.testmonkeys.jentitytest.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
 import java.util.HashMap;
@@ -9,6 +11,8 @@ import java.util.Map;
  * Singleton Comparison Model dictionary for all parsed entities.
  */
 public final class EntityToComparisonModelDictionary {
+
+    private static final Logger LOG = LoggerFactory.getLogger(EntityToComparisonModelDictionary.class);
     private static EntityToComparisonModelDictionary instance;
     private final Map<Class, ComparisonModel> dictionary;
     private final EntityInspector inspector;

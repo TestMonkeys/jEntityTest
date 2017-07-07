@@ -1,5 +1,7 @@
 package org.testmonkeys.jentitytest.comparison;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
@@ -11,9 +13,12 @@ import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
 
 public abstract class AbstractComparator implements Comparator {
 
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractComparator.class);
+
     private final List<PreComparisonCheck> preComparisonChecks = new ArrayList<>();
 
     protected void registerPreConditionalCheck(PreComparisonCheck preComparisonCheck) {
+        LOG.trace("registering pre conditional check {}",preComparisonCheck.getClass()); //LOG
         preComparisonChecks.add(preComparisonCheck);
     }
 

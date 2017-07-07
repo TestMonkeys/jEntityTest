@@ -22,11 +22,16 @@ public class StringComparator extends AbstractComparator {
     private static final char BACKSPACE = '\b';
     private static final char FORMFEED = '\f';
 
+    @SuppressWarnings("HardCodedStringLiteral")
     private static final String ESCAPED_NEW_LINE = "\\n";
+    @SuppressWarnings("HardCodedStringLiteral")
     private static final String ESCAPED_TAB = "\\t";
+    @SuppressWarnings("HardCodedStringLiteral")
     private static final String ESCAPED_CARRIAGE_RETURN = "\\r";
     private static final String ESCAPED_NULL = "\\0";
+    @SuppressWarnings("HardCodedStringLiteral")
     private static final String ESCAPED_BACKSPACE = "\\b";
+    @SuppressWarnings("HardCodedStringLiteral")
     private static final String ESCAPED_FORMFEED = "\\f";
     private static final String EMPTY_STRING = "";
 
@@ -97,13 +102,14 @@ public class StringComparator extends AbstractComparator {
 
     @Override
     protected String describe() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName())
-                .append(" with parameters: case sensitive = ").append(caseSensitive)
-                .append(", trim = ").append(trim);
         if ((ignoreCharacters != null) && (ignoreCharacters.length > 0))
-            sb.append(", ignoring characters: ").append(String.join(", ", getIgnoredCharactersEscaped()));
-        return sb.toString();
+            return MessageFormat.format(Resources.getString(Resources.desc_string_ignoring_chars),
+                    getClass().getSimpleName(),caseSensitive,trim,
+                    String.join(", ", getIgnoredCharactersEscaped()));
+        else
+            return MessageFormat.format(Resources.getString(Resources.desc_string),
+                    getClass().getSimpleName(),caseSensitive,trim,
+                    String.join(", "));
     }
 
     @SuppressWarnings("MethodWithMultipleLoops")

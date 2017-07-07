@@ -1,5 +1,7 @@
 package org.testmonkeys.jentitytest.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testmonkeys.jentitytest.comparison.PropertyComparisonWrapper;
 
 import java.beans.PropertyDescriptor;
@@ -12,9 +14,12 @@ import java.util.Set;
  * Can provide the list of comparable properties and comparator for those properties.
  */
 public class ComparisonModel {
+
+    private static final Logger LOG = LoggerFactory.getLogger(ComparisonModel.class);
     private final Map<PropertyDescriptor, PropertyComparisonWrapper> comparisonMap;
 
     public ComparisonModel() {
+        LOG.info("Creating new comparison model"); //LOG
         comparisonMap = new HashMap<>();
     }
 
@@ -24,6 +29,7 @@ public class ComparisonModel {
      * @param comparator comparator used for this property
      */
     public void setComparisonPoint(PropertyDescriptor propertyDescriptor, PropertyComparisonWrapper comparator) {
+        LOG.info("Adding comparison for {} using {}", propertyDescriptor.getName(), comparator.getComparator()); //LOG
         comparisonMap.put(propertyDescriptor, comparator);
     }
 

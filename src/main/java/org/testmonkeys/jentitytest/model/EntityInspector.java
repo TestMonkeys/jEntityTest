@@ -1,5 +1,7 @@
 package org.testmonkeys.jentitytest.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.PropertyComparisonWrapper;
 import org.testmonkeys.jentitytest.comparison.strategies.SimpleTypeComparator;
@@ -22,6 +24,7 @@ import static org.testmonkeys.jentitytest.Resources.err_getting_beaninfo_from_cl
 
 public class EntityInspector {
 
+    private static final Logger LOG = LoggerFactory.getLogger(EntityInspector.class);
     private final AnnotationToComparatorDictionary annotationToComparator =
             AnnotationToComparatorDictionary.getInstance();
 
@@ -32,19 +35,24 @@ public class EntityInspector {
      */
     @SuppressWarnings("ObjectAllocationInLoop")
     public ComparisonModel getComparisonModel(Class clazz) {
+        LOG.info("Starting inspection for {}",clazz); //LOG
         ComparisonModel model = new ComparisonModel();
         BeanInfo beanInfo = getBeanInfo(clazz);
 
         for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
+            LOG.info("Analyzing property {}",propertyDescriptor.getName()); //LOG
             Method method = propertyDescriptor.getReadMethod();
-            if (method == null)
+            if (method == null){
+                LOG.info("property does not have read method, skipping..."); //LOG
                 continue;
+            }
             Field field = getField(clazz, propertyDescriptor);
 
             //Field level processing
             if (field != null) {
                 Annotation annotation = getComparisonAnnotation(field);
                 if (annotation != null) {
+                    LOG.info("Found annotation at field level"); //LOG
                     model.setComparisonPoint(propertyDescriptor, getPropertyComparator(annotation));
                     continue;
                 }
@@ -53,11 +61,13 @@ public class EntityInspector {
             //Method level processing
             Annotation annotation = getComparisonAnnotation(method);
             if (annotation != null) {
+                LOG.info("Found annotation at method level"); //LOG
                 model.setComparisonPoint(propertyDescriptor, getPropertyComparator(annotation));
                 continue;
             }
 
             //Default (in case no annotations were used)
+            LOG.info("No annotation found, using default comparator"); //LOG
             model.setComparisonPoint(propertyDescriptor, new PropertyComparisonWrapper(new SimpleTypeComparator()));
         }
         return model;
