@@ -4,7 +4,6 @@ package org.testmonkeys.jentitytest.test.unit.model;
 import org.junit.Before;
 import org.junit.Test;
 import org.testmonkeys.jentitytest.comparison.strategies.IgnoreComparator;
-import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.model.ComparisonModel;
 import org.testmonkeys.jentitytest.model.EntityInspector;
 import org.testmonkeys.jentitytest.test.unit.model.util.ModelMultiAnnotated;
@@ -33,7 +32,7 @@ public class InspectionTestMultiFrameworkAnnotations {
      * @throws IntrospectionException
      */
     @Before
-    public void background() throws IntrospectionException, JEntityTestException {
+    public void background() throws IntrospectionException {
         EntityInspector inspector = new EntityInspector();
         this.model = inspector.getComparisonModel(ModelMultiAnnotated.class);
         this.props = this.model.getComparableProperties();

@@ -4,15 +4,26 @@ import org.hamcrest.junit.ExpectedException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.testmonkeys.jentitytest.exceptions.ComparatorIllegalAccessException;
-import org.testmonkeys.jentitytest.exceptions.ComparatorInstantiationException;
-import org.testmonkeys.jentitytest.exceptions.ComparatorInvocationTargetException;
-import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
+import org.testmonkeys.jentitytest.exceptions.*;
 import org.testmonkeys.jentitytest.model.AnnotationToComparatorDictionary;
-import org.testmonkeys.jentitytest.test.unit.model.util.*;
+import org.testmonkeys.jentitytest.test.unit.model.util.BadComparator;
+import org.testmonkeys.jentitytest.test.unit.model.util.BadComparatorAbstract;
+import org.testmonkeys.jentitytest.test.unit.model.util.BadComparatorAbstractDefaultCtr;
+import org.testmonkeys.jentitytest.test.unit.model.util.BadComparatorAnnotationImp;
+import org.testmonkeys.jentitytest.test.unit.model.util.BadComparatorErrInConstructor;
+import org.testmonkeys.jentitytest.test.unit.model.util.BadComparatorErrInDefaultConstructor;
+import org.testmonkeys.jentitytest.test.unit.model.util.BadComparatorPrivateConstructor;
+import org.testmonkeys.jentitytest.test.unit.model.util.BadComparatorPrivateDefaultConstructor;
+import org.testmonkeys.jentitytest.test.unit.model.util.BadComparisonCustom;
+import org.testmonkeys.jentitytest.test.unit.model.util.IgnoreComparatorCustom;
+import org.testmonkeys.jentitytest.test.unit.model.util.SimpleAnnotation;
 
 import java.beans.IntrospectionException;
-import java.lang.annotation.*;
+import java.lang.annotation.Annotation;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * Created by cpascal on 6/21/2017.
@@ -31,7 +42,7 @@ public class AnnotationToComparatorDictionaryTest {
      * @throws IntrospectionException
      */
     @Before
-    public void background() throws IntrospectionException, JEntityTestException {
+    public void background() throws IntrospectionException {
         comparisonMap = AnnotationToComparatorDictionary.getInstance();
         comparisonMap.setComparatorForAnnotation(BadComparator.class, BadComparisonCustom.class);
     }
@@ -41,7 +52,7 @@ public class AnnotationToComparatorDictionaryTest {
      */
     @Test
     public void unit_modelToComparison_noMappingForAnnotation() throws Throwable {
-        expectedException.expect(JEntityTestException.class);
+        expectedException.expect(JEntityModelException.class);
         expectedException.expectMessage("There is no comparator defined for annotation " +
                 "org.testmonkeys.jentitytest.test.unit.model.util.SimpleAnnotation");
 
@@ -54,7 +65,7 @@ public class AnnotationToComparatorDictionaryTest {
      */
     @Test
     public void unit_modelToComparison_nullAnnotation() throws Throwable {
-        expectedException.expect(JEntityTestException.class);
+        expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Annotation can not be null");
 
         comparisonMap.getComparatorForAnnotation(null);
@@ -66,7 +77,7 @@ public class AnnotationToComparatorDictionaryTest {
      */
     @Test
     public void unit_modelToComparison_registrationNullComparator() throws Throwable {
-        expectedException.expect(JEntityTestException.class);
+        expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Comparator can not be null");
 
         comparisonMap.setComparatorForAnnotation(null, SimpleAnnotation.class);
@@ -77,7 +88,7 @@ public class AnnotationToComparatorDictionaryTest {
      */
     @Test
     public void unit_modelToComparison_registrationNullAnnotation() throws Throwable {
-        expectedException.expect(JEntityTestException.class);
+        expectedException.expect(IllegalArgumentException.class);
         expectedException.expectMessage("Annotation can not be null");
 
         comparisonMap.setComparatorForAnnotation(IgnoreComparatorCustom.class, null);

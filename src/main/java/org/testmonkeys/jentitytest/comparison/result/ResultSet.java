@@ -2,11 +2,14 @@ package org.testmonkeys.jentitytest.comparison.result;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Spliterator;
 
-/**
- * Created by cpascal on 6/15/2017.
- */
+
 @SuppressWarnings({"ReturnOfThis", "ClassWithTooManyMethods", "ClassWithTooManyDependents"})
 public class ResultSet implements List<ComparisonResult> {
 
@@ -28,20 +31,24 @@ public class ResultSet implements List<ComparisonResult> {
         return arrayList.add(e);
     }
 
+    @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
     public boolean containsAll(Collection<?> collection) {
         return arrayList.containsAll(collection);
     }
 
+    @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
     @Override
     public boolean addAll(Collection<? extends ComparisonResult> collection) {
         return arrayList.addAll(collection);
     }
 
+    @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
     @Override
     public boolean addAll(int index, Collection<? extends ComparisonResult> collection) {
         return arrayList.addAll(index,collection);
     }
 
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
     public boolean equals(Object obj) {
         return arrayList.equals(obj);
     }
@@ -107,10 +114,12 @@ public class ResultSet implements List<ComparisonResult> {
         arrayList.clear();
     }
 
+    @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
     public boolean removeAll(Collection<?> collection) {
         return arrayList.removeAll(collection);
     }
 
+    @SuppressWarnings("ParameterNameDiffersFromOverriddenParameter")
     public boolean retainAll(Collection<?> collection) {
         return arrayList.retainAll(collection);
     }

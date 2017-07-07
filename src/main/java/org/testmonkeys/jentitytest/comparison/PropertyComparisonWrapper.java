@@ -1,5 +1,6 @@
 package org.testmonkeys.jentitytest.comparison;
 
+import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
@@ -41,7 +42,7 @@ public class PropertyComparisonWrapper {
         try {
             return property.getReadMethod().invoke(obj);
         } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new JEntityTestException("Could not read property from object", e);
+            throw new JEntityTestException(Resources.getString(Resources.err_could_not_read_property), e);
         }
     }
 

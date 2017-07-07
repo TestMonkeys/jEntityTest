@@ -1,5 +1,6 @@
 package org.testmonkeys.jentitytest.comparison.strategies;
 
+import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.AbstractComparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
@@ -8,8 +9,13 @@ import org.testmonkeys.jentitytest.comparison.result.Status;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.framework.DateTimeComparison;
 
+import java.text.MessageFormat;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
+
+import static org.testmonkeys.jentitytest.Resources.desc_datetime_delta;
+import static org.testmonkeys.jentitytest.Resources.desc_datetime_precision;
+import static org.testmonkeys.jentitytest.Resources.err_actual_and_expected_must_be_of_type;
 
 public class DateTimeComparator extends AbstractComparator {
 
@@ -44,7 +50,8 @@ public class DateTimeComparator extends AbstractComparator {
             actualValue = (Temporal) actual;
             expectedValue = (Temporal) expected;
         } catch (ClassCastException castException) {
-            throw new JEntityTestException("Expected and Actual values must be of type " + Temporal.class.getName(),
+            throw new JEntityTestException(MessageFormat.format(
+                    Resources.getString(err_actual_and_expected_must_be_of_type),Temporal.class.getName()),
                     castException);
         }
 
@@ -54,12 +61,10 @@ public class DateTimeComparator extends AbstractComparator {
 
     @Override
     protected String describe() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
         if (delta == 0)
-            sb.append(" with precision up to ").append(unit);
+            return MessageFormat.format(Resources.getString(desc_datetime_precision),
+                    getClass().getSimpleName(),unit);
         else
-            sb.append(" with delta ").append(delta).append(" ").append(unit);
-        return sb.toString();
+            return MessageFormat.format(Resources.getString(desc_datetime_delta),getClass().getSimpleName(),delta,unit);
     }
 }

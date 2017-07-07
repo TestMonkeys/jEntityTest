@@ -1,7 +1,9 @@
 package org.testmonkeys.jentitytest.model;
 
+import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.PropertyComparisonWrapper;
 import org.testmonkeys.jentitytest.comparison.strategies.SimpleTypeComparator;
+import org.testmonkeys.jentitytest.exceptions.JEntityModelException;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
 import java.beans.BeanInfo;
@@ -12,8 +14,11 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.testmonkeys.jentitytest.Resources.err_getting_beaninfo_from_class;
 
 public class EntityInspector {
 
@@ -25,6 +30,7 @@ public class EntityInspector {
      * @return
      * @throws JEntityTestException
      */
+    @SuppressWarnings("ObjectAllocationInLoop")
     public ComparisonModel getComparisonModel(Class clazz) {
         ComparisonModel model = new ComparisonModel();
         BeanInfo beanInfo = getBeanInfo(clazz);
@@ -62,7 +68,8 @@ public class EntityInspector {
         try {
             beanInfo = Introspector.getBeanInfo(clazz, Object.class);
         } catch (IntrospectionException e) {
-            throw new JEntityTestException("Could not get BeanInfo from class: " + clazz);
+            throw new JEntityModelException(MessageFormat.format(
+                    Resources.getString(err_getting_beaninfo_from_class), clazz), e);
         }
         return beanInfo;
     }
@@ -75,7 +82,7 @@ public class EntityInspector {
             }
         }
         if (knownAnnotations.size() > 1)
-            throw new JEntityTestException("There should be only one Comparison Annotation on your model");
+            throw new JEntityModelException("There should be only one Comparison Annotation on your model");
         if (knownAnnotations.size() == 1)
             return knownAnnotations.get(0);
         else

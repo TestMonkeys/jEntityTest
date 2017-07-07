@@ -1,5 +1,6 @@
 package org.testmonkeys.jentitytest.hamcrest;
 
+import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.hamcrest.matchers.DefaultResultOutput;
 import org.testmonkeys.jentitytest.hamcrest.matchers.EntityMatcher;
 import org.testmonkeys.jentitytest.hamcrest.matchers.ResultProcessor;
@@ -7,6 +8,7 @@ import org.testmonkeys.jentitytest.hamcrest.matchers.ResultProcessor;
 /**
  * Entity is a facade for accessing matcher's
  */
+@SuppressWarnings("ClassWithTooManyTransitiveDependencies")
 public final class Entity {
 
     private static ResultProcessor resultProcessor;
@@ -17,7 +19,7 @@ public final class Entity {
 
     public static void setResultProcessor(ResultProcessor resultProcessor) {
         if (resultProcessor == null)
-            throw new IllegalArgumentException("resultProcessor can not be null");
+            throw new IllegalArgumentException(Resources.getString(Resources.err_result_processor_null));
         Entity.resultProcessor = resultProcessor;
     }
 

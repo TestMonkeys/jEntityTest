@@ -1,6 +1,7 @@
 package org.testmonkeys.jentitytest.comparison;
 
-@SuppressWarnings("ClassWithTooManyDependents")
+@SuppressWarnings({"ClassWithTooManyDependents", "CallToSimpleGetterFromWithinClass",
+        "CallToSimpleSetterFromWithinClass"})
 public class ComparisonContext {
     private ComparisonContext parent;
     private String parentName;
@@ -24,16 +25,17 @@ public class ComparisonContext {
 
     public ComparisonContext withIndex(int index){
         ComparisonContext newContext=new ComparisonContext(parent);
-        newContext.index = index;
-        newContext.parentName = parentName;
-        newContext.actualObj = actualObj;
-        newContext.comparatorDetails = comparatorDetails;
+        newContext.setIndex(index);
+        newContext.setParentName(parentName);
+        newContext.setActualObj(actualObj);
+        newContext.setComparatorDetails(comparatorDetails);
         return newContext;
     }
 
     public ComparisonContext withProperty(String propertyName) {
         ComparisonContext comparisonContext = new ComparisonContext(this);
-        comparisonContext.parentName = propertyName;
+        comparisonContext.setParentName(propertyName);
+
         return comparisonContext;
     }
 
@@ -60,7 +62,7 @@ public class ComparisonContext {
      */
     public boolean isRecursive(Object actual) {
         return canBeRecursive(actual) &&
-                (actual.equals(parent.actualObj) || parent.isRecursive(actual));
+                (actual.equals(parent.getActualObj()) || parent.isRecursive(actual));
     }
 
     private boolean canBeRecursive(Object actual){
@@ -81,5 +83,9 @@ public class ComparisonContext {
 
     public void setActualObj(Object actualObj) {
         this.actualObj = actualObj;
+    }
+
+    private Object getActualObj(){
+        return actualObj;
     }
 }

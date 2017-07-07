@@ -1,5 +1,6 @@
 package org.testmonkeys.jentitytest.comparison.strategies;
 
+import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.AbstractComparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
@@ -8,14 +9,34 @@ import org.testmonkeys.jentitytest.comparison.result.Status;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.framework.StringComparison;
 
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 public class StringComparator extends AbstractComparator {
 
-    private final char[] controlChars = {'\n', '\t', '\r', '\0', '\b', '\f'};
-    private final String[] escControlChars = {"\\n", "\\t", "\\r", "\\0", "\\b", "\\f"};
+    private static final char NEW_LINE = '\n';
+    private static final char TAB = '\t';
+    private static final char CARRIAGE_RETURN = '\r';
+    private static final char NULL = '\0';
+    private static final char BACKSPACE = '\b';
+    private static final char FORMFEED = '\f';
+
+    private static final String ESCAPED_NEW_LINE = "\\n";
+    private static final String ESCAPED_TAB = "\\t";
+    private static final String ESCAPED_CARRIAGE_RETURN = "\\r";
+    private static final String ESCAPED_NULL = "\\0";
+    private static final String ESCAPED_BACKSPACE = "\\b";
+    private static final String ESCAPED_FORMFEED = "\\f";
+    private static final String EMPTY_STRING = "";
+
+    private final char[] controlChars = {NEW_LINE, TAB, CARRIAGE_RETURN, NULL, BACKSPACE, FORMFEED};
+    private final String[] escControlChars = {ESCAPED_NEW_LINE, ESCAPED_TAB, ESCAPED_CARRIAGE_RETURN, ESCAPED_NULL,
+            ESCAPED_BACKSPACE, ESCAPED_FORMFEED};
 
     private boolean caseSensitive = true;
     private boolean trim;
-    private char[] ignoreCharacters = {};
+    private char[] ignoreCharacters;
 
     public StringComparator() {
         registerPreConditionalCheck(new NullConditionalCheck());
@@ -48,15 +69,16 @@ public class StringComparator extends AbstractComparator {
             actualValue = (String) actual;
             expectedValue = (String) expected;
         } catch (ClassCastException castException) {
-            throw new JEntityTestException("Expected and Actual values must be of type " + String.class.getName(),
+            throw new JEntityTestException(MessageFormat.format(
+                    Resources.getString(Resources.err_actual_and_expected_must_be_of_type), String.class.getName()),
                     castException);
         }
 
         if (ignoreCharacters != null) {
             for (char ignore : ignoreCharacters) {
                 String ignoreString = String.valueOf(ignore);
-                actualValue = actualValue.replace(ignoreString, "");
-                expectedValue = expectedValue.replace(ignoreString, "");
+                actualValue = actualValue.replace(ignoreString, EMPTY_STRING);
+                expectedValue = expectedValue.replace(ignoreString, EMPTY_STRING);
             }
         }
         if (trim) {
@@ -78,30 +100,28 @@ public class StringComparator extends AbstractComparator {
         StringBuilder sb = new StringBuilder();
         sb.append(getClass().getSimpleName())
                 .append(" with parameters: case sensitive = ").append(caseSensitive)
-                .append(", trim = ").append(trim)
-                .append(", ignoring characters: ").append(charArrayToString(ignoreCharacters));
+                .append(", trim = ").append(trim);
+        if ((ignoreCharacters != null) && (ignoreCharacters.length > 0))
+            sb.append(", ignoring characters: ").append(String.join(", ", getIgnoredCharactersEscaped()));
         return sb.toString();
     }
 
-    private StringBuilder showControlChars(Object inputObj) {
-        StringBuilder res = new StringBuilder(inputObj.toString());
-        for (int i = 0; i < controlChars.length; i++) {
-            int index = res.indexOf(String.valueOf(controlChars[i]));
-            while (index != -1) {
-                res.replace(index, index + 1, escControlChars[i]);
-                index = res.indexOf(String.valueOf(controlChars[i]));
-            }
+    @SuppressWarnings("MethodWithMultipleLoops")
+    private String showControlChars(Object inputObj) {
+        String res = inputObj.toString();
+        for (int i=0; i<controlChars.length;i++){
+            while (res.contains(Character.toString(controlChars[i])))
+                res=res.replace(Character.toString(controlChars[i]),escControlChars[i]);
         }
         return res;
     }
 
-    private String charArrayToString(char[] array) {
-        if ((array == null) || (array.length == 0))
-            return null;
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < array.length; i++) {
-            sb.append(showControlChars(array[i]).append(", "));
-        }
-        return sb.deleteCharAt(sb.lastIndexOf(",")).toString();
+    private List<String> getIgnoredCharactersEscaped() {
+        List<String> escapedChars = new ArrayList<>();
+        if (ignoreCharacters != null)
+            for (char c : ignoreCharacters) {
+                escapedChars.add(showControlChars(Character.toString(c)));
+            }
+        return escapedChars;
     }
 }

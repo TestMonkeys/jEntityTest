@@ -1,5 +1,6 @@
 package org.testmonkeys.jentitytest.comparison.strategies;
 
+import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.AbstractComparator;
 import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
@@ -13,6 +14,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import static org.testmonkeys.jentitytest.Resources.err_actual_and_expected_must_be_generic_Collections;
+import static org.testmonkeys.jentitytest.Resources.size;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
 
 public class ChildEntityListComparator extends AbstractComparator {
@@ -55,7 +58,7 @@ public class ChildEntityListComparator extends AbstractComparator {
         Collection<?> listExpected = castToCollection(expected);
 
         if (listActual.size() != listExpected.size()) {
-            comparisonResults.add(new ComparisonResult(Failed, context.withProperty("Size"),
+            comparisonResults.add(new ComparisonResult(Failed, context.withProperty(Resources.getString(size)),
                     listActual.size(), listExpected.size()));
             return comparisonResults;
         }
@@ -82,7 +85,7 @@ public class ChildEntityListComparator extends AbstractComparator {
         try {
             return (Collection<?>) object;
         } catch (ClassCastException ex) {
-            throw new JEntityTestException("Actual and Expected should be Generic Collections",ex);
+            throw new JEntityTestException(Resources.getString(err_actual_and_expected_must_be_generic_Collections),ex);
         }
     }
 }

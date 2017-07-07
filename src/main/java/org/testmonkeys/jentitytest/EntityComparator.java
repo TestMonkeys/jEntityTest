@@ -12,6 +12,7 @@ import org.testmonkeys.jentitytest.model.EntityToComparisonModelDictionary;
 
 import java.beans.PropertyDescriptor;
 
+import static org.testmonkeys.jentitytest.Resources.entity;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
 
 
@@ -71,7 +72,7 @@ public class EntityComparator {
         if (actual != null)
             return actual.getClass().getSimpleName();
 
-        return "Entity";
+        return Resources.getString(entity);
     }
 
 }

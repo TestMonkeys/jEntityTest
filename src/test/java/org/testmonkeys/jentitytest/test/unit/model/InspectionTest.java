@@ -5,6 +5,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.testmonkeys.jentitytest.comparison.strategies.IgnoreComparator;
 import org.testmonkeys.jentitytest.comparison.strategies.SimpleTypeComparator;
+import org.testmonkeys.jentitytest.exceptions.JEntityModelException;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.model.AnnotationToComparatorDictionary;
 import org.testmonkeys.jentitytest.model.ComparisonModel;
@@ -90,7 +91,7 @@ public class InspectionTest {
 
     @Test
     public void unit_inspection_GetModelForPrimitiveType() throws Throwable {
-        this.expectedException.expect(JEntityTestException.class);
+        this.expectedException.expect(JEntityModelException.class);
         this.expectedException.expectMessage("Could not get BeanInfo from class: int");
 
         EntityInspector inspector = new EntityInspector();

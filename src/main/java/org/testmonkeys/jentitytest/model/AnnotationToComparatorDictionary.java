@@ -1,15 +1,14 @@
 package org.testmonkeys.jentitytest.model;
 
+import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.strategies.*;
-import org.testmonkeys.jentitytest.exceptions.ComparatorIllegalAccessException;
-import org.testmonkeys.jentitytest.exceptions.ComparatorInstantiationException;
-import org.testmonkeys.jentitytest.exceptions.ComparatorInvocationTargetException;
-import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
+import org.testmonkeys.jentitytest.exceptions.*;
 import org.testmonkeys.jentitytest.framework.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
+import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +18,7 @@ import java.util.Map;
  * <p>
  * Contains default comparisons but can register new annotations to comparator mappings at runtime.
  */
+
 public final class AnnotationToComparatorDictionary {
 
     private static AnnotationToComparatorDictionary instance;
@@ -58,9 +58,9 @@ public final class AnnotationToComparatorDictionary {
      */
     public void setComparatorForAnnotation(Class<? extends Comparator> comparator, Class<?> annotation) {
         if (comparator == null)
-            throw new JEntityTestException("Comparator can not be null");
+            throw new IllegalArgumentException(Resources.getString(Resources.err_comparator_null));
         if (annotation == null)
-            throw new JEntityTestException("Annotation can not be null");
+            throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
         mapping.put(annotation, comparator);
     }
 
@@ -73,13 +73,14 @@ public final class AnnotationToComparatorDictionary {
      */
     public Comparator getComparatorForAnnotation(Annotation annotation) {
         if (annotation == null)
-            throw new JEntityTestException("Annotation can not be null");
+            throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
 
         if (mapping.containsKey(annotation.annotationType())) {
             return initializeComparator(annotation, mapping.get(annotation.annotationType()));
         }
-        throw new JEntityTestException("There is no comparator defined for annotation " +
-                annotation.annotationType().getName());
+        throw new JEntityModelException(
+                MessageFormat.format(Resources.getString(Resources.ERR_NO_COMPARATOR_DEFINED_FOR_ANNOTATION),
+                annotation.annotationType().getName()));
     }
 
 
@@ -99,6 +100,7 @@ public final class AnnotationToComparatorDictionary {
                 break;
             }
         }
+        //noinspection OverlyBroadCatchBlock
         try {
             if (annotationConstructor != null)
                 return (Comparator) annotationConstructor.newInstance(annotation);
