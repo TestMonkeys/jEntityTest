@@ -36,6 +36,7 @@ public class PropertyComparisonWrapper {
         return resultList;
     }
 
+    @SuppressWarnings("WeakerAccess")
     protected Object getPropertyValue(PropertyDescriptor property, Object obj) {
         try {
             return property.getReadMethod().invoke(obj);

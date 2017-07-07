@@ -17,7 +17,8 @@ import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
 
 public class EntityComparator {
 
-    private final EntityToComparisonModelDictionary comparisonDictionary = EntityToComparisonModelDictionary.getInstance();
+    private final EntityToComparisonModelDictionary comparisonDictionary =
+            EntityToComparisonModelDictionary.getInstance();
     private final PreComparisonCheck nullComparatorHelper = new NullConditionalCheck();
 
     /**

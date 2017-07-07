@@ -17,7 +17,8 @@ import java.util.List;
 
 public class EntityInspector {
 
-    private final AnnotationToComparatorDictionary annotationToComparator = AnnotationToComparatorDictionary.getInstance();
+    private final AnnotationToComparatorDictionary annotationToComparator =
+            AnnotationToComparatorDictionary.getInstance();
 
     /**
      * @param clazz

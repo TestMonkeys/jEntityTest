@@ -39,7 +39,8 @@ public abstract class AbstractComparator implements Comparator {
      * @return
      * @throws JEntityTestException
      */
-    private List<ConditionalCheckResult> runConditionals(Object actualValue, Object expectedValue, ComparisonContext context) {
+    private List<ConditionalCheckResult> runConditionals(Object actualValue, Object expectedValue,
+                                                         ComparisonContext context) {
         List<ConditionalCheckResult> results = new ArrayList<>();
         for (int i = preComparisonChecks.size() - 1; i >= 0; i--) {
             PreComparisonCheck check = preComparisonChecks.get(i);

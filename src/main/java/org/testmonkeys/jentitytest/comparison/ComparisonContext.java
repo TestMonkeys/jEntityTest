@@ -1,5 +1,6 @@
 package org.testmonkeys.jentitytest.comparison;
 
+@SuppressWarnings("ClassWithTooManyDependents")
 public class ComparisonContext {
     private ComparisonContext parent;
     private String parentName;
@@ -11,6 +12,7 @@ public class ComparisonContext {
         index = -1;
     }
 
+    @SuppressWarnings("WeakerAccess")
     public ComparisonContext(ComparisonContext parent) {
         this.parent = parent;
         index = -1;
@@ -73,16 +75,8 @@ public class ComparisonContext {
         this.comparatorDetails = comparatorDetails;
     }
 
-    public String getParentName() {
-        return parentName;
-    }
-
     public void setParentName(String parentName) {
         this.parentName = parentName;
-    }
-
-    public Object getActualObj() {
-        return actualObj;
     }
 
     public void setActualObj(Object actualObj) {

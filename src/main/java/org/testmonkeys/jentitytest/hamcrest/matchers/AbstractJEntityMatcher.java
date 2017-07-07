@@ -5,6 +5,7 @@ import org.hamcrest.BaseMatcher;
 /**
  * Created by cpascal on 6/21/2017.
  */
+@SuppressWarnings("WeakerAccess")
 public abstract class AbstractJEntityMatcher<T> extends BaseMatcher<T> {
     protected ResultProcessor resultProcessor;
 

@@ -9,7 +9,9 @@ import java.lang.annotation.Annotation;
  */
 public class ComparatorInstantiationException extends JEntityTestException {
 
-    public ComparatorInstantiationException(Class<? extends Comparator> comparator, Annotation annotation, Exception e) {
-        super("Could not create instance of Comparator " + comparator.getName() + " for annotation " + annotation.getClass().getName(), e);
+    public ComparatorInstantiationException(Class<? extends Comparator> comparator, Annotation annotation,
+                                            Exception e) {
+        super("Could not create instance of Comparator " + comparator.getName()
+                + " for annotation " + annotation.getClass().getName(), e);
     }
 }

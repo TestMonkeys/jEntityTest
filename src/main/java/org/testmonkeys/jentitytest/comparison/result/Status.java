@@ -3,6 +3,7 @@ package org.testmonkeys.jentitytest.comparison.result;
 /**
  * Created by cpascal on 7/6/2017.
  */
+@SuppressWarnings("ClassWithTooManyDependents")
 public enum Status {
     Passed,
     Failed;

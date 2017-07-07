@@ -78,7 +78,8 @@ public final class AnnotationToComparatorDictionary {
         if (mapping.containsKey(annotation.annotationType())) {
             return initializeComparator(annotation, mapping.get(annotation.annotationType()));
         }
-        throw new JEntityTestException("There is no comparator defined for annotation " + annotation.annotationType().getName());
+        throw new JEntityTestException("There is no comparator defined for annotation " +
+                annotation.annotationType().getName());
     }
 
 
@@ -92,7 +93,8 @@ public final class AnnotationToComparatorDictionary {
         Constructor[] constructors = type.getDeclaredConstructors();
         Constructor annotationConstructor = null;
         for (Constructor candidate : constructors) {
-            if ((candidate.getParameterCount() == 1) && (annotation.annotationType().isAssignableFrom(candidate.getParameterTypes()[0]))) {
+            if ((candidate.getParameterCount() == 1)
+                    && (annotation.annotationType().isAssignableFrom(candidate.getParameterTypes()[0]))) {
                 annotationConstructor = candidate;
                 break;
             }
