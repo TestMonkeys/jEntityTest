@@ -1,5 +1,6 @@
 package org.testmonkeys.jentitytest.test.integration.parallel;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.ParallelComputer;
 import org.junit.runner.JUnitCore;
@@ -9,6 +10,7 @@ import org.junit.runner.JUnitCore;
  */
 public class ParallelRun {
 
+    @Ignore
     @Test
     public void runAllTests() {
         Class<?>[] classes = { ParallelizableTest.class,

@@ -1,6 +1,7 @@
 package org.testmonkeys.jentitytest.test.integration.parallel;
 
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.testmonkeys.jentitytest.hamcrest.Entity;
 
@@ -11,6 +12,7 @@ public class ParallelizableTest2 {
 
 
 
+    @Ignore
     @Test
     public void test1(){
         Parent expected = new Parent();
@@ -38,6 +40,7 @@ public class ParallelizableTest2 {
         Assert.assertThat(actual, Entity.isEqualTo(expected));
     }
 
+    @Ignore
     @Test
     public void test2(){
         Parent expected = new Parent();
@@ -65,6 +68,7 @@ public class ParallelizableTest2 {
         Assert.assertThat(actual, Entity.isEqualTo(expected));
     }
 
+    @Ignore
     @Test
     public void test3(){
         for (int i=0;i<1000000; i++){
