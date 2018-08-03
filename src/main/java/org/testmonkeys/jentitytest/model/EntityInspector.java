@@ -35,15 +35,15 @@ public class EntityInspector {
      */
     @SuppressWarnings("ObjectAllocationInLoop")
     public ComparisonModel getComparisonModel(Class clazz) {
-        LOG.info("Starting inspection for {}",clazz); //LOG
+        LOG.debug("Starting inspection for {}",clazz); //LOG
         ComparisonModel model = new ComparisonModel();
         BeanInfo beanInfo = getBeanInfo(clazz);
 
         for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
-            LOG.info("Analyzing property {}",propertyDescriptor.getName()); //LOG
+            LOG.debug("Analyzing property {}",propertyDescriptor.getName()); //LOG
             Method method = propertyDescriptor.getReadMethod();
             if (method == null){
-                LOG.info("property does not have read method, skipping..."); //LOG
+                LOG.debug("property does not have read method, skipping..."); //LOG
                 continue;
             }
             Field field = getField(clazz, propertyDescriptor);
@@ -52,7 +52,7 @@ public class EntityInspector {
             if (field != null) {
                 Annotation annotation = getComparisonAnnotation(field);
                 if (annotation != null) {
-                    LOG.info("Found annotation at field level"); //LOG
+                    LOG.debug("Found annotation at field level"); //LOG
                     model.setComparisonPoint(propertyDescriptor, getPropertyComparator(annotation));
                     continue;
                 }
@@ -61,13 +61,13 @@ public class EntityInspector {
             //Method level processing
             Annotation annotation = getComparisonAnnotation(method);
             if (annotation != null) {
-                LOG.info("Found annotation at method level"); //LOG
+                LOG.debug("Found annotation at method level"); //LOG
                 model.setComparisonPoint(propertyDescriptor, getPropertyComparator(annotation));
                 continue;
             }
 
             //Default (in case no annotations were used)
-            LOG.info("No annotation found, using default comparator"); //LOG
+            LOG.debug("No annotation found, using default comparator"); //LOG
             model.setComparisonPoint(propertyDescriptor, new PropertyComparisonWrapper(new SimpleTypeComparator()));
         }
         return model;

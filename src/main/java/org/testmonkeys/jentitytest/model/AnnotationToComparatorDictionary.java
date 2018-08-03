@@ -29,7 +29,7 @@ public final class AnnotationToComparatorDictionary {
     private final Map<Class<?>, Class<? extends Comparator>> mapping;
 
     private AnnotationToComparatorDictionary() {
-        LOG.info("Initializing Annotation to Comparator Dictionary"); //LOG
+        LOG.debug("Initializing Annotation to Comparator Dictionary"); //LOG
         mapping = new HashMap<>();
         setComparatorForAnnotation(IgnoreComparator.class,IgnoreComparison.class);
         setComparatorForAnnotation(ChildEntityComparator.class,ChildEntityComparison.class);
@@ -63,7 +63,7 @@ public final class AnnotationToComparatorDictionary {
      * @throws JEntityTestException in case the comparator or annotation is null
      */
     public void setComparatorForAnnotation(Class<? extends Comparator> comparator, Class<?> annotation) {
-        LOG.info("Registering Comparator {} for Annotation {}",comparator,annotation); //LOG
+        LOG.debug("Registering Comparator {} for Annotation {}",comparator,annotation); //LOG
         if (comparator == null)
             throw new IllegalArgumentException(Resources.getString(Resources.err_comparator_null));
         if (annotation == null)

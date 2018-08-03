@@ -18,4 +18,5 @@ public class SimpleTypeComparator extends AbstractComparator {
 
         return new ResultSet().with(status, context, actual, expected);
     }
+
 }
