@@ -26,11 +26,11 @@ The id was generated on while creating the user, so we can't know it beforehand.
 public class User{
 
   @IgnoreComparison
-  private string id;
+  private String id;
   
-  private string firstName;
+  private String firstName;
   
-  private string lastName;
+  private String lastName;
   ...
 
 ```
