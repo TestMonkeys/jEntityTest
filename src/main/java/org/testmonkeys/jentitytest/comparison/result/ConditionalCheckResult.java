@@ -4,18 +4,18 @@ import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 
 public class ConditionalCheckResult extends ComparisonResult {
 
-    private boolean stopComparison;
+    private boolean comparisonFinished;
 
-    public ConditionalCheckResult(boolean passed, ComparisonContext context, Object actual, Object
+    public ConditionalCheckResult(Status status, ComparisonContext context, Object actual, Object
             expected) {
-        super(passed, context, actual, expected);
+        super(status, context, actual, expected);
     }
 
-    public boolean stopComparison() {
-        return stopComparison;
+    public boolean isComparisonFinished() {
+        return comparisonFinished;
     }
 
-    public void setStopComparison(boolean stopComparison) {
-        this.stopComparison = stopComparison;
+    public void stopComparison() {
+        comparisonFinished = true;
     }
 }

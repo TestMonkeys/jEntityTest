@@ -4,16 +4,16 @@ import org.testmonkeys.jentitytest.framework.ChildEntityListComparison;
 
 import java.util.List;
 
-class CompositeModel {
+public class CompositeModel {
 
     @ChildEntityListComparison
     private List<SimpleModel> modelList;
 
-    List<SimpleModel> getModelList() {
-        return modelList;
+    public List<SimpleModel> getModelList() {
+        return this.modelList;
     }
 
-    void setModelList(List<SimpleModel> modelList) {
+    public void setModelList(List<SimpleModel> modelList) {
         this.modelList = modelList;
     }
 }

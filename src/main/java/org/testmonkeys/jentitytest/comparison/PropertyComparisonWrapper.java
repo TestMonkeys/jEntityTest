@@ -1,23 +1,30 @@
 package org.testmonkeys.jentitytest.comparison;
 
-import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
-import org.testmonkeys.jentitytest.framework.JEntityTestException;
+import org.testmonkeys.jentitytest.Resources;
+import org.testmonkeys.jentitytest.comparison.result.ResultSet;
+import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.LinkedList;
-import java.util.List;
 
 public class PropertyComparisonWrapper {
 
-    private Comparator comparator;
+    private final Comparator comparator;
 
     public PropertyComparisonWrapper(Comparator comparator) {
         this.comparator = comparator;
     }
 
-    public List<ComparisonResult> areEqual(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) throws JEntityTestException {
-        List<ComparisonResult> resultList = new LinkedList<>();
+    /**
+     * @param property
+     * @param actual
+     * @param expected
+     * @param context
+     * @return
+     * @throws JEntityTestException
+     */
+    public ResultSet compare(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) {
+        ResultSet resultList = new ResultSet();
 
         Object actualValue = getPropertyValue(property, actual);
         Object expectedValue = getPropertyValue(property, expected);
@@ -25,16 +32,17 @@ public class PropertyComparisonWrapper {
         if (context.isRecursive(actualValue))
             return resultList;
         context.setActualObj(actualValue);
-        resultList.addAll(comparator.areEqual(actualValue, expectedValue, context));
+        resultList.addAll(comparator.compare(actualValue, expectedValue, context));
 
         return resultList;
     }
 
+    @SuppressWarnings("WeakerAccess")
     protected Object getPropertyValue(PropertyDescriptor property, Object obj) {
         try {
             return property.getReadMethod().invoke(obj);
         } catch (IllegalAccessException | InvocationTargetException e) {
-            throw new JEntityTestException("Could not read property from object", e);
+            throw new JEntityTestException(Resources.getString(Resources.err_could_not_read_property), e);
         }
     }
 

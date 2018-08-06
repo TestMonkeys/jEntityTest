@@ -1,7 +1,7 @@
 package org.testmonkeys.jentitytest.test.integration.childList;
 
 import org.junit.Test;
-import org.testmonkeys.jentitytest.Entity;
+import org.testmonkeys.jentitytest.hamcrest.Entity;
 
 import java.util.ArrayList;
 

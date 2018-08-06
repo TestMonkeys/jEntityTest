@@ -1,11 +1,16 @@
 package org.testmonkeys.jentitytest.comparison;
 
-import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
-import org.testmonkeys.jentitytest.framework.JEntityTestException;
-
-import java.util.List;
+import org.testmonkeys.jentitytest.comparison.result.ResultSet;
+import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
 public interface Comparator {
 
-    List<ComparisonResult> areEqual(Object actual, Object expected, ComparisonContext context) throws JEntityTestException;
+    /**
+     * @param actual
+     * @param expected
+     * @param context
+     * @return
+     * @throws JEntityTestException
+     */
+    ResultSet compare(Object actual, Object expected, ComparisonContext context);
 }

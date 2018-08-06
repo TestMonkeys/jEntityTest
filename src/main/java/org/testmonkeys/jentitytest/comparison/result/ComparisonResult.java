@@ -3,33 +3,29 @@ package org.testmonkeys.jentitytest.comparison.result;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 
 public class ComparisonResult {
-    private ComparisonContext comparisonContext;
+    private final ComparisonContext comparisonContext;
     private Object expected;
     private Object actual;
-    private boolean passed;
+    private Status status;
 
-    public ComparisonResult(boolean passed, ComparisonContext context, Object actual, Object
+    public ComparisonResult(Status status, ComparisonContext context, Object actual, Object
             expected) {
-        setPassed(passed);
-        setComparisonContext(context);
-        setActual(actual);
-        setExpected(expected);
+        this.status = status;
+        comparisonContext = context;
+        this.actual = actual;
+        this.expected = expected;
     }
 
-    public boolean isPassed() {
-        return passed;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setPassed(boolean passed) {
-        this.passed = passed;
-    }
-
-    public void setComparisonContext(ComparisonContext comparisonContext) {
-        this.comparisonContext = comparisonContext;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Object getExpected() {
-        return this.expected;
+        return expected;
     }
 
     public void setExpected(Object expected) {
@@ -37,7 +33,7 @@ public class ComparisonResult {
     }
 
     public Object getActual() {
-        return this.actual;
+        return actual;
     }
 
     public void setActual(Object actual) {
