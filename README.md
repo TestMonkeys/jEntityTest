@@ -37,6 +37,8 @@ public class User{
 There are a few more comparison strategies that can be applied for any field, that will impact how the comparison is done.
 
 # Comparison Strategies available
+For a more detailed explanation of each comparison strategy please visit the [wiki](https://github.com/TestMonkeys/jEntityTest/wiki/JEntityTest-comparison-strategies) 
+
 
 ## ChildEntityComparison
 
