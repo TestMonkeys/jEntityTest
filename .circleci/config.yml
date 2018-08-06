@@ -174,13 +174,12 @@ jobs:
           command: |
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
             mvn clean package -DskipTests=true
-            mkdir ~/repo/jentityTest/releasePackage
             mkdir -p /tmp/workspace/release/jars
             mv ~/repo/target/*.jar /tmp/workspace/release/jars/
             export POM_NAME_1='/tmp/workspace/release/jars/jentityTest-'
             export POM_NAME_2='.pom'
             export POM_FULL_NAME="$POM_NAME_1$MAVEN_RELEASE_VERSION$POM_NAME_2"
-            cp ~/repo/jentityTest/pom.xml $POM_FULL_NAME
+            cp ~/repo/pom.xml $POM_FULL_NAME
 
       - persist_to_workspace:
           root: *workspace_root
