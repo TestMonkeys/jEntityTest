@@ -1,5 +1,5 @@
 # jEntityTest
-[![CircleCI](https://circleci.com/gh/TestMonkeys/jEntityTest/tree/develop.svg?style=svg)](https://circleci.com/gh/TestMonkeys/jEntityTest)
+[![CircleCI](https://circleci.com/gh/TestMonkeys/jEntityTest.svg?style=svg)](https://circleci.com/gh/TestMonkeys/jEntityTest)
 [![codecov](https://codecov.io/gh/TestMonkeys/jEntityTest/branch/master/graph/badge.svg)](https://codecov.io/gh/TestMonkeys/jEntityTest)
 
 jEntityTest is a library that can compare two instances of a class based on their declared fields. Making it easier to check if they are equal. It also contains a hamcrest matcher so that you can use the comparison in assertions. The comparison can further be customized via annotations for each field.
