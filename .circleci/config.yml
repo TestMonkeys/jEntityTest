@@ -135,16 +135,8 @@ jobs:
       - store_test_results:
           path: ~/junit
 
-      - run:
-          command: |
-            touch ~/repo/junit-tests/target/mvnrelease.out
-            touch ~/repo/junit-tests/target/circleTag.out
-            echo $CIRCLE_TAG > ~/repo/junit-tests/target/circleTag.out
-            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            echo $MAVEN_RELEASE_VERSION > ~/repo/junit-tests/target/mvnrelease.out
-
       - store_artifacts:
-                path: ~/repo/junit-tests/target
+                path: ~/repo/target
 
 
 ##################################################################
