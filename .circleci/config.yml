@@ -230,7 +230,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install gettext
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            echo '{"username": "$SONATYPE_USER","password": "$SONATYPE_PASSWORD","close": "0"}' > req.template
+            echo '{"username": "$SONATYPE_USER","password": "$SONATYPE_PASSWORD","close": "1"}' > req.template
             envsubst < req.template > request
             sudo curl -u $BINTRAY_USER:$BINTRAY_API_KEY --header "Content-Type: application/json" --data '@./request' --request POST https://api.bintray.com/maven_central_sync/testmonkeys/maven/jentityTest/versions/$MAVEN_RELEASE_VERSION
             rm request
