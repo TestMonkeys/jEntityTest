@@ -1,5 +1,6 @@
 package org.testmonkeys.jentitytest;
 
+import java.util.Locale;
 import java.util.ResourceBundle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +11,9 @@ public class Resources {
     private static final Logger LOG = LoggerFactory.getLogger(Resources.class);
 
     @SuppressWarnings("HardCodedStringLiteral")
+
     private static final ResourceBundle bundle=ResourceBundle.getBundle("jentityStrings");
+
 
     public static final String ERR_NO_COMPARATOR_DEFINED_FOR_ANNOTATION="err_no_comparator_defined_for_annotation";
     public static final String err_creating_comparator_for_annotation="err_creating_comparator_for_annotation";
