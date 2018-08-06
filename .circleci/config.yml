@@ -173,11 +173,10 @@ jobs:
           name: Building packages
           command: |
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            cd jentityTest
             mvn clean package -DskipTests=true
             mkdir ~/repo/jentityTest/releasePackage
             mkdir -p /tmp/workspace/release/jars
-            mv ~/repo/jentityTest/target/*.jar /tmp/workspace/release/jars/
+            mv ~/repo/target/*.jar /tmp/workspace/release/jars/
             export POM_NAME_1='/tmp/workspace/release/jars/jentityTest-'
             export POM_NAME_2='.pom'
             export POM_FULL_NAME="$POM_NAME_1$MAVEN_RELEASE_VERSION$POM_NAME_2"
@@ -189,7 +188,7 @@ jobs:
             - release/jars/
 
       - store_artifacts:
-          path: ~/repo/jentityTest/target
+          path: ~/repo/target
 
 ##################################################################
 ##
@@ -216,7 +215,7 @@ jobs:
           name: upload artifacts to bintray
           command: |
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            export jentityTest_URL='testmonkeys/maven/jentityTest/'
+            export jentityTest_URL='testmonkeys/maven/org.testmonkeys.jentitytest/'
             export jentityTest_PACKAGE='org/testmonkeys/jentityTest/'
             export VCS_URL='https://github.com/TestMonkeys/jentityTest.git'
             export BINTRAY_URL="$jentityTest_URL$MAVEN_RELEASE_VERSION"
@@ -232,7 +231,7 @@ jobs:
             sudo apt-get update
             sudo apt-get install gettext
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            echo '{"username": "$SONATYPE_USER","password": "$SONATYPE_PASSWORD","close": "1"}' > req.template
+            echo '{"username": "$SONATYPE_USER","password": "$SONATYPE_PASSWORD","close": "0"}' > req.template
             envsubst < req.template > request
             sudo curl -u $BINTRAY_USER:$BINTRAY_API_KEY --header "Content-Type: application/json" --data '@./request' --request POST https://api.bintray.com/maven_central_sync/testmonkeys/maven/jentityTest/versions/$MAVEN_RELEASE_VERSION
             rm request
