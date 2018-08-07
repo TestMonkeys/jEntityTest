@@ -141,7 +141,7 @@ jobs:
           name: Generate Jacoco results
           command:
              cd ~/repo/src/main/java &&
-             /tmp/cc-test-reporter format-coverage -d --prefix ~/repo/ --add-prefix src/main/java/ -t jacoco ~/repo/src/main/java/jacoco.xml
+             /tmp/cc-test-reporter format-coverage -d --prefix ~/repo/ --add-prefix src/main/java/ -t jacoco ~/repo/target/site/jacoco/jacoco.xml
              
       - run:
           name: Upload Jacoco results
