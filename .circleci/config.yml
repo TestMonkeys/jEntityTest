@@ -138,11 +138,15 @@ jobs:
           when: always
 
       - run:
-          name: Upload Jacoco results
+          name: Generate Jacoco results
           command:
-             cp  ~/repo/target/site/jacoco/jacoco.xml ~/repo/src/main/java/jacoco.xml &&
              cd ~/repo/src/main/java &&
              /tmp/cc-test-reporter format-coverage -d --prefix ~/repo/ --add-prefix src/main/java/ -t jacoco ~/repo/src/main/java/jacoco.xml
+             
+      - run:
+          name: Upload Jacoco results
+          command:
+             cd ~/repo/src/main/java &&
              /tmp/cc-test-reporter upload-coverage -d
 
       - store_test_results:
