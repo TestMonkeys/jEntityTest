@@ -140,7 +140,7 @@ jobs:
       - run:
           name: Upload Jacoco results
           command:
-             cp  ~/repo/target/site/jacoco/jacoco.xml ~/repo/src/main/java/jacoco.xml
+             cp  ~/repo/target/site/jacoco/jacoco.xml ~/repo/src/main/java/jacoco.xml &&
              cd ~/repo/ &&
              /tmp/cc-test-reporter format-coverage -d --prefix ~/repo/ -t jacoco ~/repo/src/main/java/jacoco.xml
              /tmp/cc-test-reporter upload-coverage -d
