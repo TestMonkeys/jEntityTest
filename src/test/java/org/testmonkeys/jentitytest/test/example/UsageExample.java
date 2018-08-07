@@ -33,14 +33,14 @@ public class UsageExample {
         User user = new User();
         user.setAge(22);
         user.setFirstName("John");
-        user.setLastName("Flimsy");
+        user.setLastName("Does");
         user.setCreatedDate(LocalDateTime.now());
         user.setId(1);
 
         //Children
         User child1=new User();
         child1.setFirstName("Jeremy");
-        child1.setLastName("Flimsy");
+        child1.setLastName("Doe");
 
         List<User> childrenList = new ArrayList<>();
         //childrenList.add(child1);
