@@ -141,8 +141,8 @@ jobs:
           name: Upload Jacoco results
           command:
              cp  ~/repo/target/site/jacoco/jacoco.xml ~/repo/src/main/java/jacoco.xml &&
-             cd ~/repo/ &&
-             /tmp/cc-test-reporter format-coverage -d --prefix ~/repo/ -t jacoco ~/repo/src/main/java/jacoco.xml
+             cd ~/repo/src/main/java &&
+             /tmp/cc-test-reporter format-coverage -d --prefix ~/repo/ --add-prefix src/main/java/ -t jacoco ~/repo/src/main/java/jacoco.xml
              /tmp/cc-test-reporter upload-coverage -d
 
       - store_test_results:
