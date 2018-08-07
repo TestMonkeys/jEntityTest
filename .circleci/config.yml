@@ -249,5 +249,5 @@ jobs:
             export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
             echo '{"username": "$SONATYPE_USER","password": "$SONATYPE_PASSWORD","close": "1"}' > req.template
             envsubst < req.template > request
-            sudo curl -u $BINTRAY_USER:$BINTRAY_API_KEY --header "Content-Type: application/json" --data '@./request' --request POST https://api.bintray.com/maven_central_sync/testmonkeys/maven/org.testmonkeys.jentityTest/versions/$MAVEN_RELEASE_VERSION
+            sudo curl -u $BINTRAY_USER:$BINTRAY_API_KEY --header "Content-Type: application/json" --data '@./request' --request POST https://api.bintray.com/maven_central_sync/testmonkeys/maven/org.testmonkeys.jentitytest/versions/$MAVEN_RELEASE_VERSION
             rm request
