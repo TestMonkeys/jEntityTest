@@ -6,11 +6,13 @@ import org.testmonkeys.jentitytest.comparison.PropertyComparisonWrapper;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
+import org.testmonkeys.jentitytest.comparison.result.Status;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.model.ComparisonModel;
 import org.testmonkeys.jentitytest.model.EntityToComparisonModelDictionary;
 
 import java.beans.PropertyDescriptor;
+import java.util.stream.Collectors;
 
 import static org.testmonkeys.jentitytest.Resources.entity;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
@@ -58,8 +60,20 @@ public class EntityComparator {
 
         ResultSet comparisonResults = new ResultSet();
         for (PropertyDescriptor propertyDescriptor : model.getComparableProperties()) {
-            PropertyComparisonWrapper comparator = model.getComparator(propertyDescriptor);
             ComparisonContext propContext = context.withProperty(propertyDescriptor.getName());
+
+            ResultSet preConditionalChecksResults=new ResultSet();
+            if (model.hasPreConditionalCheck(propertyDescriptor))
+                for (PropertyComparisonWrapper preConditionalChecks:model.getPreConditionalChecks(propertyDescriptor)){
+                    preConditionalChecksResults.addAll(preConditionalChecks.compare(propertyDescriptor,actual,expected,propContext));
+                }
+            if (preConditionalChecksResults.stream().anyMatch(x->x.getStatus().equals(Status.Skipped))){
+                //comparisonResults.addAll(preConditionalChecksResults.stream().filter(x->x.getStatus().equals(Status.Skipped)).collect(Collectors.toList()));
+                continue;
+            }
+            comparisonResults.addAll(preConditionalChecksResults);
+
+            PropertyComparisonWrapper comparator = model.getComparator(propertyDescriptor);
             comparisonResults.addAll(comparator.compare(propertyDescriptor, actual, expected, propContext));
         }
         return comparisonResults;
