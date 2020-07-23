@@ -10,6 +10,7 @@ import org.testmonkeys.jentitytest.comparison.abortConditions.AbortOnExpectNullC
 import org.testmonkeys.jentitytest.comparison.strategies.*;
 import org.testmonkeys.jentitytest.comparison.validations.AbstractValidation;
 import org.testmonkeys.jentitytest.comparison.validations.NotNullValidator;
+import org.testmonkeys.jentitytest.comparison.validations.RegexValidation;
 import org.testmonkeys.jentitytest.exceptions.*;
 import org.testmonkeys.jentitytest.framework.*;
 
@@ -47,6 +48,7 @@ public final class AnnotationToComparatorDictionary {
         setComparatorForAnnotation(StringComparator.class,StringComparison.class);
         setComparatorForAnnotation(ChildEntityListComparator.class,ChildEntityListComparison.class);
         setValidatorForAnnotation(NotNullValidator.class,ValidateNotNull.class);
+        setValidatorForAnnotation(RegexValidation.class,ValidateRegex.class);
     }
 
     public static synchronized AnnotationToComparatorDictionary getInstance() {
