@@ -4,7 +4,8 @@ package org.testmonkeys.jentitytest.comparison.result;
 @SuppressWarnings("ClassWithTooManyDependents")
 public enum Status {
     Passed,
-    Failed;
+    Failed,
+    Skipped;
 
     @SuppressWarnings("BooleanParameter")
     public static Status valueOf(boolean passed) {

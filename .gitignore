@@ -11,7 +11,7 @@
 .gradle/
 
 # Build pack
-
+target/
 build/
 
 # Package Files #

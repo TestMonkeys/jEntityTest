@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.Comparator;
+import org.testmonkeys.jentitytest.comparison.abortConditions.AbstractAbortCondition;
+import org.testmonkeys.jentitytest.comparison.abortConditions.AbortOnExpectNullCondition;
 import org.testmonkeys.jentitytest.comparison.strategies.*;
 import org.testmonkeys.jentitytest.exceptions.*;
 import org.testmonkeys.jentitytest.framework.*;
@@ -27,10 +29,13 @@ public final class AnnotationToComparatorDictionary {
 
     private static AnnotationToComparatorDictionary instance;
     private final Map<Class<?>, Class<? extends Comparator>> mapping;
+    private final Map<Class<?>, Class<? extends AbstractAbortCondition>> preConditionalMapping;
 
     private AnnotationToComparatorDictionary() {
         LOG.debug("Initializing Annotation to Comparator Dictionary"); //LOG
         mapping = new HashMap<>();
+        preConditionalMapping=new HashMap<>();
+        setPreConditionalCheckForAnnotation(AbortOnExpectNullCondition.class, IgnoreComparisonIfExpectedNull.class);
         setComparatorForAnnotation(IgnoreComparator.class,IgnoreComparison.class);
         setComparatorForAnnotation(ChildEntityComparator.class,ChildEntityComparison.class);
         setComparatorForAnnotation(DateTimeComparator.class,DateTimeComparison.class);
@@ -56,6 +61,17 @@ public final class AnnotationToComparatorDictionary {
     }
 
     /**
+     * Checks if provided annotation is linked to a comparator
+     *
+     * @param candidate annotation to check
+     * @return boolean result of verification
+     */
+    public boolean hasPreConditionalCheckAssigned(Annotation candidate) {
+        LOG.trace("Checking if {} has a comparator assigned",candidate); //LOG
+        return preConditionalMapping.containsKey(candidate.annotationType());
+    }
+
+    /**
      * Register or overwrite a mapping between an annotation and a comparator
      *
      * @param comparator comparator to register
@@ -69,6 +85,22 @@ public final class AnnotationToComparatorDictionary {
         if (annotation == null)
             throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
         mapping.put(annotation, comparator);
+    }
+
+    /**
+     * Register or overwrite a mapping between an annotation and a comparator
+     *
+     * @param comparator comparator to register
+     * @param annotation annotation to register
+     * @throws JEntityTestException in case the comparator or annotation is null
+     */
+    public void setPreConditionalCheckForAnnotation(Class<? extends AbstractAbortCondition> comparator, Class<?> annotation) {
+        LOG.debug("Registering Comparator {} for Annotation {}",comparator,annotation); //LOG
+        if (comparator == null)
+            throw new IllegalArgumentException(Resources.getString(Resources.err_comparator_null));
+        if (annotation == null)
+            throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
+        preConditionalMapping.put(annotation, comparator);
     }
 
     /**
@@ -86,11 +118,32 @@ public final class AnnotationToComparatorDictionary {
         if (mapping.containsKey(annotation.annotationType())) {
             return initializeComparator(annotation, mapping.get(annotation.annotationType()));
         }
+
         throw new JEntityModelException(
                 MessageFormat.format(Resources.getString(Resources.ERR_NO_COMPARATOR_DEFINED_FOR_ANNOTATION),
                 annotation.annotationType().getName()));
     }
 
+    /**
+     * Gets the comparator assigned to the provided annotation
+     *
+     * @param annotation annotation
+     * @return Comparator for provided annotation
+     * @throws JEntityTestException in case comparator could not be provided
+     */
+    public AbstractAbortCondition getPreComparisonCheckForAnnotation(Annotation annotation) {
+        LOG.trace("Getting pre-comparison check for Annotation {}",annotation); //LOG
+        if (annotation == null)
+            throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
+
+        if (preConditionalMapping.containsKey(annotation.annotationType())) {
+            return initializePreComparisonCheck(annotation, preConditionalMapping.get(annotation.annotationType()));
+        }
+
+        throw new JEntityModelException(
+                MessageFormat.format(Resources.getString(Resources.ERR_NO_COMPARATOR_DEFINED_FOR_ANNOTATION),
+                        annotation.annotationType().getName()));
+    }
 
     /**
      * @param annotation
@@ -126,5 +179,41 @@ public final class AnnotationToComparatorDictionary {
             throw new ComparatorInvocationTargetException(type, annotation, e);
         }
     }
+
+    /**
+     * @param annotation
+     * @param type
+     * @return
+     * @throws JEntityTestException
+     */
+    private AbstractAbortCondition initializePreComparisonCheck(Annotation annotation, Class<? extends AbstractAbortCondition> type) {
+        LOG.trace("Starting initialization for comparator {}",type); //LOG
+        Constructor[] constructors = type.getDeclaredConstructors();
+        Constructor annotationConstructor = null;
+        for (Constructor candidate : constructors) {
+            if ((candidate.getParameterCount() == 1)
+                    && (annotation.annotationType().isAssignableFrom(candidate.getParameterTypes()[0]))) {
+                annotationConstructor = candidate;
+                break;
+            }
+        }
+        //noinspection OverlyBroadCatchBlock
+        try {
+            if (annotationConstructor != null) {
+                LOG.trace("Initializing comparator {} using constructor with annotation parameter", type); //LOG
+                return (AbstractAbortCondition) annotationConstructor.newInstance(annotation);
+            } else {
+                LOG.trace("Initializing comparator {} using default constructor", type); //LOG
+                return type.getConstructor().newInstance();
+            }
+        } catch (InstantiationException e) {
+            throw new PreComparisonCheckInstantiationException(type, annotation, e);
+        } catch (IllegalAccessException e) {
+            throw new PreComparisonCheckInstantiationException(type, annotation, e);
+        } catch (Exception e) {
+            throw new PreComparisonCheckInstantiationException(type, annotation, e);
+        }
+    }
+
 
 }

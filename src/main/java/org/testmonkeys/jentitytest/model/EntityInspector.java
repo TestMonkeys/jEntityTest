@@ -50,6 +50,9 @@ public class EntityInspector {
 
             //Field level processing
             if (field != null) {
+                for (Annotation annotation:getPreConditionalChecksAnnotation(field)){
+                    model.setAbortCondition(propertyDescriptor,annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
+                }
                 Annotation annotation = getComparisonAnnotation(field);
                 if (annotation != null) {
                     LOG.debug("Found annotation at field level"); //LOG
@@ -59,6 +62,9 @@ public class EntityInspector {
             }
 
             //Method level processing
+            for (Annotation annotation:getPreConditionalChecksAnnotation(method)){
+                model.setAbortCondition(propertyDescriptor,annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
+            }
             Annotation annotation = getComparisonAnnotation(method);
             if (annotation != null) {
                 LOG.debug("Found annotation at method level"); //LOG
@@ -97,6 +103,16 @@ public class EntityInspector {
             return knownAnnotations.get(0);
         else
             return null;
+    }
+
+    private List<Annotation> getPreConditionalChecksAnnotation(AnnotatedElement member) {
+        List<Annotation> knownAnnotations = new ArrayList<>();
+        for (Annotation candidate : member.getAnnotations()) {
+            if (annotationToComparator.hasPreConditionalCheckAssigned(candidate)) {
+                knownAnnotations.add(candidate);
+            }
+        }
+        return knownAnnotations;
     }
 
     private PropertyComparisonWrapper getPropertyComparator(Annotation annotation) {
