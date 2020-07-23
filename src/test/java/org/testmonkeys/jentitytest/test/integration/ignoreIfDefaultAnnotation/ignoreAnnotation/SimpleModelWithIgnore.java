@@ -1,10 +1,9 @@
 package org.testmonkeys.jentitytest.test.integration.ignoreIfDefaultAnnotation.ignoreAnnotation;
 
-import org.testmonkeys.jentitytest.framework.IgnoreComparison;
-import org.testmonkeys.jentitytest.framework.IgnoreComparisonIfExpectedDefault;
+import org.testmonkeys.jentitytest.framework.IgnoreComparisonIfExpectedNull;
 
 public class SimpleModelWithIgnore {
-    @IgnoreComparisonIfExpectedDefault
+    @IgnoreComparisonIfExpectedNull
     private String name;
     private int age;
 

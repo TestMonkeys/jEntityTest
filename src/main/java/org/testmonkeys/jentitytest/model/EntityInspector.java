@@ -51,7 +51,7 @@ public class EntityInspector {
             //Field level processing
             if (field != null) {
                 for (Annotation annotation:getPreConditionalChecksAnnotation(field)){
-                    model.setPreConditionalCheck(propertyDescriptor,getPropertyComparator(annotation));
+                    model.setAbortCondition(propertyDescriptor,annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
                 }
                 Annotation annotation = getComparisonAnnotation(field);
                 if (annotation != null) {
@@ -63,7 +63,7 @@ public class EntityInspector {
 
             //Method level processing
             for (Annotation annotation:getPreConditionalChecksAnnotation(method)){
-                model.setPreConditionalCheck(propertyDescriptor,getPropertyComparator(annotation));
+                model.setAbortCondition(propertyDescriptor,annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
             }
             Annotation annotation = getComparisonAnnotation(method);
             if (annotation != null) {

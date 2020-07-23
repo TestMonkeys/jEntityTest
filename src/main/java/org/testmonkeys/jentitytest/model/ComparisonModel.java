@@ -2,7 +2,9 @@ package org.testmonkeys.jentitytest.model;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.testmonkeys.jentitytest.comparison.PropertyComparisonWrapper;
+import org.testmonkeys.jentitytest.comparison.abortConditions.AbstractAbortCondition;
 
 import java.beans.PropertyDescriptor;
 import java.util.*;
@@ -14,13 +16,14 @@ import java.util.*;
 public class ComparisonModel {
 
     private static final Logger LOG = LoggerFactory.getLogger(ComparisonModel.class);
+    private final Map<PropertyDescriptor, List<AbstractAbortCondition>> abortConditions;
     private final Map<PropertyDescriptor, PropertyComparisonWrapper> comparisonMap;
-    private final Map<PropertyDescriptor, List<PropertyComparisonWrapper>> preConditionalChecks;
+
 
     public ComparisonModel() {
         LOG.debug("Creating new comparison model"); //LOG
+        abortConditions = new HashMap<>();
         comparisonMap = new HashMap<>();
-        preConditionalChecks = new HashMap<>();
     }
 
     /**
@@ -34,15 +37,17 @@ public class ComparisonModel {
     }
 
     /**
-     * Adds pre-conditional check
+     * Adds abort condition check
+     * This will stop comparison with the expected in case if the abortCondition fails, but will not mark the field
+     * as a comparison failure.
      * @param propertyDescriptor property to add to the comparison
-     * @param comparator comparator used for this property
+     * @param abortCondition abort condition used for this property
      */
-    public void setPreConditionalCheck(PropertyDescriptor propertyDescriptor, PropertyComparisonWrapper comparator) {
-        LOG.debug("Adding pre-conditional check for {} using {}", propertyDescriptor.getName(), comparator.getComparator()); //LOG
-        if (!preConditionalChecks.containsKey(propertyDescriptor))
-            preConditionalChecks.put(propertyDescriptor,new ArrayList<>());
-        preConditionalChecks.get(propertyDescriptor).add(comparator);
+    public void setAbortCondition(PropertyDescriptor propertyDescriptor, AbstractAbortCondition abortCondition) {
+        LOG.debug("Adding pre-conditional check for {} using {}", propertyDescriptor.getName(), abortCondition); //LOG
+        if (!abortConditions.containsKey(propertyDescriptor))
+            abortConditions.put(propertyDescriptor,new ArrayList<>());
+        abortConditions.get(propertyDescriptor).add(abortCondition);
     }
 
     /**
@@ -67,8 +72,8 @@ public class ComparisonModel {
      * @param propertyDescriptor
      * @return
      */
-    public List<PropertyComparisonWrapper> getPreConditionalChecks(PropertyDescriptor propertyDescriptor) {
-        return preConditionalChecks.get(propertyDescriptor);
+    public List<AbstractAbortCondition> getAbortConditionChecks(PropertyDescriptor propertyDescriptor) {
+        return abortConditions.get(propertyDescriptor);
     }
 
     /**
@@ -76,7 +81,7 @@ public class ComparisonModel {
      * @param propertyDescriptor
      * @return
      */
-    public boolean hasPreConditionalCheck(PropertyDescriptor propertyDescriptor) {
-        return preConditionalChecks.containsKey(propertyDescriptor);
+    public boolean hasAbortConditions(PropertyDescriptor propertyDescriptor) {
+        return abortConditions.containsKey(propertyDescriptor);
     }
 }
