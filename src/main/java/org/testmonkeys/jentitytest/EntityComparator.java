@@ -6,6 +6,7 @@ import org.testmonkeys.jentitytest.comparison.abortConditions.AbstractAbortCondi
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
+import org.testmonkeys.jentitytest.comparison.validations.AbstractValidation;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.model.ComparisonModel;
 import org.testmonkeys.jentitytest.model.EntityToComparisonModelDictionary;
@@ -58,21 +59,46 @@ public class EntityComparator {
         ResultSet comparisonResults = new ResultSet();
         for (PropertyDescriptor propertyDescriptor : model.getComparableProperties()) {
             ComparisonContext propContext = context.withProperty(propertyDescriptor.getName());
-
-            //Abort Conditions block
-            if (model.hasAbortConditions(propertyDescriptor))
-                for (AbstractAbortCondition preConditionalChecks:model.getAbortConditionChecks(propertyDescriptor)){
-                    conditionalCheckResult = preConditionalChecks.check(propertyDescriptor,actual, expected, propContext);
-                    if ((conditionalCheckResult.getStatus() == Failed) || conditionalCheckResult.isComparisonFinished()) {
-                        return new ResultSet().with(conditionalCheckResult);
-                    }
-                }
-
-            //comparison block
-            PropertyComparisonWrapper comparator = model.getComparator(propertyDescriptor);
-            comparisonResults.addAll(comparator.compare(propertyDescriptor, actual, expected, propContext));
+            ResultSet results=runChecksForField(model,propertyDescriptor, actual,expected, propContext);
+//            //Abort Conditions block
+//            if (model.hasAbortConditions(propertyDescriptor))
+//                for (AbstractAbortCondition preConditionalChecks:model.getAbortConditionChecks(propertyDescriptor)){
+//                    conditionalCheckResult = preConditionalChecks.check(propertyDescriptor,actual, expected, propContext);
+//                    if ((conditionalCheckResult.getStatus() == Failed) || conditionalCheckResult.isComparisonFinished()) {
+//                        return new ResultSet().with(conditionalCheckResult);
+//                    }
+//                }
+//
+//            //comparison block
+//            PropertyComparisonWrapper comparator = model.getComparator(propertyDescriptor);
+//            comparisonResults.addAll(comparator.compare(propertyDescriptor, actual, expected, propContext));
+            comparisonResults.addAll(results);
         }
         return comparisonResults;
+    }
+
+    private ResultSet runChecksForField(ComparisonModel model, PropertyDescriptor propertyDescriptor, Object actual, Object expected,ComparisonContext propContext){
+        //Validations
+        if (model.hasValidations(propertyDescriptor))
+            for (AbstractValidation validation:model.getValidations(propertyDescriptor)){
+                ConditionalCheckResult conditionalCheckResult= validation.check(propertyDescriptor,actual,expected, propContext);
+                if ((conditionalCheckResult.getStatus() == Failed) || conditionalCheckResult.isComparisonFinished()) {
+                    return new ResultSet().with(conditionalCheckResult);
+                }
+            }
+
+        //Abort Conditions block
+        if (model.hasAbortConditions(propertyDescriptor))
+            for (AbstractAbortCondition preConditionalChecks:model.getAbortConditionChecks(propertyDescriptor)){
+                ConditionalCheckResult conditionalCheckResult = preConditionalChecks.check(propertyDescriptor,actual, expected, propContext);
+                if ((conditionalCheckResult.getStatus() == Failed) || conditionalCheckResult.isComparisonFinished()) {
+                    return new ResultSet().with(conditionalCheckResult);
+                }
+            }
+
+        //comparison block
+        PropertyComparisonWrapper comparator = model.getComparator(propertyDescriptor);
+        return comparator.compare(propertyDescriptor, actual, expected, propContext);
     }
 
     private String getContextParentName(Object actual, Object expected) {

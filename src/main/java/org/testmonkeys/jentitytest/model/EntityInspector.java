@@ -53,6 +53,9 @@ public class EntityInspector {
                 for (Annotation annotation:getPreConditionalChecksAnnotation(field)){
                     model.setAbortCondition(propertyDescriptor,annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
                 }
+                for (Annotation annotation:getValidationChecksAnnotation(field)){
+                    model.setValidation(propertyDescriptor,annotationToComparator.getValidationForAnnotation(annotation));
+                }
                 Annotation annotation = getComparisonAnnotation(field);
                 if (annotation != null) {
                     LOG.debug("Found annotation at field level"); //LOG
@@ -64,6 +67,9 @@ public class EntityInspector {
             //Method level processing
             for (Annotation annotation:getPreConditionalChecksAnnotation(method)){
                 model.setAbortCondition(propertyDescriptor,annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
+            }
+            for (Annotation annotation:getValidationChecksAnnotation(method)){
+                model.setValidation(propertyDescriptor,annotationToComparator.getValidationForAnnotation(annotation));
             }
             Annotation annotation = getComparisonAnnotation(method);
             if (annotation != null) {
@@ -109,6 +115,16 @@ public class EntityInspector {
         List<Annotation> knownAnnotations = new ArrayList<>();
         for (Annotation candidate : member.getAnnotations()) {
             if (annotationToComparator.hasPreConditionalCheckAssigned(candidate)) {
+                knownAnnotations.add(candidate);
+            }
+        }
+        return knownAnnotations;
+    }
+
+    private List<Annotation> getValidationChecksAnnotation(AnnotatedElement member) {
+        List<Annotation> knownAnnotations = new ArrayList<>();
+        for (Annotation candidate : member.getAnnotations()) {
+            if (annotationToComparator.hasValidationCheckAssigned(candidate)) {
                 knownAnnotations.add(candidate);
             }
         }
