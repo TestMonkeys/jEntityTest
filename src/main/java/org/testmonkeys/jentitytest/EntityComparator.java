@@ -60,18 +60,6 @@ public class EntityComparator {
         for (PropertyDescriptor propertyDescriptor : model.getComparableProperties()) {
             ComparisonContext propContext = context.withProperty(propertyDescriptor.getName());
             ResultSet results=runChecksForField(model,propertyDescriptor, actual,expected, propContext);
-//            //Abort Conditions block
-//            if (model.hasAbortConditions(propertyDescriptor))
-//                for (AbstractAbortCondition preConditionalChecks:model.getAbortConditionChecks(propertyDescriptor)){
-//                    conditionalCheckResult = preConditionalChecks.check(propertyDescriptor,actual, expected, propContext);
-//                    if ((conditionalCheckResult.getStatus() == Failed) || conditionalCheckResult.isComparisonFinished()) {
-//                        return new ResultSet().with(conditionalCheckResult);
-//                    }
-//                }
-//
-//            //comparison block
-//            PropertyComparisonWrapper comparator = model.getComparator(propertyDescriptor);
-//            comparisonResults.addAll(comparator.compare(propertyDescriptor, actual, expected, propContext));
             comparisonResults.addAll(results);
         }
         return comparisonResults;
