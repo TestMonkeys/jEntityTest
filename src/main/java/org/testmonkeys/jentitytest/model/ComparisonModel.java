@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import org.testmonkeys.jentitytest.comparison.PropertyComparisonWrapper;
 import org.testmonkeys.jentitytest.comparison.abortConditions.AbstractAbortCondition;
+import org.testmonkeys.jentitytest.comparison.validations.AbstractValidation;
 
 import java.beans.PropertyDescriptor;
 import java.util.*;
@@ -16,14 +17,46 @@ import java.util.*;
 public class ComparisonModel {
 
     private static final Logger LOG = LoggerFactory.getLogger(ComparisonModel.class);
+    private final Map<PropertyDescriptor, List<AbstractValidation>> validations;
     private final Map<PropertyDescriptor, List<AbstractAbortCondition>> abortConditions;
     private final Map<PropertyDescriptor, PropertyComparisonWrapper> comparisonMap;
 
 
     public ComparisonModel() {
         LOG.debug("Creating new comparison model"); //LOG
+        validations = new HashMap<>();
         abortConditions = new HashMap<>();
         comparisonMap = new HashMap<>();
+    }
+
+    /**
+     * Adds a validation point for the property
+     * @param propertyDescriptor property to add to the comparison
+     * @param validation validation used for this property
+     */
+    public void setValidation(PropertyDescriptor propertyDescriptor, AbstractValidation validation) {
+        LOG.debug("Adding validation for {} using {}", propertyDescriptor.getName(), validation); //LOG
+        if (!validations.containsKey(propertyDescriptor))
+            validations.put(propertyDescriptor,new ArrayList<>());
+        validations.get(propertyDescriptor).add(validation);
+    }
+
+    /**
+     * Gets the validation checks for the provided propertyDescriptor in the current model
+     * @param propertyDescriptor
+     * @return list of validation checks
+     */
+    public List<AbstractValidation> getValidations(PropertyDescriptor propertyDescriptor) {
+        return validations.get(propertyDescriptor);
+    }
+
+    /**
+     * Checks if there are any validation checks registered for provided propertyDescriptor in the current model
+     * @param propertyDescriptor
+     * @return
+     */
+    public boolean hasValidations(PropertyDescriptor propertyDescriptor) {
+        return validations.containsKey(propertyDescriptor);
     }
 
     /**
