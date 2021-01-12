@@ -34,8 +34,7 @@ public class RegexComparator extends AbstractComparator {
                     castException);
         }
 
-        Status status;
-            status = Status.valueOf(Pattern.matches(expectedValue,actualValue));
+        Status status = Status.valueOf(Pattern.matches(expectedValue,actualValue));
 
         return new ResultSet().with(status, context, actualValue, expectedValue);
     }
