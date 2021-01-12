@@ -47,6 +47,7 @@ public final class AnnotationToComparatorDictionary {
         setComparatorForAnnotation(DateTimeComparator.class,DateTimeComparison.class);
         setComparatorForAnnotation(StringComparator.class,StringComparison.class);
         setComparatorForAnnotation(ChildEntityListComparator.class,ChildEntityListComparison.class);
+        setComparatorForAnnotation(RegexComparator.class, RegexInExpected.class);
         setValidatorForAnnotation(NotNullValidator.class,ValidateNotNull.class);
         setValidatorForAnnotation(RegexValidation.class,ValidateRegex.class);
     }
