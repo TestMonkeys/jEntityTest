@@ -1,0 +1,14 @@
+entity: "org.testmonkeys.some.Entity"
+properties:
+  username:
+    validators:
+      - strategy: NotNull
+      - strategy: RegexValidator
+        parameters:
+          expression: ".*"
+    abortConditions:
+      - strategy: AbortIfExpectedNull
+    comparisonStrategy:
+      strategy: DateTimeComparison
+
+

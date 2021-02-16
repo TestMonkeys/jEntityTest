@@ -51,10 +51,10 @@ public class EntityInspector {
             //Field level processing
             if (field != null) {
                 for (Annotation annotation:getPreConditionalChecksAnnotation(field)){
-                    model.setAbortCondition(propertyDescriptor,annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
+                    model.addAbortCondition(propertyDescriptor,annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
                 }
                 for (Annotation annotation:getValidationChecksAnnotation(field)){
-                    model.setValidation(propertyDescriptor,annotationToComparator.getValidationForAnnotation(annotation));
+                    model.addValidation(propertyDescriptor,annotationToComparator.getValidationForAnnotation(annotation));
                 }
                 Annotation annotation = getComparisonAnnotation(field);
                 if (annotation != null) {
@@ -66,10 +66,10 @@ public class EntityInspector {
 
             //Method level processing
             for (Annotation annotation:getPreConditionalChecksAnnotation(method)){
-                model.setAbortCondition(propertyDescriptor,annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
+                model.addAbortCondition(propertyDescriptor,annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
             }
             for (Annotation annotation:getValidationChecksAnnotation(method)){
-                model.setValidation(propertyDescriptor,annotationToComparator.getValidationForAnnotation(annotation));
+                model.addValidation(propertyDescriptor,annotationToComparator.getValidationForAnnotation(annotation));
             }
             Annotation annotation = getComparisonAnnotation(method);
             if (annotation != null) {

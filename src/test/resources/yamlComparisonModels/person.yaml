@@ -1,0 +1,32 @@
+entity: org.testmonkeys.jentitytest.test.integration.yaml.test.Person
+properties:
+  id:
+    abortConditions:
+      - strategy: AbortIfExpectedNull
+  name:
+    validators:
+      - strategy: RegexValidation
+        parameters:
+          regExp: ^[0-9A-Za-z!@.,;:'"?-]{1,10}\z
+    comparisonStrategy:
+      strategy: StringComparison
+      parameters:
+        caseSensitive: false
+        trim: true
+  createdAt:
+    comparisonStrategy:
+      strategy: DateTimeComparison
+      parameters:
+        delta: 1
+        unit: MINUTES
+  employmentRecord:
+    comparisonStrategy:
+      strategy: ChildEntityComparison
+  knownAddresses:
+    comparisonStrategy:
+      strategy: ChildEntityListComparison
+
+
+
+
+

@@ -3,19 +3,18 @@ package org.testmonkeys.jentitytest.model;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testmonkeys.jentitytest.Resources;
-import org.testmonkeys.jentitytest.comparison.AbstractCheck;
 import org.testmonkeys.jentitytest.comparison.Comparator;
-import org.testmonkeys.jentitytest.comparison.abortConditions.AbstractAbortCondition;
 import org.testmonkeys.jentitytest.comparison.abortConditions.AbortOnExpectNullCondition;
+import org.testmonkeys.jentitytest.comparison.abortConditions.AbstractAbortCondition;
 import org.testmonkeys.jentitytest.comparison.strategies.*;
 import org.testmonkeys.jentitytest.comparison.validations.AbstractValidation;
 import org.testmonkeys.jentitytest.comparison.validations.NotNullValidator;
 import org.testmonkeys.jentitytest.comparison.validations.RegexValidation;
-import org.testmonkeys.jentitytest.exceptions.*;
+import org.testmonkeys.jentitytest.exceptions.JEntityModelException;
+import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.framework.*;
 
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +34,7 @@ public final class AnnotationToComparatorDictionary {
     private final Map<Class<?>, Class<? extends Comparator>> mapping;
     private final Map<Class<?>, Class<? extends AbstractAbortCondition>> preConditionalMapping;
     private final Map<Class<?>, Class<? extends AbstractValidation>> validationsMapping;
+    private final ReflectionUtils reflectionUtils = new ReflectionUtils();
 
     private AnnotationToComparatorDictionary() {
         LOG.debug("Initializing Annotation to Comparator Dictionary"); //LOG
@@ -152,7 +152,7 @@ public final class AnnotationToComparatorDictionary {
             throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
 
         if (mapping.containsKey(annotation.annotationType())) {
-            return initializeComparator(annotation, mapping.get(annotation.annotationType()));
+            return reflectionUtils.initializeComparator(annotation, mapping.get(annotation.annotationType()));
         }
 
         throw new JEntityModelException(
@@ -173,7 +173,7 @@ public final class AnnotationToComparatorDictionary {
             throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
 
         if (preConditionalMapping.containsKey(annotation.annotationType())) {
-            return initializeCheck(annotation, preConditionalMapping.get(annotation.annotationType()));
+            return reflectionUtils.initializeCheck(annotation, preConditionalMapping.get(annotation.annotationType()));
         }
 
         throw new JEntityModelException(
@@ -194,7 +194,7 @@ public final class AnnotationToComparatorDictionary {
             throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
 
         if (validationsMapping.containsKey(annotation.annotationType())) {
-            return initializeCheck(annotation, validationsMapping.get(annotation.annotationType()));
+            return reflectionUtils.initializeCheck(annotation, validationsMapping.get(annotation.annotationType()));
         }
 
         throw new JEntityModelException(
@@ -202,75 +202,7 @@ public final class AnnotationToComparatorDictionary {
                         annotation.annotationType().getName()));
     }
 
-    /**
-     * @param annotation
-     * @param type
-     * @return
-     * @throws JEntityTestException
-     */
-    private Comparator initializeComparator(Annotation annotation, Class<? extends Comparator> type) {
-        LOG.trace("Starting initialization for comparator {}",type); //LOG
-        Constructor[] constructors = type.getDeclaredConstructors();
-        Constructor annotationConstructor = null;
-        for (Constructor candidate : constructors) {
-            if ((candidate.getParameterCount() == 1)
-                    && (annotation.annotationType().isAssignableFrom(candidate.getParameterTypes()[0]))) {
-                annotationConstructor = candidate;
-                break;
-            }
-        }
-        //noinspection OverlyBroadCatchBlock
-        try {
-            if (annotationConstructor != null) {
-                LOG.trace("Initializing comparator {} using constructor with annotation parameter", type); //LOG
-                return (Comparator) annotationConstructor.newInstance(annotation);
-            } else {
-                LOG.trace("Initializing comparator {} using default constructor", type); //LOG
-                return type.getConstructor().newInstance();
-            }
-        } catch (InstantiationException e) {
-            throw new ComparatorInstantiationException(type, annotation, e);
-        } catch (IllegalAccessException e) {
-            throw new ComparatorIllegalAccessException(type, annotation, e);
-        } catch (Exception e) {
-            throw new ComparatorInvocationTargetException(type, annotation, e);
-        }
-    }
 
-    /**
-     * @param annotation
-     * @param type
-     * @return
-     * @throws JEntityTestException
-     */
-    private  <T> T initializeCheck(Annotation annotation, Class<? extends AbstractCheck> type) {
-        LOG.trace("Starting initialization for comparator {}",type); //LOG
-        Constructor[] constructors = type.getDeclaredConstructors();
-        Constructor annotationConstructor = null;
-        for (Constructor candidate : constructors) {
-            if ((candidate.getParameterCount() == 1)
-                    && (annotation.annotationType().isAssignableFrom(candidate.getParameterTypes()[0]))) {
-                annotationConstructor = candidate;
-                break;
-            }
-        }
-        //noinspection OverlyBroadCatchBlock
-        try {
-            if (annotationConstructor != null) {
-                LOG.trace("Initializing comparator {} using constructor with annotation parameter", type); //LOG
-                return (T) annotationConstructor.newInstance(annotation);
-            } else {
-                LOG.trace("Initializing comparator {} using default constructor", type); //LOG
-                return (T) type.getConstructor().newInstance();
-            }
-        } catch (InstantiationException e) {
-            throw new CheckInstantiationException(type, annotation, e);
-        } catch (IllegalAccessException e) {
-            throw new CheckInstantiationException(type, annotation, e);
-        } catch (Exception e) {
-            throw new CheckInstantiationException(type, annotation, e);
-        }
-    }
 
 
 }

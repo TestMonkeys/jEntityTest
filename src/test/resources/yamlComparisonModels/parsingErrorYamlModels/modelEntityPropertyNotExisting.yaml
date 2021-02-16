@@ -1,0 +1,20 @@
+entity: org.testmonkeys.jentitytest.test.integration.yaml.parsing.YamlParsingEntity
+properties:
+  # not existing field firstname
+  firstname:
+    validators:
+      - strategy: RegexValidation
+        parameters:
+          regExp: ".*"
+          failOnNull: true
+      - strategy: org.testmonkeys.jentitytest.comparison.validations.NotNullValidator
+    comparisonStrategy:
+      strategy: StringComparison
+      parameters:
+        caseSensitive: false
+        ignoreCharacters: [ c, a ]
+        trim: false
+
+
+
+

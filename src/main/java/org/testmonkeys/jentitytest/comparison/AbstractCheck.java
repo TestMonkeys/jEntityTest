@@ -7,12 +7,15 @@ import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 /**
  * Base class for Abort Condition Checks, acts as a wrapper and makes all abort conditions implement the strategy
  * pattern
  */
 public abstract class AbstractCheck {
+
+    private Map<String,Object> parameters;
 
     /**
      * @param property property on which the check will run

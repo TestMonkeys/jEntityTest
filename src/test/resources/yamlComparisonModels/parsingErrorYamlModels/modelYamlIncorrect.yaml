@@ -1,0 +1,20 @@
+entity: org.testmonkeys.jentitytest.test.integration.yaml.parsing.YamlParsingEntity
+properties:
+  name:
+    #using validation instead of validators
+    validation:
+      - strategy: RegexValidation
+        parameters:
+          regExp: ".*"
+          failOnNull: true
+      - strategy: org.testmonkeys.jentitytest.comparison.validations.NotNullValidator
+    comparisonStrategy:
+      strategy: StringComparison
+      parameters:
+        caseSensitive: false
+        ignoreCharacters: [ c, a ]
+        trim: false
+
+
+
+
