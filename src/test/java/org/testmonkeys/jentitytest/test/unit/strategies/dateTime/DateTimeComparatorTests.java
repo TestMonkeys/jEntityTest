@@ -34,6 +34,13 @@ public class DateTimeComparatorTests {
     private DateTimeComparator getComparator(int delta, ChronoUnit unit) {
         DateTimeComparator comparator = new DateTimeComparator();
         comparator.setDelta(delta);
+        comparator.setUnit(unit.name());
+        return comparator;
+    }
+
+    private DateTimeComparator getComparator(int delta, String unit) {
+        DateTimeComparator comparator = new DateTimeComparator();
+        comparator.setDelta(delta);
         comparator.setUnit(unit);
         return comparator;
     }
@@ -130,6 +137,17 @@ public class DateTimeComparatorTests {
     @Test
     public void strategy_dateTimeComparator_3SecondDelta_inRange_seconds_expectedLess() throws Throwable {
         DateTimeComparator comparator = getComparator(3, ChronoUnit.SECONDS);
+        LocalDateTime actual = LocalDateTime.of(2016, 10, 5, 22, 33, 5, 1);
+        LocalDateTime expected = LocalDateTime.of(2016, 10, 5, 22, 33, 2, 1);
+
+        List<ComparisonResult> results = comparator.compare(actual, expected, context);
+        ComparisonResult result = results.get(0);
+        assertTrue(result.getStatus() == Passed);
+    }
+
+    @Test
+    public void strategy_dateTimeComparator_3SecondDelta_inRange_seconds_expectedLess_string() throws Throwable {
+        DateTimeComparator comparator = getComparator(3, "SECONDS");
         LocalDateTime actual = LocalDateTime.of(2016, 10, 5, 22, 33, 5, 1);
         LocalDateTime expected = LocalDateTime.of(2016, 10, 5, 22, 33, 2, 1);
 

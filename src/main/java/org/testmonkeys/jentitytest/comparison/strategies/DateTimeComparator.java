@@ -1,5 +1,7 @@
 package org.testmonkeys.jentitytest.comparison.strategies;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testmonkeys.jentitytest.Resources;
@@ -15,16 +17,19 @@ import java.text.MessageFormat;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 
-import static org.testmonkeys.jentitytest.Resources.desc_datetime_delta;
-import static org.testmonkeys.jentitytest.Resources.desc_datetime_precision;
-import static org.testmonkeys.jentitytest.Resources.err_actual_and_expected_must_be_of_type;
+import static org.testmonkeys.jentitytest.Resources.*;
 
 public class DateTimeComparator extends AbstractComparator {
 
     private static final Logger LOG = LoggerFactory.getLogger(DateTimeComparator.class);
 
+    @Getter
+    @Setter
     private int delta;
-    private ChronoUnit unit = ChronoUnit.NANOS;
+
+    private ChronoUnit chronoUnit = ChronoUnit.NANOS;
+    @Getter
+    private String unit = "NANOS";
 
     public DateTimeComparator() {
         registerPreConditionalCheck(new NullConditionalCheck());
@@ -33,14 +38,11 @@ public class DateTimeComparator extends AbstractComparator {
     public DateTimeComparator(DateTimeComparison annotation) {
         registerPreConditionalCheck(new NullConditionalCheck());
         delta = annotation.delta();
-        unit = annotation.unit();
+        chronoUnit = annotation.unit();
     }
 
-    public void setDelta(int delta) {
-        this.delta = delta;
-    }
-
-    public void setUnit(ChronoUnit unit) {
+    public void setUnit(String unit) {
+        this.chronoUnit = ChronoUnit.valueOf(unit);
         this.unit = unit;
     }
 
@@ -59,7 +61,7 @@ public class DateTimeComparator extends AbstractComparator {
                     castException);
         }
 
-        Status status = Status.valueOf(Math.abs(actualValue.until(expectedValue, unit)) <= delta);
+        Status status = Status.valueOf(Math.abs(actualValue.until(expectedValue, chronoUnit)) <= delta);
         return new ResultSet().with(status, context, actual, expected);
     }
 
@@ -67,8 +69,8 @@ public class DateTimeComparator extends AbstractComparator {
     protected String describe() {
         if (delta == 0)
             return MessageFormat.format(Resources.getString(desc_datetime_precision),
-                    getClass().getSimpleName(),unit);
+                    getClass().getSimpleName(), chronoUnit);
         else
-            return MessageFormat.format(Resources.getString(desc_datetime_delta),getClass().getSimpleName(),delta,unit);
+            return MessageFormat.format(Resources.getString(desc_datetime_delta), getClass().getSimpleName(), delta, chronoUnit);
     }
 }

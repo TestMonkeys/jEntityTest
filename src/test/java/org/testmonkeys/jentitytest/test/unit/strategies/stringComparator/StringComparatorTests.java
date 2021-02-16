@@ -7,6 +7,8 @@ import org.testmonkeys.jentitytest.comparison.strategies.StringComparator;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
 import java.beans.IntrospectionException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertTrue;
@@ -21,7 +23,7 @@ public class StringComparatorTests {
     }
 
     private StringComparator getComparator(boolean caseSensitive, boolean trim,
-                                           char[] ignoreChars) {
+                                           List<String> ignoreChars) {
         StringComparator comparator = new StringComparator();
         comparator.setCaseSensitive(caseSensitive);
         comparator.setIgnoreCharacters(ignoreChars);
@@ -87,7 +89,7 @@ public class StringComparatorTests {
         String actual = "$Ates tA";
         String expected = "test";
 
-        char[] ignore = {'$', ' ', 'A'};
+        List<String> ignore = Arrays.asList("$", " ", "A");
 
         StringComparator comparator = getComparator(false, false, ignore);
 
@@ -99,7 +101,7 @@ public class StringComparatorTests {
     public void stringComparatorPassIgnoreSpecChars2() throws IntrospectionException {
         String actual = "^tesAt$A";
         String expected = "test";
-        char[] ignore = {'^', '$', 'A'};
+        List<String> ignore = Arrays.asList("^", "$", "A");
 
         StringComparator comparator = getComparator(false, false, ignore);
 
@@ -111,7 +113,7 @@ public class StringComparatorTests {
     public void stringComparatorFailIgnoreSpecChars() throws IntrospectionException {
         String actual = "test\t$%";
         String expected = "test";
-        char[] ignore = {'\t', '$'};
+        List<String> ignore = Arrays.asList("\t", "$");
 
         StringComparator comparator = getComparator(false, false, ignore);
 
@@ -133,7 +135,7 @@ public class StringComparatorTests {
     public void stringComparatorPassIgnoreTrailing() throws IntrospectionException {
         String actual = "\t\ntest\r";
         String expected = " test \r\n";
-        char empty [] = {};
+        List<String> empty = new ArrayList<>();
         StringComparator comparator = getComparator(false, true, empty);
 
         List<ComparisonResult> resultList = comparator.compare(actual, expected, context);

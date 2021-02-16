@@ -1,5 +1,7 @@
 package org.testmonkeys.jentitytest.comparison.strategies;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.AbstractComparator;
 import org.testmonkeys.jentitytest.comparison.Comparator;
@@ -19,6 +21,8 @@ import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
 
 public class ChildEntityListComparator extends AbstractComparator {
 
+    @Getter
+    @Setter
     private boolean ordered = true;
 
     public ChildEntityListComparator() {

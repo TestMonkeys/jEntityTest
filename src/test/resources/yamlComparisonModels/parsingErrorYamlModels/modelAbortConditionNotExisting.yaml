@@ -1,0 +1,10 @@
+entity: org.testmonkeys.jentitytest.test.integration.yaml.parsing.YamlParsingEntity
+properties:
+  name:
+    abortConditions:
+      - strategy: AbortConditionThatWasNotImplementedYet
+
+
+
+
+

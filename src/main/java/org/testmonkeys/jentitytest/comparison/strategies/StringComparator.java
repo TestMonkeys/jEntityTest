@@ -1,5 +1,7 @@
 package org.testmonkeys.jentitytest.comparison.strategies;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.AbstractComparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
@@ -39,9 +41,15 @@ public class StringComparator extends AbstractComparator {
     private final String[] escControlChars = {ESCAPED_NEW_LINE, ESCAPED_TAB, ESCAPED_CARRIAGE_RETURN, ESCAPED_NULL,
             ESCAPED_BACKSPACE, ESCAPED_FORMFEED};
 
+    @Getter
+    @Setter
     private boolean caseSensitive = true;
+    @Getter
+    @Setter
     private boolean trim;
-    private char[] ignoreCharacters;
+    @Getter
+    @Setter
+    private List<String> ignoreCharacters = new ArrayList<>();
 
     public StringComparator() {
         registerPreConditionalCheck(new NullConditionalCheck());
@@ -51,19 +59,8 @@ public class StringComparator extends AbstractComparator {
         registerPreConditionalCheck(new NullConditionalCheck());
         caseSensitive = annotation.caseSensitive();
         trim = annotation.trim();
-        ignoreCharacters = annotation.ignoreCharacters();
-    }
-
-    public void setCaseSensitive(boolean caseSensitive) {
-        this.caseSensitive = caseSensitive;
-    }
-
-    public void setTrim(boolean trim) {
-        this.trim = trim;
-    }
-
-    public void setIgnoreCharacters(char[] ignoreCharacters) {
-        this.ignoreCharacters = ignoreCharacters;
+        for (char c : annotation.ignoreCharacters())
+            ignoreCharacters.add(String.valueOf(c));
     }
 
     public ResultSet computeComparison(Object actual, Object expected, ComparisonContext context) {
@@ -80,8 +77,7 @@ public class StringComparator extends AbstractComparator {
         }
 
         if (ignoreCharacters != null) {
-            for (char ignore : ignoreCharacters) {
-                String ignoreString = String.valueOf(ignore);
+            for (String ignoreString : ignoreCharacters) {
                 actualValue = actualValue.replace(ignoreString, EMPTY_STRING);
                 expectedValue = expectedValue.replace(ignoreString, EMPTY_STRING);
             }
@@ -102,13 +98,13 @@ public class StringComparator extends AbstractComparator {
 
     @Override
     protected String describe() {
-        if ((ignoreCharacters != null) && (ignoreCharacters.length > 0))
+        if ((ignoreCharacters != null) && (ignoreCharacters.size() > 0))
             return MessageFormat.format(Resources.getString(Resources.desc_string_ignoring_chars),
-                    getClass().getSimpleName(),caseSensitive,trim,
+                    getClass().getSimpleName(), caseSensitive, trim,
                     String.join(", ", getIgnoredCharactersEscaped()));
         else
             return MessageFormat.format(Resources.getString(Resources.desc_string),
-                    getClass().getSimpleName(),caseSensitive,trim,
+                    getClass().getSimpleName(), caseSensitive, trim,
                     String.join(", "));
     }
 
@@ -125,9 +121,11 @@ public class StringComparator extends AbstractComparator {
     private List<String> getIgnoredCharactersEscaped() {
         List<String> escapedChars = new ArrayList<>();
         if (ignoreCharacters != null)
-            for (char c : ignoreCharacters) {
-                escapedChars.add(showControlChars(Character.toString(c)));
+            for (String c : ignoreCharacters) {
+                escapedChars.add(showControlChars(c));
             }
         return escapedChars;
     }
+
+
 }

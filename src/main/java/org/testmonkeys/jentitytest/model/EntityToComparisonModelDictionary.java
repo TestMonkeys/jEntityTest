@@ -38,7 +38,6 @@ public final class EntityToComparisonModelDictionary {
      * @param clazz Entity class
      * @param model ComparisonModel
      */
-    @SuppressWarnings("NonBooleanMethodNameMayNotStartWithQuestion")
     public void addComparisonModel(Class clazz, ComparisonModel model) {
         dictionary.put(clazz, model);
     }

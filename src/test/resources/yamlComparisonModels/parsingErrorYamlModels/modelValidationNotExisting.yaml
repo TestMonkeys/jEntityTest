@@ -1,0 +1,19 @@
+entity: org.testmonkeys.jentitytest.test.integration.yaml.parsing.YamlParsingEntity
+properties:
+  name:
+    validators:
+      - strategy: RegexValidationThatWasNotImplementedYet
+        parameters:
+          regExp: ".*"
+          failOnNull: true
+      - strategy: org.testmonkeys.jentitytest.comparison.validations.NotNullValidator
+    comparisonStrategy:
+      strategy: StringComparison
+      parameters:
+        caseSensitive: false
+        ignoreCharacters: [ c, a ]
+        trim: false
+
+
+
+
