@@ -137,23 +137,32 @@ jobs:
              find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/junit/ \;
           when: always
 
+
+
       - run:
           name: Generate Jacoco results
           command:
-             cd ~/repo/src/main/java &&
-             /tmp/cc-test-reporter format-coverage -d --prefix ~/repo/ --add-prefix src/main/java/ -t jacoco ~/repo/target/site/jacoco/jacoco.xml
-             
+            cd ~/repo/src/main/java &&
+            /tmp/cc-test-reporter format-coverage -d --prefix ~/repo/ --add-prefix src/main/java/ -t jacoco ~/repo/target/site/jacoco/jacoco.xml
+
       - run:
           name: Upload Jacoco results
           command:
-             cd ~/repo/src/main/java &&
-             /tmp/cc-test-reporter upload-coverage -d
+            cd ~/repo/src/main/java &&
+            /tmp/cc-test-reporter upload-coverage -d
+
+      - run:
+          name: Upload to codeCov
+          command: |
+            bash <(curl -s https://codecov.io/bash) -f ~/repo/target/site/jacoco/jacoco.xml
+
+          when: always
 
       - store_test_results:
           path: ~/junit
 
       - store_artifacts:
-                path: ~/repo/target
+          path: ~/repo/target
 
 
 ##################################################################
