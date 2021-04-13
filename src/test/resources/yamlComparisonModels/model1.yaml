@@ -2,12 +2,12 @@ entity: "org.testmonkeys.some.Entity"
 properties:
   username:
     validators:
-      - strategy: NotNull
-      - strategy: RegexValidator
+      - strategy: ValidateNotNull
+      - strategy: ValidateRegex
         parameters:
           expression: ".*"
     abortConditions:
-      - strategy: AbortIfExpectedNull
+      - strategy: IgnoreComparisonIfExpectedNull
     comparisonStrategy:
       strategy: DateTimeComparison
 

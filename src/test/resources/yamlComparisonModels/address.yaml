@@ -2,7 +2,7 @@ entity: org.testmonkeys.jentitytest.test.integration.yaml.test.Address
 properties:
   id:
     abortConditions:
-      - strategy: AbortIfExpectedNull
+      - strategy: IgnoreComparisonIfExpectedNull
 
 
 

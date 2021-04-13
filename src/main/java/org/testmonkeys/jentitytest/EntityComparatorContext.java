@@ -2,10 +2,7 @@ package org.testmonkeys.jentitytest;
 
 import lombok.Getter;
 import org.testmonkeys.jentitytest.comparison.abortConditions.AbortOnExpectNullCondition;
-import org.testmonkeys.jentitytest.comparison.strategies.ChildEntityComparator;
-import org.testmonkeys.jentitytest.comparison.strategies.ChildEntityListComparator;
-import org.testmonkeys.jentitytest.comparison.strategies.DateTimeComparator;
-import org.testmonkeys.jentitytest.comparison.strategies.StringComparator;
+import org.testmonkeys.jentitytest.comparison.strategies.*;
 import org.testmonkeys.jentitytest.comparison.validations.NotNullValidator;
 import org.testmonkeys.jentitytest.comparison.validations.RegexValidation;
 import org.testmonkeys.jentitytest.model.ComparisonModel;
@@ -26,13 +23,16 @@ public class EntityComparatorContext {
 
     private EntityComparatorContext() {
         strategyShortNames = new HashMap<>();
-        strategyShortNames.put("RegexValidation", RegexValidation.class);
-        strategyShortNames.put("NotNullValidator", NotNullValidator.class);
+        strategyShortNames.put("ValidateRegex", RegexValidation.class);
+        strategyShortNames.put("ValidateNotNull", NotNullValidator.class);
         strategyShortNames.put("StringComparison", StringComparator.class);
+        strategyShortNames.put("RegexInExpected", RegexComparator.class);
+        strategyShortNames.put("IgnoreComparisonIfExpectedNull", AbortOnExpectNullCondition.class);
+        strategyShortNames.put("IgnoreComparison", IgnoreComparator.class);
         strategyShortNames.put("DateTimeComparison", DateTimeComparator.class);
         strategyShortNames.put("ChildEntityComparison", ChildEntityComparator.class);
         strategyShortNames.put("ChildEntityListComparison", ChildEntityListComparator.class);
-        strategyShortNames.put("AbortIfExpectedNull", AbortOnExpectNullCondition.class);
+
     }
 
     public synchronized static EntityComparatorContext getInstance() {
