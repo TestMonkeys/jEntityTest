@@ -26,6 +26,12 @@ import static org.testmonkeys.jentitytest.Resources.*;
 @Slf4j
 public class ReflectionUtils {
 
+    /**
+     * Gets the bean info for provided class
+     *
+     * @param clazz
+     * @return bean info
+     */
     public BeanInfo getBeanInfo(Class clazz) {
         BeanInfo beanInfo;
         try {
@@ -37,6 +43,15 @@ public class ReflectionUtils {
         return beanInfo;
     }
 
+    /**
+     * Initializes strategy from StrategyDefinition provided. This is used primarily for instantiating
+     * Strategies configured in YAML.
+     * Strategy is initialised with default constructor and parameters are assigned based on strategy properties
+     *
+     * @param strategy
+     * @param <T>      Expected type
+     * @return instance of required strategy
+     */
     public <T> T initializeStrategy(StrategyDefinition strategy) {
         log.trace("Starting initialization for yaml strategy {}", strategy.getStrategy()); //log
 
@@ -54,6 +69,14 @@ public class ReflectionUtils {
         return instance;
     }
 
+    /**
+     * Fills parameters to strategy properties.
+     * Method will fail on any property name mismatch, or extra parameters than strategy properties available
+     *
+     * @param strategyType
+     * @param strategy
+     * @param parameters
+     */
     @SneakyThrows
     private void fillParameters(Class<?> strategyType, Object strategy, Map<String, Object> parameters) {
         if (parameters == null || parameters.isEmpty())

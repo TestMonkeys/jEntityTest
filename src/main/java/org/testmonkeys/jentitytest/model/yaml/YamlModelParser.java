@@ -27,6 +27,12 @@ public class YamlModelParser {
 
     private final ReflectionUtils reflectionUtils = new ReflectionUtils();
 
+    /**
+     * Interprets yaml model and creates a ComparisonModel based on that
+     *
+     * @param inputStream
+     * @return
+     */
     public ComparisonModel readModel(InputStream inputStream) {
         Yaml yaml = new Yaml(new Constructor(EntityYamlComparisonDefinition.class));
 
@@ -57,7 +63,7 @@ public class YamlModelParser {
         }
     }
 
-    public void createPropertyModel(PropertyDescriptor propertyDescriptor, ComparisonModel model, EntityYamlComparisonDefinition obj) {
+    private void createPropertyModel(PropertyDescriptor propertyDescriptor, ComparisonModel model, EntityYamlComparisonDefinition obj) {
         if (obj.getProperties().containsKey(propertyDescriptor.getDisplayName())) {
             createPropertyComparisonModelFromYamlConfiguration(propertyDescriptor, model, obj);
         } else {
@@ -65,7 +71,7 @@ public class YamlModelParser {
         }
     }
 
-    public void createPropertyComparisonModelFromYamlConfiguration(PropertyDescriptor propertyDescriptor, ComparisonModel model, EntityYamlComparisonDefinition obj) {
+    private void createPropertyComparisonModelFromYamlConfiguration(PropertyDescriptor propertyDescriptor, ComparisonModel model, EntityYamlComparisonDefinition obj) {
         FieldMappingDefinitions fmDefinition = obj.getProperties().get(propertyDescriptor.getDisplayName());
         List<StrategyDefinition> validators = fmDefinition.getValidators();
         if (validators != null) {
@@ -84,7 +90,7 @@ public class YamlModelParser {
         }
     }
 
-    public void createDefaultPropertyModel(PropertyDescriptor propertyDescriptor, ComparisonModel model) {
+    private void createDefaultPropertyModel(PropertyDescriptor propertyDescriptor, ComparisonModel model) {
         model.setComparisonPoint(propertyDescriptor, new PropertyComparisonWrapper(new SimpleTypeComparator()));
     }
 
