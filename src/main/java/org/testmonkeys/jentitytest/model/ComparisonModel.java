@@ -2,8 +2,7 @@ package org.testmonkeys.jentitytest.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.testmonkeys.jentitytest.comparison.PropertyComparisonWrapper;
 import org.testmonkeys.jentitytest.comparison.abortConditions.AbstractAbortCondition;
 import org.testmonkeys.jentitytest.comparison.validations.AbstractValidation;
@@ -16,19 +15,19 @@ import java.util.Set;
  * ComparisonModel describes an entity by defining the mappings between PropertyDescriptor and Validation,
  * AbortConditions and Comparison strategy instances.
  */
+@Slf4j
 public class ComparisonModel {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ComparisonModel.class);
-    @Getter
-    @Setter
-    private Class<?> entityType;
     private final MultiStrategyFieldMapping<AbstractValidation> validations;
     private final MultiStrategyFieldMapping<AbstractAbortCondition> abortConditions;
     private final SingleStrategyFieldMapping<PropertyComparisonWrapper> comparisonMap;
+    @Getter
+    @Setter
+    private Class<?> entityType;
 
 
     public ComparisonModel() {
-        LOG.debug("Creating new comparison model"); //LOG
+        log.debug("Creating new comparison model"); //log
         validations = new MultiStrategyFieldMapping<>();
         abortConditions = new MultiStrategyFieldMapping<>();
         comparisonMap = new SingleStrategyFieldMapping<>();
@@ -36,16 +35,18 @@ public class ComparisonModel {
 
     /**
      * Adds a validation point for the property
+     *
      * @param propertyDescriptor property to add to the comparison
-     * @param validation validation used for this property
+     * @param validation         validation used for this property
      */
     public void addValidation(PropertyDescriptor propertyDescriptor, AbstractValidation validation) {
-        LOG.debug("Adding validation for {} using {}", propertyDescriptor.getName(), validation); //LOG
-        validations.addStrategy(propertyDescriptor,validation);
+        log.debug("Adding validation for {} using {}", propertyDescriptor.getName(), validation); //log
+        validations.addStrategy(propertyDescriptor, validation);
     }
 
     /**
      * Gets the validation checks for the provided propertyDescriptor in the current model
+     *
      * @param propertyDescriptor
      * @return list of validation checks
      */
@@ -55,6 +56,7 @@ public class ComparisonModel {
 
     /**
      * Checks if there are any validation checks registered for provided propertyDescriptor in the current model
+     *
      * @param propertyDescriptor
      * @return
      */
@@ -66,16 +68,18 @@ public class ComparisonModel {
      * Adds abort condition check
      * This will stop comparison with the expected in case if the abortCondition fails, but will not mark the field
      * as a comparison failure.
+     *
      * @param propertyDescriptor property to add to the comparison
-     * @param abortCondition abort condition used for this property
+     * @param abortCondition     abort condition used for this property
      */
     public void addAbortCondition(PropertyDescriptor propertyDescriptor, AbstractAbortCondition abortCondition) {
-        LOG.debug("Adding pre-conditional check for {} using {}", propertyDescriptor.getName(), abortCondition); //LOG
-        abortConditions.addStrategy(propertyDescriptor,abortCondition);
+        log.debug("Adding pre-conditional check for {} using {}", propertyDescriptor.getName(), abortCondition); //log
+        abortConditions.addStrategy(propertyDescriptor, abortCondition);
     }
 
     /**
      * Checks if there are any pre-conditional checks registered for provided propertyDescriptor in the current model
+     *
      * @param propertyDescriptor
      * @return
      */
@@ -85,6 +89,7 @@ public class ComparisonModel {
 
     /**
      * Gets the pre-conditional checks for the provided propertyDescriptor in the current model
+     *
      * @param propertyDescriptor
      * @return
      */
@@ -93,19 +98,20 @@ public class ComparisonModel {
     }
 
 
-
     /**
      * Adds comparison point for strategies
+     *
      * @param propertyDescriptor property to add to the comparison
-     * @param comparator comparator used for this property
+     * @param comparator         comparator used for this property
      */
     public void setComparisonPoint(PropertyDescriptor propertyDescriptor, PropertyComparisonWrapper comparator) {
-        LOG.debug("Adding comparison for {} using {}", propertyDescriptor.getName(), comparator.getComparator()); //LOG
+        log.debug("Adding comparison for {} using {}", propertyDescriptor.getName(), comparator.getComparator()); //log
         comparisonMap.setStrategy(propertyDescriptor, comparator);
     }
 
     /**
      * Gets the set of properties that this model contains
+     *
      * @return
      */
     public Set<PropertyDescriptor> getComparableProperties() {
@@ -114,6 +120,7 @@ public class ComparisonModel {
 
     /**
      * Gets the comparator for the provided propertyDescriptor in the current model
+     *
      * @param propertyDescriptor
      * @return
      */

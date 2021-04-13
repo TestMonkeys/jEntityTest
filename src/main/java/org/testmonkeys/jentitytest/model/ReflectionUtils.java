@@ -38,13 +38,13 @@ public class ReflectionUtils {
     }
 
     public <T> T initializeStrategy(StrategyDefinition strategy) {
-        log.trace("Starting initialization for yaml strategy {}", strategy.getStrategy()); //LOG
+        log.trace("Starting initialization for yaml strategy {}", strategy.getStrategy()); //log
 
         Class<?> strategyClass = getStrategyTypeForName(strategy.getStrategy());
         T instance = null;
         try {
 
-            log.trace("Initializing strategy {} using default constructor", strategyClass); //LOG
+            log.trace("Initializing strategy {} using default constructor", strategyClass); //log
             instance = (T) strategyClass.getConstructor().newInstance();
 
         } catch (Exception e) {
@@ -109,7 +109,7 @@ public class ReflectionUtils {
      * @throws JEntityTestException
      */
     public Comparator initializeComparator(Annotation annotation, Class<? extends Comparator> type) {
-        log.trace("Starting initialization for comparator {}", type); //LOG
+        log.trace("Starting initialization for comparator {}", type); //log
         Constructor<?>[] constructors = type.getDeclaredConstructors();
         Constructor<?> annotationConstructor = null;
         for (Constructor<?> candidate : constructors) {
@@ -122,10 +122,10 @@ public class ReflectionUtils {
         //noinspection OverlyBroadCatchBlock
         try {
             if (annotationConstructor != null) {
-                log.trace("Initializing comparator {} using constructor with annotation parameter", type); //LOG
+                log.trace("Initializing comparator {} using constructor with annotation parameter", type); //log
                 return (Comparator) annotationConstructor.newInstance(annotation);
             } else {
-                log.trace("Initializing comparator {} using default constructor", type); //LOG
+                log.trace("Initializing comparator {} using default constructor", type); //log
                 return type.getConstructor().newInstance();
             }
         } catch (Exception e) {
@@ -140,7 +140,7 @@ public class ReflectionUtils {
      * @throws JEntityTestException
      */
     public <T> T initializeCheck(Annotation annotation, Class<? extends AbstractCheck> type) {
-        log.trace("Starting initialization for comparator {}", type); //LOG
+        log.trace("Starting initialization for comparator {}", type); //log
         Constructor[] constructors = type.getDeclaredConstructors();
         Constructor annotationConstructor = null;
         for (Constructor candidate : constructors) {
@@ -153,10 +153,10 @@ public class ReflectionUtils {
         //noinspection OverlyBroadCatchBlock
         try {
             if (annotationConstructor != null) {
-                log.trace("Initializing comparator {} using constructor with annotation parameter", type); //LOG
+                log.trace("Initializing comparator {} using constructor with annotation parameter", type); //log
                 return (T) annotationConstructor.newInstance(annotation);
             } else {
-                log.trace("Initializing comparator {} using default constructor", type); //LOG
+                log.trace("Initializing comparator {} using default constructor", type); //log
                 return (T) type.getConstructor().newInstance();
             }
         } catch (Exception e) {

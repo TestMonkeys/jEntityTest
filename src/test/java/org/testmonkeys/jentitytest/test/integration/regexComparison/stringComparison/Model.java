@@ -1,7 +1,6 @@
 package org.testmonkeys.jentitytest.test.integration.regexComparison.stringComparison;
 
 import org.testmonkeys.jentitytest.framework.RegexInExpected;
-import org.testmonkeys.jentitytest.framework.StringComparison;
 
 public class Model {
 

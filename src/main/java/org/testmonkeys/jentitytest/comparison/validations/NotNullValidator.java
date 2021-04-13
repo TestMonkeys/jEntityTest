@@ -1,7 +1,6 @@
 package org.testmonkeys.jentitytest.comparison.validations;
 
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
-import org.testmonkeys.jentitytest.comparison.abortConditions.AbstractAbortCondition;
 import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
 
 import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;

@@ -20,7 +20,7 @@ public class StringComparisonTest {
         Assert.assertThat(actual, Entity.isEqualTo(expected));
     }
 
-    @Test (expected = AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void testFailingCase() {
         Model actual = new Model();
         actual.setField("Rest");
@@ -38,7 +38,7 @@ public class StringComparisonTest {
         Assert.assertThat(actual, Entity.isEqualTo(expected));
     }
 
-    @Test (expected = AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void testFailingSpecChars() {
         Model actual = new Model();
         actual.setField("\ttest\n");
@@ -54,7 +54,7 @@ public class StringComparisonTest {
         Assert.assertThat(actual, Entity.isEqualTo(expected));
     }
 
-    @Test (expected = AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void testFailingNulls() {
         Model actual = new Model();
         actual.setField("\ttest\n");
@@ -72,7 +72,7 @@ public class StringComparisonTest {
         actual.setField("\ttest\r\n");
         Model expected = new Model();
         expected.setField("test");
-        Assert.assertThat(actual,Entity.isEqualTo(expected));
+        Assert.assertThat(actual, Entity.isEqualTo(expected));
     }
 
     @Test
@@ -85,6 +85,6 @@ public class StringComparisonTest {
         actual.setField("\ttest\t\r\n");
         Model expected = new Model();
         expected.setField("test");
-        Assert.assertThat(actual,Entity.isEqualTo(expected));
+        Assert.assertThat(actual, Entity.isEqualTo(expected));
     }
 }

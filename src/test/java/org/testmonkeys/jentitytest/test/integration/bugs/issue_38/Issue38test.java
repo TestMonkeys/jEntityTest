@@ -8,7 +8,7 @@ import org.testmonkeys.jentitytest.test.unit.strategies.dateTime.SimpleModel;
 public class Issue38test {
 
     @Test
-    public void issue38test(){
+    public void issue38test() {
         SimpleModel modelExpected = new SimpleModel();
         SimpleModel modelActual = new SimpleModel();
 

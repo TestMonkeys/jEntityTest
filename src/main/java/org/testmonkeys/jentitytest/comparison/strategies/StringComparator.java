@@ -111,9 +111,9 @@ public class StringComparator extends AbstractComparator {
     @SuppressWarnings("MethodWithMultipleLoops")
     private String showControlChars(Object inputObj) {
         String res = inputObj.toString();
-        for (int i=0; i<controlChars.length;i++){
+        for (int i = 0; i < controlChars.length; i++) {
             while (res.contains(Character.toString(controlChars[i])))
-                res=res.replace(Character.toString(controlChars[i]),escControlChars[i]);
+                res = res.replace(Character.toString(controlChars[i]), escControlChars[i]);
         }
         return res;
     }

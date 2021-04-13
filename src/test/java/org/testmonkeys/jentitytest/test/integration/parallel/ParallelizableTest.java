@@ -12,7 +12,7 @@ public class ParallelizableTest {
 
     @Ignore
     @Test
-    public void test1(){
+    public void test1() {
         Parent expected = new Parent();
         expected.setAge(20);
         expected.setFirstName("test1First");
@@ -40,36 +40,37 @@ public class ParallelizableTest {
 
     @Ignore
     @Test
-    public void test2(){
-        for (int i=0; i<100000; i++){
-        Parent expected = new Parent();
-        expected.setAge(21);
-        expected.setFirstName("test2First");
-        expected.setLastName("test2Last");
+    public void test2() {
+        for (int i = 0; i < 100000; i++) {
+            Parent expected = new Parent();
+            expected.setAge(21);
+            expected.setFirstName("test2First");
+            expected.setLastName("test2Last");
 
-        Child expectedChild = new Child();
-        expectedChild.setAge(2);
-        expectedChild.setFirstName("test2Child");
-        expectedChild.setLastName("test2ParentName");
-        expected.setChild1(expectedChild);
+            Child expectedChild = new Child();
+            expectedChild.setAge(2);
+            expectedChild.setFirstName("test2Child");
+            expectedChild.setLastName("test2ParentName");
+            expected.setChild1(expectedChild);
 
-        Parent actual = new Parent();
-        actual.setAge(21);
-        actual.setFirstName("test2First");
-        actual.setLastName("test2Last");
+            Parent actual = new Parent();
+            actual.setAge(21);
+            actual.setFirstName("test2First");
+            actual.setLastName("test2Last");
 
-        Child actualChild = new Child();
-        actualChild.setAge(2);
-        actualChild.setFirstName("test2Child");
-        actualChild.setLastName("test2ParentName");
-        actual.setChild1(actualChild);
+            Child actualChild = new Child();
+            actualChild.setAge(2);
+            actualChild.setFirstName("test2Child");
+            actualChild.setLastName("test2ParentName");
+            actual.setChild1(actualChild);
 
-        Assert.assertThat(actual, Entity.isEqualTo(expected));}
+            Assert.assertThat(actual, Entity.isEqualTo(expected));
+        }
     }
 
     @Ignore
     @Test
-    public void test3(){
+    public void test3() {
         Parent expected = new Parent();
         expected.setAge(23);
         expected.setFirstName("test3First");

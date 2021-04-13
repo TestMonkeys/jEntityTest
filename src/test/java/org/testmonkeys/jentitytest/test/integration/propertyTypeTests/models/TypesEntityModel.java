@@ -21,7 +21,7 @@ public class TypesEntityModel {
     private Boolean booleanField;
     private Byte byteField;
 
-    public TypesEntityModel(){
+    public TypesEntityModel() {
     }
 
     public Float getFloatField() {

@@ -9,7 +9,7 @@ import org.testmonkeys.jentitytest.test.integration.propertyTypeTests.models.Typ
 public class TypeTest {
 
     @Test
-    public void integerPosTypeTest(){
+    public void integerPosTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setIntegerField(new Integer(9));
 
@@ -20,7 +20,7 @@ public class TypeTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void integerNegTypeTest(){
+    public void integerNegTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setIntegerField(new Integer(9));
 
@@ -31,7 +31,7 @@ public class TypeTest {
     }
 
     @Test
-    public void characterPosTypeTest(){
+    public void characterPosTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setCharacterField('o');
 
@@ -42,7 +42,7 @@ public class TypeTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void characterNegTypeTest(){
+    public void characterNegTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setCharacterField('i');
 
@@ -53,7 +53,7 @@ public class TypeTest {
     }
 
     @Test
-    public void floatPosTypeTest(){
+    public void floatPosTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setFloatField(new Float(10.5));
 
@@ -64,7 +64,7 @@ public class TypeTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void floatNegTypeTest(){
+    public void floatNegTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setFloatField(new Float(10.5));
 
@@ -75,7 +75,7 @@ public class TypeTest {
     }
 
     @Test
-    public void stringPosTypeTest(){
+    public void stringPosTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setStringField("jentity");
 
@@ -86,7 +86,7 @@ public class TypeTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void stringNegTypeTest(){
+    public void stringNegTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setStringField("jentity");
 
@@ -97,7 +97,7 @@ public class TypeTest {
     }
 
     @Test
-    public void doublePosTypeTest(){
+    public void doublePosTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setDoubleField(new Double(25.8));
 
@@ -108,7 +108,7 @@ public class TypeTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void doubleNegTypeTest(){
+    public void doubleNegTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setDoubleField(new Double(85.8));
 
@@ -119,7 +119,7 @@ public class TypeTest {
     }
 
     @Test
-    public void longPosTypeTest(){
+    public void longPosTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setLongField(new Long(78));
 
@@ -130,7 +130,7 @@ public class TypeTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void longNegTypeTest(){
+    public void longNegTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setLongField(new Long(56));
 
@@ -141,7 +141,7 @@ public class TypeTest {
     }
 
     @Test
-    public void shortPosTypeTest(){
+    public void shortPosTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setShortField(new Short("7"));
 
@@ -152,7 +152,7 @@ public class TypeTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void shortNegTypeTest(){
+    public void shortNegTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setShortField(new Short("8"));
 
@@ -163,7 +163,7 @@ public class TypeTest {
     }
 
     @Test
-    public void booleanPosTypeTest(){
+    public void booleanPosTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setBooleanField(new Boolean(true));
 
@@ -174,7 +174,7 @@ public class TypeTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void booleanNegTypeTest(){
+    public void booleanNegTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setBooleanField(new Boolean(true));
 
@@ -185,7 +185,7 @@ public class TypeTest {
     }
 
     @Test
-    public void bytePosTypeTest(){
+    public void bytePosTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setByteField(new Byte("7"));
 
@@ -196,7 +196,7 @@ public class TypeTest {
     }
 
     @Test(expected = AssertionError.class)
-    public void byteNegTypeTest(){
+    public void byteNegTypeTest() {
         TypesEntityModel actualEntity = new TypesEntityModel();
         actualEntity.setByteField(new Byte("9"));
 

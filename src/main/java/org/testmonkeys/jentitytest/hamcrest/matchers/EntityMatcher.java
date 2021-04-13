@@ -17,6 +17,7 @@ import static org.testmonkeys.jentitytest.comparison.result.Status.Passed;
 
 /**
  * Hamcrest Entity Type matcher for type <T>
+ *
  * @param <T> type of strategies to be matched
  */
 public class EntityMatcher<T> extends AbstractJEntityMatcher<T> {
@@ -30,6 +31,7 @@ public class EntityMatcher<T> extends AbstractJEntityMatcher<T> {
 
     /**
      * Performs matching using the EntityComparator between the actualItem and expected
+     *
      * @param item
      * @return
      */

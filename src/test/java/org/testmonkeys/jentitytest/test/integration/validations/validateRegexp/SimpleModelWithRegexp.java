@@ -1,12 +1,9 @@
 package org.testmonkeys.jentitytest.test.integration.validations.validateRegexp;
 
 import org.testmonkeys.jentitytest.framework.IgnoreComparison;
-import org.testmonkeys.jentitytest.framework.IgnoreComparisonIfExpectedNull;
-import org.testmonkeys.jentitytest.framework.ValidateNotNull;
 import org.testmonkeys.jentitytest.framework.ValidateRegex;
 
 public class SimpleModelWithRegexp {
-
 
 
     private String name;

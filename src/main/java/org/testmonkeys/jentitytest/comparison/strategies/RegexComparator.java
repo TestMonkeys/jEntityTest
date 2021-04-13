@@ -7,11 +7,8 @@ import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalC
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.comparison.result.Status;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
-import org.testmonkeys.jentitytest.framework.StringComparison;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 
 public class RegexComparator extends AbstractComparator {
@@ -34,7 +31,7 @@ public class RegexComparator extends AbstractComparator {
                     castException);
         }
 
-        Status status = Status.valueOf(Pattern.matches(expectedValue,actualValue));
+        Status status = Status.valueOf(Pattern.matches(expectedValue, actualValue));
 
         return new ResultSet().with(status, context, actualValue, expectedValue);
     }

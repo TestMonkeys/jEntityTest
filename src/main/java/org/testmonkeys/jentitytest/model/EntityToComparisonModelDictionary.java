@@ -1,7 +1,6 @@
 package org.testmonkeys.jentitytest.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
 import java.util.HashMap;
@@ -10,9 +9,9 @@ import java.util.Map;
 /**
  * Singleton Comparison Model dictionary for all parsed entities.
  */
+@Slf4j
 public final class EntityToComparisonModelDictionary {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EntityToComparisonModelDictionary.class);
     private static EntityToComparisonModelDictionary instance;
     private final Map<Class, ComparisonModel> dictionary;
     private final EntityInspector inspector;
@@ -24,6 +23,7 @@ public final class EntityToComparisonModelDictionary {
 
     /**
      * Gets the instance of {@code EntityToComparisonModelDictionary}
+     *
      * @return {@code EntityToComparisonModelDictionary}
      */
     public static synchronized EntityToComparisonModelDictionary getInstance() {

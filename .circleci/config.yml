@@ -1,7 +1,7 @@
 version: 2
 references:
   workspace_root: &workspace_root
-    /tmp/workspace
+                    /tmp/workspace
 
   attach_workspace: &attach_workspace
     attach_workspace:
@@ -50,11 +50,11 @@ workflows:
 
 
 jobs:
-##################################################################
-##
-##BUILD JOB
-##
-##################################################################
+  ##################################################################
+  ##
+  ##BUILD JOB
+  ##
+  ##################################################################
   build:
     docker:
       # specify the version you desire here
@@ -72,25 +72,25 @@ jobs:
       - checkout
 
       - restore_cache:
-            keys:
-              # when lock file changes, use increasingly general patterns to restore cache
-              - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
-              - maven-repo-v1-{{ .Branch }}-
-              - maven-repo-v1-
+          keys:
+            # when lock file changes, use increasingly general patterns to restore cache
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
 
       - run: mvn install -DskipTests=true -DfailIfNoTests=false
 
       - save_cache:
-            paths:
-              - ~/.m2
-            key: maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+          paths:
+            - ~/.m2
+          key: maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
 
 
-##################################################################
-##
-##TEST JOB
-##
-##################################################################
+  ##################################################################
+  ##
+  ##TEST JOB
+  ##
+  ##################################################################
   test:
     docker:
       # specify the version you desire here
@@ -109,16 +109,16 @@ jobs:
       - checkout
 
       - restore_cache:
-            keys:
-              # when lock file changes, use increasingly general patterns to restore cache
-              - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
-              - maven-repo-v1-{{ .Branch }}-
-              - maven-repo-v1-
+          keys:
+            # when lock file changes, use increasingly general patterns to restore cache
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
       - run:
-            name: Setup Code Climate test-reporter
-            command: |
-                  curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /tmp/cc-test-reporter
-                  chmod +x /tmp/cc-test-reporter
+          name: Setup Code Climate test-reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > /tmp/cc-test-reporter
+            chmod +x /tmp/cc-test-reporter
 
       - run:
           name: Unit Tests
@@ -133,8 +133,8 @@ jobs:
       - run:
           name: Save test results
           command: |
-             mkdir -p ~/junit/
-             find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/junit/ \;
+            mkdir -p ~/junit/
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/junit/ \;
           when: always
 
 
@@ -165,15 +165,15 @@ jobs:
           path: ~/repo/target
 
 
-##################################################################
-##
-##CREATE PACKAGE JOB
-##
-##################################################################
+  ##################################################################
+  ##
+  ##CREATE PACKAGE JOB
+  ##
+  ##################################################################
   create-package:
     docker:
-          # specify the version you desire here
-          - image: circleci/openjdk:8u141-browsers
+      # specify the version you desire here
+      - image: circleci/openjdk:8u141-browsers
 
     working_directory: ~/repo
 
@@ -181,11 +181,11 @@ jobs:
       - checkout
 
       - restore_cache:
-            keys:
-              # when lock file changes, use increasingly general patterns to restore cache
-              - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
-              - maven-repo-v1-{{ .Branch }}-
-              - maven-repo-v1-
+          keys:
+            # when lock file changes, use increasingly general patterns to restore cache
+            - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
+            - maven-repo-v1-{{ .Branch }}-
+            - maven-repo-v1-
 
 
       - run:
@@ -215,14 +215,14 @@ jobs:
       - store_artifacts:
           path: ~/repo/target
 
-##################################################################
-##
-##BINTRAY UPLOAD JOB
-##
-##################################################################
+  ##################################################################
+  ##
+  ##BINTRAY UPLOAD JOB
+  ##
+  ##################################################################
   bintray-upload:
     docker:
-            # specify the version you desire here
+      # specify the version you desire here
       - image: circleci/openjdk:8u141-browsers
 
     working_directory: ~/repo

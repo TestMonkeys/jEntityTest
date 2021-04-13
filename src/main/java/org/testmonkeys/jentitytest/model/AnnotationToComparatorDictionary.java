@@ -1,7 +1,6 @@
 package org.testmonkeys.jentitytest.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.Comparator;
 import org.testmonkeys.jentitytest.comparison.abortConditions.AbortOnExpectNullCondition;
@@ -25,10 +24,8 @@ import java.util.Map;
  * <p>
  * Contains default comparisons but can register new annotations to comparator mappings at runtime.
  */
-
+@Slf4j
 public final class AnnotationToComparatorDictionary {
-
-    private static final Logger LOG = LoggerFactory.getLogger(AnnotationToComparatorDictionary.class);
 
     private static AnnotationToComparatorDictionary instance;
     private final Map<Class<?>, Class<? extends Comparator>> mapping;
@@ -37,19 +34,19 @@ public final class AnnotationToComparatorDictionary {
     private final ReflectionUtils reflectionUtils = new ReflectionUtils();
 
     private AnnotationToComparatorDictionary() {
-        LOG.debug("Initializing Annotation to Comparator Dictionary"); //LOG
+        log.debug("Initializing Annotation to Comparator Dictionary"); //log
         mapping = new HashMap<>();
-        preConditionalMapping=new HashMap<>();
+        preConditionalMapping = new HashMap<>();
         validationsMapping = new HashMap<>();
         setPreConditionalCheckForAnnotation(AbortOnExpectNullCondition.class, IgnoreComparisonIfExpectedNull.class);
-        setComparatorForAnnotation(IgnoreComparator.class,IgnoreComparison.class);
-        setComparatorForAnnotation(ChildEntityComparator.class,ChildEntityComparison.class);
-        setComparatorForAnnotation(DateTimeComparator.class,DateTimeComparison.class);
-        setComparatorForAnnotation(StringComparator.class,StringComparison.class);
-        setComparatorForAnnotation(ChildEntityListComparator.class,ChildEntityListComparison.class);
+        setComparatorForAnnotation(IgnoreComparator.class, IgnoreComparison.class);
+        setComparatorForAnnotation(ChildEntityComparator.class, ChildEntityComparison.class);
+        setComparatorForAnnotation(DateTimeComparator.class, DateTimeComparison.class);
+        setComparatorForAnnotation(StringComparator.class, StringComparison.class);
+        setComparatorForAnnotation(ChildEntityListComparator.class, ChildEntityListComparison.class);
         setComparatorForAnnotation(RegexComparator.class, RegexInExpected.class);
-        setValidatorForAnnotation(NotNullValidator.class,ValidateNotNull.class);
-        setValidatorForAnnotation(RegexValidation.class,ValidateRegex.class);
+        setValidatorForAnnotation(NotNullValidator.class, ValidateNotNull.class);
+        setValidatorForAnnotation(RegexValidation.class, ValidateRegex.class);
     }
 
     public static synchronized AnnotationToComparatorDictionary getInstance() {
@@ -65,7 +62,7 @@ public final class AnnotationToComparatorDictionary {
      * @return boolean result of verification
      */
     public boolean hasComparatorAssigned(Annotation annotation) {
-        LOG.trace("Checking if {} has a comparator assigned",annotation); //LOG
+        log.trace("Checking if {} has a comparator assigned", annotation); //log
         return mapping.containsKey(annotation.annotationType());
     }
 
@@ -76,7 +73,7 @@ public final class AnnotationToComparatorDictionary {
      * @return boolean result of verification
      */
     public boolean hasPreConditionalCheckAssigned(Annotation candidate) {
-        LOG.trace("Checking if {} has a comparator assigned",candidate); //LOG
+        log.trace("Checking if {} has a comparator assigned", candidate); //log
         return preConditionalMapping.containsKey(candidate.annotationType());
     }
 
@@ -87,7 +84,7 @@ public final class AnnotationToComparatorDictionary {
      * @return boolean result of verification
      */
     public boolean hasValidationCheckAssigned(Annotation candidate) {
-        LOG.trace("Checking if {} has a comparator assigned",candidate); //LOG
+        log.trace("Checking if {} has a comparator assigned", candidate); //log
         return validationsMapping.containsKey(candidate.annotationType());
     }
 
@@ -99,7 +96,7 @@ public final class AnnotationToComparatorDictionary {
      * @throws JEntityTestException in case the comparator or annotation is null
      */
     public void setComparatorForAnnotation(Class<? extends Comparator> comparator, Class<?> annotation) {
-        LOG.debug("Registering Comparator {} for Annotation {}",comparator,annotation); //LOG
+        log.debug("Registering Comparator {} for Annotation {}", comparator, annotation); //log
         if (comparator == null)
             throw new IllegalArgumentException(Resources.getString(Resources.err_comparator_null));
         if (annotation == null)
@@ -115,7 +112,7 @@ public final class AnnotationToComparatorDictionary {
      * @throws JEntityTestException in case the comparator or annotation is null
      */
     public void setPreConditionalCheckForAnnotation(Class<? extends AbstractAbortCondition> comparator, Class<?> annotation) {
-        LOG.debug("Registering Comparator {} for Annotation {}",comparator,annotation); //LOG
+        log.debug("Registering Comparator {} for Annotation {}", comparator, annotation); //log
         if (comparator == null)
             throw new IllegalArgumentException(Resources.getString(Resources.err_comparator_null));
         if (annotation == null)
@@ -131,7 +128,7 @@ public final class AnnotationToComparatorDictionary {
      * @throws JEntityTestException in case the comparator or annotation is null
      */
     public void setValidatorForAnnotation(Class<? extends AbstractValidation> comparator, Class<?> annotation) {
-        LOG.debug("Registering Comparator {} for Annotation {}",comparator,annotation); //LOG
+        log.debug("Registering Comparator {} for Annotation {}", comparator, annotation); //log
         if (comparator == null)
             throw new IllegalArgumentException(Resources.getString(Resources.err_comparator_null));
         if (annotation == null)
@@ -147,7 +144,7 @@ public final class AnnotationToComparatorDictionary {
      * @throws JEntityTestException in case comparator could not be provided
      */
     public Comparator getComparatorForAnnotation(Annotation annotation) {
-        LOG.trace("Getting comparator for Annotation {}",annotation); //LOG
+        log.trace("Getting comparator for Annotation {}", annotation); //log
         if (annotation == null)
             throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
 
@@ -157,7 +154,7 @@ public final class AnnotationToComparatorDictionary {
 
         throw new JEntityModelException(
                 MessageFormat.format(Resources.getString(Resources.ERR_NO_COMPARATOR_DEFINED_FOR_ANNOTATION),
-                annotation.annotationType().getName()));
+                        annotation.annotationType().getName()));
     }
 
     /**
@@ -168,7 +165,7 @@ public final class AnnotationToComparatorDictionary {
      * @throws JEntityTestException in case comparator could not be provided
      */
     public AbstractAbortCondition getPreComparisonCheckForAnnotation(Annotation annotation) {
-        LOG.trace("Getting pre-comparison check for Annotation {}",annotation); //LOG
+        log.trace("Getting pre-comparison check for Annotation {}", annotation); //log
         if (annotation == null)
             throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
 
@@ -189,7 +186,7 @@ public final class AnnotationToComparatorDictionary {
      * @throws JEntityTestException in case comparator could not be provided
      */
     public AbstractValidation getValidationForAnnotation(Annotation annotation) {
-        LOG.trace("Getting validation check for Annotation {}",annotation); //LOG
+        log.trace("Getting validation check for Annotation {}", annotation); //log
         if (annotation == null)
             throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
 
@@ -201,8 +198,6 @@ public final class AnnotationToComparatorDictionary {
                 MessageFormat.format(Resources.getString(Resources.ERR_NO_COMPARATOR_DEFINED_FOR_ANNOTATION),
                         annotation.annotationType().getName()));
     }
-
-
 
 
 }

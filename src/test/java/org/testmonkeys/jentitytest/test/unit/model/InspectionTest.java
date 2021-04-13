@@ -6,7 +6,6 @@ import org.junit.Test;
 import org.testmonkeys.jentitytest.comparison.strategies.IgnoreComparator;
 import org.testmonkeys.jentitytest.comparison.strategies.SimpleTypeComparator;
 import org.testmonkeys.jentitytest.exceptions.JEntityModelException;
-import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.model.AnnotationToComparatorDictionary;
 import org.testmonkeys.jentitytest.model.ComparisonModel;
 import org.testmonkeys.jentitytest.model.EntityInspector;
@@ -96,5 +95,5 @@ public class InspectionTest {
 
         EntityInspector inspector = new EntityInspector();
         inspector.getComparisonModel(int.class);
-     }
+    }
 }
