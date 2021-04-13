@@ -14,8 +14,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Passed;
 
@@ -44,6 +43,23 @@ public class DateTimeComparatorTests {
         comparator.setUnit(unit);
         return comparator;
     }
+
+    @Test
+    public void strategy_dateTimeComparator_defaultParameters() {
+        DateTimeComparator comparator = new DateTimeComparator();
+        assertEquals("delta", comparator.getDelta(), 0);
+        assertEquals("unit", comparator.getUnit(), "NANOS");
+
+    }
+
+    @Test
+    public void strategy_dateTimeComparator_parameters() {
+        DateTimeComparator comparator = getComparator(1, "SECONDS");
+        assertEquals("delta", comparator.getDelta(), 1);
+        assertEquals("unit", comparator.getUnit(), "SECONDS");
+
+    }
+
 
     @Test
     public void strategy_dateTimeComparator_noDelta_expectedNull() throws Throwable {

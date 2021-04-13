@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Passed;
 
 public class StringComparatorTests {
@@ -31,6 +31,21 @@ public class StringComparatorTests {
         return comparator;
     }
 
+    @Test
+    public void stringComparator_defaultParameters() {
+        StringComparator comparator = new StringComparator();
+        assertTrue("case sensitive", comparator.isCaseSensitive());
+        assertFalse("trim", comparator.isTrim());
+        assertEquals("ignored char count", 0, comparator.getIgnoreCharacters().size());
+    }
+
+    @Test
+    public void stringComparator_parameters() {
+        StringComparator comparator = getComparator(false, true, Arrays.asList("a"));
+        assertFalse("case sensitive", comparator.isCaseSensitive());
+        assertTrue("trim", comparator.isTrim());
+        assertEquals("ignored char count", Arrays.asList("a"), comparator.getIgnoreCharacters());
+    }
 
     @Test
     public void stringComparatorPassNulls() throws IntrospectionException {
