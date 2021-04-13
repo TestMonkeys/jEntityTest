@@ -28,6 +28,8 @@ public class EntityInspector {
             AnnotationToComparatorDictionary.getInstance();
 
     /**
+     * Inspects the class and creates a ComparisonModel based on class properties and annotations
+     *
      * @param clazz
      * @return
      * @throws JEntityTestException

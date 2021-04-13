@@ -42,6 +42,11 @@ public class EntityComparatorContext {
         return instance;
     }
 
+    /**
+     * Adds a new comparison model based on yaml configuration provided
+     *
+     * @param is input stream of the yaml comparison model file
+     */
     public void defineComparisonModel(InputStream is) {
         ComparisonModel model = yamlModelParser.readModel(is);
         EntityToComparisonModelDictionary.getInstance().addComparisonModel(model.getEntityType(), model);
