@@ -13,6 +13,6 @@ public class DefaultResultOutput implements ResultProcessor {
     @Override
     public synchronized String getOutput(ComparisonContext context, ComparisonResult result) {
         return MessageFormat.format(Resources.getString(comp_result),
-                context,result.getExpected(),result.getActual(),context.getComparatorDetails());
+                context, result.getExpected(), result.getActual(), context.getComparatorDetails());
     }
 }

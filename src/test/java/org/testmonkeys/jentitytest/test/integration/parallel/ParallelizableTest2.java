@@ -11,10 +11,9 @@ import org.testmonkeys.jentitytest.hamcrest.Entity;
 public class ParallelizableTest2 {
 
 
-
     @Ignore
     @Test
-    public void test1(){
+    public void test1() {
         Parent expected = new Parent();
         expected.setAge(23);
         expected.setFirstName("test3First");
@@ -42,7 +41,7 @@ public class ParallelizableTest2 {
 
     @Ignore
     @Test
-    public void test2(){
+    public void test2() {
         Parent expected = new Parent();
         expected.setAge(21);
         expected.setFirstName("test2First");
@@ -70,30 +69,31 @@ public class ParallelizableTest2 {
 
     @Ignore
     @Test
-    public void test3(){
-        for (int i=0;i<1000000; i++){
-        Parent expected = new Parent();
-        expected.setAge(20);
-        expected.setFirstName("test1First");
-        expected.setLastName("test1Last");
+    public void test3() {
+        for (int i = 0; i < 1000000; i++) {
+            Parent expected = new Parent();
+            expected.setAge(20);
+            expected.setFirstName("test1First");
+            expected.setLastName("test1Last");
 
-        Child expectedChild = new Child();
-        expectedChild.setAge(1);
-        expectedChild.setFirstName("test1Child");
-        expectedChild.setLastName("test1ParentName");
-        expected.setChild1(expectedChild);
+            Child expectedChild = new Child();
+            expectedChild.setAge(1);
+            expectedChild.setFirstName("test1Child");
+            expectedChild.setLastName("test1ParentName");
+            expected.setChild1(expectedChild);
 
-        Parent actual = new Parent();
-        actual.setAge(20);
-        actual.setFirstName("test1First");
-        actual.setLastName("test1Last");
+            Parent actual = new Parent();
+            actual.setAge(20);
+            actual.setFirstName("test1First");
+            actual.setLastName("test1Last");
 
-        Child actualChild = new Child();
-        actualChild.setAge(1);
-        actualChild.setFirstName("test1Child");
-        actualChild.setLastName("test1ParentName");
-        actual.setChild1(actualChild);
+            Child actualChild = new Child();
+            actualChild.setAge(1);
+            actualChild.setFirstName("test1Child");
+            actualChild.setLastName("test1ParentName");
+            actual.setChild1(actualChild);
 
-        Assert.assertThat(actual, Entity.isEqualTo(expected));}
+            Assert.assertThat(actual, Entity.isEqualTo(expected));
+        }
     }
 }

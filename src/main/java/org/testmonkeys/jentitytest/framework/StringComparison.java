@@ -9,6 +9,8 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.FIELD})
 public @interface StringComparison {
     boolean caseSensitive() default true;
+
     boolean trim() default false;
+
     char[] ignoreCharacters() default {};
 }

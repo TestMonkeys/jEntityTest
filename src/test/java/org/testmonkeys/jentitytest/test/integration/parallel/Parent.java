@@ -7,6 +7,15 @@ import org.testmonkeys.jentitytest.framework.ChildEntityComparison;
  */
 public class Parent {
 
+    @ChildEntityComparison
+
+    private Child child1;
+    @ChildEntityComparison
+    private Child child2;
+    private int age;
+    private String firstName;
+    private String lastName;
+
     public Child getChild1() {
         return child1;
     }
@@ -46,16 +55,6 @@ public class Parent {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
-    @ChildEntityComparison
-
-    private Child child1;
-    @ChildEntityComparison
-    private Child child2;
-
-    private int age;
-    private String firstName;
-    private String lastName;
 
 
 }

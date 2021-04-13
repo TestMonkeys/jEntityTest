@@ -5,8 +5,8 @@ import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.PreComparisonCheck;
 import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
 
-import static org.testmonkeys.jentitytest.Resources.NULL;
 import static org.testmonkeys.jentitytest.Resources.NOT_NULL;
+import static org.testmonkeys.jentitytest.Resources.NULL;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Passed;
 

@@ -26,8 +26,8 @@ public class PropertyComparisonWrapperTest {
         PropertyComparisonWrapper propertyComparison = new PropertyComparisonWrapper(new SimpleTypeComparator());
         BeanInfo beanInfo = getBeanInfo(Model.class);
         PropertyDescriptor descriptor = null;
-        for(PropertyDescriptor d : beanInfo.getPropertyDescriptors()) {
-            if(d.getName().equals("illegalAccess"))
+        for (PropertyDescriptor d : beanInfo.getPropertyDescriptors()) {
+            if (d.getName().equals("illegalAccess"))
                 descriptor = d;
         }
         propertyComparison.compare(descriptor, new Model(), new Model(), new ComparisonContext());
@@ -40,8 +40,8 @@ public class PropertyComparisonWrapperTest {
         PropertyComparisonWrapper propertyComparison = new PropertyComparisonWrapper(new SimpleTypeComparator());
         BeanInfo beanInfo = getBeanInfo(Model.class);
         PropertyDescriptor descriptor = null;
-        for(PropertyDescriptor d : beanInfo.getPropertyDescriptors()) {
-            if(d.getName().equals("invocationTarget"))
+        for (PropertyDescriptor d : beanInfo.getPropertyDescriptors()) {
+            if (d.getName().equals("invocationTarget"))
                 descriptor = d;
         }
         propertyComparison.compare(descriptor, new Model(), new Model(), new ComparisonContext());

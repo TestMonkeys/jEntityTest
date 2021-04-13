@@ -20,7 +20,7 @@ public class RegexComparisonTest {
         Assert.assertThat(actual, Entity.isEqualTo(expected));
     }
 
-    @Test (expected = AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void testFailingCase() {
         Model actual = new Model();
         actual.setField("Fest");

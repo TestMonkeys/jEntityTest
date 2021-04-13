@@ -1,8 +1,6 @@
 package org.testmonkeys.jentitytest.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testmonkeys.jentitytest.comparison.validations.AbstractValidation;
+import lombok.extern.slf4j.Slf4j;
 
 import java.beans.PropertyDescriptor;
 import java.util.ArrayList;
@@ -10,9 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 public class MultiStrategyFieldMapping<T> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MultiStrategyFieldMapping.class);
     private final Map<PropertyDescriptor, List<T>> comparisonMap;
 
     public MultiStrategyFieldMapping() {
@@ -21,18 +19,20 @@ public class MultiStrategyFieldMapping<T> {
 
     /**
      * Adds a strategy for the property
+     *
      * @param propertyDescriptor property to add to the mapping
-     * @param validation strategy used for this property
+     * @param validation         strategy used for this property
      */
     public void addStrategy(PropertyDescriptor propertyDescriptor, T validation) {
-        LOG.debug("Adding strategy for {} using {}", propertyDescriptor.getName(), validation); //LOG
+        log.debug("Adding strategy for {} using {}", propertyDescriptor.getName(), validation); //log
         if (!comparisonMap.containsKey(propertyDescriptor))
-            comparisonMap.put(propertyDescriptor,new ArrayList<>());
+            comparisonMap.put(propertyDescriptor, new ArrayList<>());
         comparisonMap.get(propertyDescriptor).add(validation);
     }
 
     /**
      * Gets the strategies defined for the provided propertyDescriptor in the current model
+     *
      * @param propertyDescriptor
      * @return list of strategies
      */
@@ -42,6 +42,7 @@ public class MultiStrategyFieldMapping<T> {
 
     /**
      * Checks if there are any strategies registered for provided propertyDescriptor in the current model
+     *
      * @param propertyDescriptor
      * @return
      */

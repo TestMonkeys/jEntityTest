@@ -59,17 +59,17 @@ public class EntityComparator {
         ResultSet comparisonResults = new ResultSet();
         for (PropertyDescriptor propertyDescriptor : model.getComparableProperties()) {
             ComparisonContext propContext = context.withProperty(propertyDescriptor.getName());
-            ResultSet results=runChecksForField(model,propertyDescriptor, actual,expected, propContext);
+            ResultSet results = runChecksForField(model, propertyDescriptor, actual, expected, propContext);
             comparisonResults.addAll(results);
         }
         return comparisonResults;
     }
 
-    private ResultSet runChecksForField(ComparisonModel model, PropertyDescriptor propertyDescriptor, Object actual, Object expected,ComparisonContext propContext){
+    private ResultSet runChecksForField(ComparisonModel model, PropertyDescriptor propertyDescriptor, Object actual, Object expected, ComparisonContext propContext) {
         //Validations
         if (model.hasValidations(propertyDescriptor))
-            for (AbstractValidation validation:model.getValidations(propertyDescriptor)){
-                ConditionalCheckResult conditionalCheckResult= validation.check(propertyDescriptor,actual,expected, propContext);
+            for (AbstractValidation validation : model.getValidations(propertyDescriptor)) {
+                ConditionalCheckResult conditionalCheckResult = validation.check(propertyDescriptor, actual, expected, propContext);
                 if ((conditionalCheckResult.getStatus() == Failed) || conditionalCheckResult.isComparisonFinished()) {
                     return new ResultSet().with(conditionalCheckResult);
                 }
@@ -77,8 +77,8 @@ public class EntityComparator {
 
         //Abort Conditions block
         if (model.hasAbortConditions(propertyDescriptor))
-            for (AbstractAbortCondition preConditionalChecks:model.getAbortConditionChecks(propertyDescriptor)){
-                ConditionalCheckResult conditionalCheckResult = preConditionalChecks.check(propertyDescriptor,actual, expected, propContext);
+            for (AbstractAbortCondition preConditionalChecks : model.getAbortConditionChecks(propertyDescriptor)) {
+                ConditionalCheckResult conditionalCheckResult = preConditionalChecks.check(propertyDescriptor, actual, expected, propContext);
                 if ((conditionalCheckResult.getStatus() == Failed) || conditionalCheckResult.isComparisonFinished()) {
                     return new ResultSet().with(conditionalCheckResult);
                 }

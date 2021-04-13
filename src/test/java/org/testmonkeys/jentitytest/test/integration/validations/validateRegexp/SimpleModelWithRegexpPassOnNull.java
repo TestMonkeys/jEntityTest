@@ -7,7 +7,6 @@ import org.testmonkeys.jentitytest.framework.ValidateRegex;
 public class SimpleModelWithRegexpPassOnNull {
 
 
-
     private String name;
     private int age;
 

@@ -13,7 +13,7 @@ public class ParallelRun {
     @Ignore
     @Test
     public void runAllTests() {
-        Class<?>[] classes = { ParallelizableTest.class,
+        Class<?>[] classes = {ParallelizableTest.class,
                 ParallelizableTest2.class,
                 ParallelizableTest.class,
                 ParallelizableTest2.class,
@@ -27,7 +27,7 @@ public class ParallelRun {
                 ParallelizableTest2.class,
                 ParallelizableTest.class,
                 ParallelizableTest2.class,
-                ParallelizableTest.class };
+                ParallelizableTest.class};
 
         // ParallelComputer(true,true) will run all classes and methods
         // in parallel.  (First arg for classes, second arg for methods)

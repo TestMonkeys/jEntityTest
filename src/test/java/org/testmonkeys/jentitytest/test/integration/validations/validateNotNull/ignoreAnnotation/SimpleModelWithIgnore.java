@@ -7,7 +7,6 @@ import org.testmonkeys.jentitytest.framework.ValidateNotNull;
 public class SimpleModelWithIgnore {
 
 
-
     private String name;
     private int age;
 

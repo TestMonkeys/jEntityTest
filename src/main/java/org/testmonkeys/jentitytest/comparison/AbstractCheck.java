@@ -15,13 +15,13 @@ import java.util.Map;
  */
 public abstract class AbstractCheck {
 
-    private Map<String,Object> parameters;
+    private Map<String, Object> parameters;
 
     /**
      * @param property property on which the check will run
-     * @param actual actual parent object of the property
+     * @param actual   actual parent object of the property
      * @param expected expected parent object of the property
-     * @param context comparison context
+     * @param context  comparison context
      * @return conditional check result
      * @throws JEntityTestException
      */
@@ -30,7 +30,7 @@ public abstract class AbstractCheck {
         Object expectedValue = getPropertyValue(property, expected);
 
         if (context.isRecursive(actualValue))
-            return new ConditionalCheckResult(Status.Passed,context,actualValue,expectedValue);
+            return new ConditionalCheckResult(Status.Passed, context, actualValue, expectedValue);
         context.setActualObj(actualValue);
         return runCheck(actualValue, expectedValue, context);
     }

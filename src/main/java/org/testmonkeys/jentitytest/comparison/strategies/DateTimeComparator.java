@@ -2,8 +2,7 @@ package org.testmonkeys.jentitytest.comparison.strategies;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.AbstractComparator;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
@@ -19,9 +18,8 @@ import java.time.temporal.Temporal;
 
 import static org.testmonkeys.jentitytest.Resources.*;
 
+@Slf4j
 public class DateTimeComparator extends AbstractComparator {
-
-    private static final Logger LOG = LoggerFactory.getLogger(DateTimeComparator.class);
 
     @Getter
     @Setter
@@ -57,7 +55,7 @@ public class DateTimeComparator extends AbstractComparator {
             expectedValue = (Temporal) expected;
         } catch (ClassCastException castException) {
             throw new JEntityTestException(MessageFormat.format(
-                    Resources.getString(err_actual_and_expected_must_be_of_type),Temporal.class.getName()),
+                    Resources.getString(err_actual_and_expected_must_be_of_type), Temporal.class.getName()),
                     castException);
         }
 

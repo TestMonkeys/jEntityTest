@@ -60,7 +60,7 @@ public class StringComparatorTests {
         assertTrue(resultList.get(0).getStatus() == Passed);
     }
 
-    @Test (expected = AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void stringComparatorFailCaseSensitive() throws IntrospectionException {
         String actual = "Test";
         String expected = "test";
@@ -109,7 +109,7 @@ public class StringComparatorTests {
         assertTrue(resultList.get(0).getStatus() == Passed);
     }
 
-    @Test (expected = AssertionError.class)
+    @Test(expected = AssertionError.class)
     public void stringComparatorFailIgnoreSpecChars() throws IntrospectionException {
         String actual = "test\t$%";
         String expected = "test";

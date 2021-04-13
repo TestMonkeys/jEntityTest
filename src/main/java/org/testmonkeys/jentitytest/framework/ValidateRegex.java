@@ -9,14 +9,16 @@ import java.lang.annotation.Target;
 @Target({ElementType.METHOD, ElementType.FIELD})
 public @interface ValidateRegex {
     String expression() default "";
+
     RegexMatching matching() default RegexMatching.Strict;
+
     NullHandling nullHandling() default NullHandling.Fail;
 
-    enum RegexMatching{
+    enum RegexMatching {
         Strict
     }
 
-    enum NullHandling{
+    enum NullHandling {
         Fail,
         Pass
     }

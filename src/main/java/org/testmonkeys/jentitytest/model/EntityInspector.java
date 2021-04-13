@@ -1,7 +1,6 @@
 package org.testmonkeys.jentitytest.model;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.PropertyComparisonWrapper;
 import org.testmonkeys.jentitytest.comparison.strategies.SimpleTypeComparator;
@@ -22,9 +21,9 @@ import java.util.List;
 
 import static org.testmonkeys.jentitytest.Resources.err_getting_beaninfo_from_class;
 
+@Slf4j
 public class EntityInspector {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EntityInspector.class);
     private final AnnotationToComparatorDictionary annotationToComparator =
             AnnotationToComparatorDictionary.getInstance();
 
@@ -35,51 +34,51 @@ public class EntityInspector {
      */
     @SuppressWarnings("ObjectAllocationInLoop")
     public ComparisonModel getComparisonModel(Class clazz) {
-        LOG.debug("Starting inspection for {}",clazz); //LOG
+        log.debug("Starting inspection for {}", clazz); //log
         ComparisonModel model = new ComparisonModel();
         BeanInfo beanInfo = getBeanInfo(clazz);
 
         for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
-            LOG.debug("Analyzing property {}",propertyDescriptor.getName()); //LOG
+            log.debug("Analyzing property {}", propertyDescriptor.getName()); //log
             Method method = propertyDescriptor.getReadMethod();
-            if (method == null){
-                LOG.debug("property does not have read method, skipping..."); //LOG
+            if (method == null) {
+                log.debug("property does not have read method, skipping..."); //log
                 continue;
             }
             Field field = getField(clazz, propertyDescriptor);
 
             //Field level processing
             if (field != null) {
-                for (Annotation annotation:getPreConditionalChecksAnnotation(field)){
-                    model.addAbortCondition(propertyDescriptor,annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
+                for (Annotation annotation : getPreConditionalChecksAnnotation(field)) {
+                    model.addAbortCondition(propertyDescriptor, annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
                 }
-                for (Annotation annotation:getValidationChecksAnnotation(field)){
-                    model.addValidation(propertyDescriptor,annotationToComparator.getValidationForAnnotation(annotation));
+                for (Annotation annotation : getValidationChecksAnnotation(field)) {
+                    model.addValidation(propertyDescriptor, annotationToComparator.getValidationForAnnotation(annotation));
                 }
                 Annotation annotation = getComparisonAnnotation(field);
                 if (annotation != null) {
-                    LOG.debug("Found annotation at field level"); //LOG
+                    log.debug("Found annotation at field level"); //log
                     model.setComparisonPoint(propertyDescriptor, getPropertyComparator(annotation));
                     continue;
                 }
             }
 
             //Method level processing
-            for (Annotation annotation:getPreConditionalChecksAnnotation(method)){
-                model.addAbortCondition(propertyDescriptor,annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
+            for (Annotation annotation : getPreConditionalChecksAnnotation(method)) {
+                model.addAbortCondition(propertyDescriptor, annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
             }
-            for (Annotation annotation:getValidationChecksAnnotation(method)){
-                model.addValidation(propertyDescriptor,annotationToComparator.getValidationForAnnotation(annotation));
+            for (Annotation annotation : getValidationChecksAnnotation(method)) {
+                model.addValidation(propertyDescriptor, annotationToComparator.getValidationForAnnotation(annotation));
             }
             Annotation annotation = getComparisonAnnotation(method);
             if (annotation != null) {
-                LOG.debug("Found annotation at method level"); //LOG
+                log.debug("Found annotation at method level"); //log
                 model.setComparisonPoint(propertyDescriptor, getPropertyComparator(annotation));
                 continue;
             }
 
             //Default (in case no annotations were used)
-            LOG.debug("No annotation found, using default comparator"); //LOG
+            log.debug("No annotation found, using default comparator"); //log
             model.setComparisonPoint(propertyDescriptor, new PropertyComparisonWrapper(new SimpleTypeComparator()));
         }
         return model;

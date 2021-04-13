@@ -13,6 +13,7 @@ public class ValidateRegexpTest {
         SimpleModelWithRegexp actual = new SimpleModelWithRegexp("John", 27);
         Assert.assertThat(actual, Entity.isEqualTo(expected));
     }
+
     @Test
     public void testPassing1() {
 

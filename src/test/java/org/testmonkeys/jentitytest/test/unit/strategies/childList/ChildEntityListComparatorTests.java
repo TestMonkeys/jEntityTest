@@ -11,6 +11,7 @@ import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Passed;
@@ -19,6 +20,19 @@ public class ChildEntityListComparatorTests {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
+
+    @Test
+    public void defaultOrderedParameter() {
+        ChildEntityListComparator comparator = new ChildEntityListComparator();
+        assertTrue("ordered", comparator.isOrdered());
+    }
+
+    @Test
+    public void orderedParameterProperty() {
+        ChildEntityListComparator comparator = new ChildEntityListComparator();
+        comparator.setOrdered(false);
+        assertFalse("ordered", comparator.isOrdered());
+    }
 
     @Test
     public void actualNotCollection() {

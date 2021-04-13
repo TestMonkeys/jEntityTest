@@ -23,8 +23,8 @@ public class ComparisonContext {
         this.index = index;
     }
 
-    public ComparisonContext withIndex(int index){
-        ComparisonContext newContext=new ComparisonContext(parent);
+    public ComparisonContext withIndex(int index) {
+        ComparisonContext newContext = new ComparisonContext(parent);
         newContext.setIndex(index);
         newContext.setParentName(parentName);
         newContext.setActualObj(actualObj);
@@ -41,6 +41,7 @@ public class ComparisonContext {
 
     /**
      * Generates the full path for current comparison
+     *
      * @return
      */
     @SuppressWarnings("MagicCharacter")
@@ -58,6 +59,7 @@ public class ComparisonContext {
 
     /**
      * Checks if the object was present before in the ComparisonContext tree
+     *
      * @param actual
      * @return
      */
@@ -66,7 +68,7 @@ public class ComparisonContext {
                 (actual.equals(parent.getActualObj()) || parent.isRecursive(actual));
     }
 
-    private boolean canBeRecursive(Object actual){
+    private boolean canBeRecursive(Object actual) {
         return (parent != null) && (actual != null);
     }
 
@@ -82,11 +84,11 @@ public class ComparisonContext {
         this.parentName = parentName;
     }
 
-    public void setActualObj(Object actualObj) {
-        this.actualObj = actualObj;
+    private Object getActualObj() {
+        return actualObj;
     }
 
-    private Object getActualObj(){
-        return actualObj;
+    public void setActualObj(Object actualObj) {
+        this.actualObj = actualObj;
     }
 }
