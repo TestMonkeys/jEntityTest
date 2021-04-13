@@ -3,7 +3,7 @@ properties:
   name:
     #using validation instead of validators
     validation:
-      - strategy: RegexValidation
+      - strategy: ValidateRegex
         parameters:
           regExp: ".*"
           failOnNull: true

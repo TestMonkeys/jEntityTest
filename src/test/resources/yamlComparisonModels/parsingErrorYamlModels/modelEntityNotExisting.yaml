@@ -2,7 +2,7 @@ entity: org.testmonkeys.jentitytest.nonExisting.Model
 properties:
   name:
     validators:
-      - strategy: RegexValidation
+      - strategy: ValidateRegex
         parameters:
           regExp: ".*"
           failOnNull: true

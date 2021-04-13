@@ -3,7 +3,7 @@ properties:
   # not existing field firstname
   firstname:
     validators:
-      - strategy: RegexValidation
+      - strategy: ValidateRegex
         parameters:
           regExp: ".*"
           failOnNull: true

@@ -2,7 +2,7 @@ entity: org.testmonkeys.jentitytest.test.integration.yaml.parsing.YamlParsingEnt
 properties:
   name:
     validators:
-      - strategy: RegexValidation
+      - strategy: ValidateRegex
         parameters:
           regExp: ".*"
           #extra parameter:

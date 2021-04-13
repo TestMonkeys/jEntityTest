@@ -2,10 +2,10 @@ entity: org.testmonkeys.jentitytest.test.integration.yaml.test.Person
 properties:
   id:
     abortConditions:
-      - strategy: AbortIfExpectedNull
+      - strategy: IgnoreComparisonIfExpectedNull
   name:
     validators:
-      - strategy: RegexValidation
+      - strategy: ValidateRegex
         parameters:
           regExp: ^[0-9A-Za-z!@.,;:'"?-]{1,10}\z
     comparisonStrategy:
