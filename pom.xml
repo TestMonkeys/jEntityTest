@@ -46,7 +46,7 @@
         <junitVersion>4.13.2</junitVersion>
         <maven.compiler.version>3.8.1</maven.compiler.version>
         <maven.surefire.version>2.22.2</maven.surefire.version>
-        <jackson.version>2.12.2</jackson.version>
+        <jackson.version>2.12.3</jackson.version>
         <snakeYamlVersion>1.21</snakeYamlVersion>
         <lombok.version>1.16.16</lombok.version>
     </properties>
