@@ -48,7 +48,7 @@
         <maven.surefire.version>2.22.2</maven.surefire.version>
         <jackson.version>2.12.3</jackson.version>
         <snakeYamlVersion>1.21</snakeYamlVersion>
-        <lombok.version>1.16.16</lombok.version>
+        <lombok.version>1.18.20</lombok.version>
     </properties>
 
 
