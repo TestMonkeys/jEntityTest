@@ -41,7 +41,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <logbackVersion>1.2.4</logbackVersion>
+        <logbackVersion>1.2.4-groovyless</logbackVersion>
         <hamcrestVersion>2.0.0.0</hamcrestVersion>
         <junitVersion>4.13.2</junitVersion>
         <maven.compiler.version>3.8.1</maven.compiler.version>
