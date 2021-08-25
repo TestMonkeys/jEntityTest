@@ -2,6 +2,7 @@ package org.testmonkeys.jentitytest.hamcrest;
 
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.hamcrest.matchers.DefaultResultOutput;
+import org.testmonkeys.jentitytest.hamcrest.matchers.EntityInListMatcher;
 import org.testmonkeys.jentitytest.hamcrest.matchers.EntityMatcher;
 import org.testmonkeys.jentitytest.hamcrest.matchers.ResultProcessor;
 
@@ -33,6 +34,12 @@ public final class Entity {
     @SuppressWarnings("NonBooleanMethodNameMayNotStartWithQuestion")
     public static synchronized <T> EntityMatcher<T> isEqualTo(Object expected) {
         EntityMatcher<T> matcher = new EntityMatcher<>(expected);
+        matcher.setResultProcessor(resultProcessor);
+        return matcher;
+    }
+
+    public static synchronized <T> EntityInListMatcher<T> listContains(Object expected) {
+        EntityInListMatcher<T> matcher = new EntityInListMatcher<>(expected);
         matcher.setResultProcessor(resultProcessor);
         return matcher;
     }
