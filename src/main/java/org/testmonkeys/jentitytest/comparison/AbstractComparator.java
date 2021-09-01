@@ -36,11 +36,11 @@ public abstract class AbstractComparator implements Comparator {
     }
 
     /**
-     * @param actualValue
-     * @param expectedValue
-     * @param context
-     * @return
-     * @throws JEntityTestException
+     * @param actualValue   actual object
+     * @param expectedValue expected object
+     * @param context       context of this comparison
+     * @return result set of the comparison
+     * @throws JEntityTestException if comparison is impossible
      */
     private List<ConditionalCheckResult> runConditionals(Object actualValue, Object expectedValue,
                                                          ComparisonContext context) {
@@ -55,11 +55,11 @@ public abstract class AbstractComparator implements Comparator {
     }
 
     /**
-     * @param actual
-     * @param expected
-     * @param context
-     * @return
-     * @throws JEntityTestException
+     * @param actual actual object
+     * @param expected expected object
+     * @param context context of this comparison
+     * @return result set of the comparison
+     * @throws JEntityTestException if comparison is impossible
      */
     protected abstract ResultSet computeComparison(Object actual, Object expected, ComparisonContext context);
 

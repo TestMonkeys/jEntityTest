@@ -27,9 +27,9 @@ public final class Entity {
     /**
      * Returns a matcher for the expected strategies type
      *
-     * @param expected
-     * @param <T>
-     * @return
+     * @param expected expected object
+     * @param <T>      enitity type
+     * @return entity matcher
      */
     @SuppressWarnings("NonBooleanMethodNameMayNotStartWithQuestion")
     public static synchronized <T> EntityMatcher<T> isEqualTo(Object expected) {

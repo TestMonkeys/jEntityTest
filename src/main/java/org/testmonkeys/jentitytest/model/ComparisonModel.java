@@ -47,7 +47,7 @@ public class ComparisonModel {
     /**
      * Gets the validation checks for the provided propertyDescriptor in the current model
      *
-     * @param propertyDescriptor
+     * @param propertyDescriptor property
      * @return list of validation checks
      */
     public List<AbstractValidation> getValidations(PropertyDescriptor propertyDescriptor) {
@@ -57,8 +57,8 @@ public class ComparisonModel {
     /**
      * Checks if there are any validation checks registered for provided propertyDescriptor in the current model
      *
-     * @param propertyDescriptor
-     * @return
+     * @param propertyDescriptor property
+     * @return true if has any validations defined
      */
     public boolean hasValidations(PropertyDescriptor propertyDescriptor) {
         return validations.hasStrategy(propertyDescriptor);
@@ -80,8 +80,8 @@ public class ComparisonModel {
     /**
      * Checks if there are any pre-conditional checks registered for provided propertyDescriptor in the current model
      *
-     * @param propertyDescriptor
-     * @return
+     * @param propertyDescriptor property
+     * @return true if has any abort conditions defined
      */
     public boolean hasAbortConditions(PropertyDescriptor propertyDescriptor) {
         return abortConditions.hasStrategy(propertyDescriptor);
@@ -90,8 +90,8 @@ public class ComparisonModel {
     /**
      * Gets the pre-conditional checks for the provided propertyDescriptor in the current model
      *
-     * @param propertyDescriptor
-     * @return
+     * @param propertyDescriptor property
+     * @return abort conditions list
      */
     public List<AbstractAbortCondition> getAbortConditionChecks(PropertyDescriptor propertyDescriptor) {
         return abortConditions.getStrategies(propertyDescriptor);
@@ -112,7 +112,7 @@ public class ComparisonModel {
     /**
      * Gets the set of properties that this model contains
      *
-     * @return
+     * @return set of comparable properties
      */
     public Set<PropertyDescriptor> getComparableProperties() {
         return comparisonMap.getMappedProperties();
@@ -121,8 +121,8 @@ public class ComparisonModel {
     /**
      * Gets the comparator for the provided propertyDescriptor in the current model
      *
-     * @param propertyDescriptor
-     * @return
+     * @param propertyDescriptor property
+     * @return comparions wrapper instance
      */
     public PropertyComparisonWrapper getComparator(PropertyDescriptor propertyDescriptor) {
         return comparisonMap.getStrategy(propertyDescriptor);

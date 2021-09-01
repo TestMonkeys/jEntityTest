@@ -16,7 +16,7 @@ import static org.testmonkeys.jentitytest.Resources.desc_following_props_did_not
 import static org.testmonkeys.jentitytest.comparison.result.Status.Passed;
 
 /**
- * Hamcrest Entity Type matcher for type <T>
+ * Hamcrest Entity Type matcher
  *
  * @param <T> type of strategies to be matched
  */
@@ -32,8 +32,8 @@ public class EntityMatcher<T> extends AbstractJEntityMatcher<T> {
     /**
      * Performs matching using the EntityComparator between the actualItem and expected
      *
-     * @param item
-     * @return
+     * @param item actual object
+     * @return true if actual object matches expected
      */
     @Override
     public boolean matches(Object item) {

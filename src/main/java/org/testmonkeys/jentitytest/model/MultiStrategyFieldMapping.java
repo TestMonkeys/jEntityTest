@@ -33,7 +33,7 @@ public class MultiStrategyFieldMapping<T> {
     /**
      * Gets the strategies defined for the provided propertyDescriptor in the current model
      *
-     * @param propertyDescriptor
+     * @param propertyDescriptor property
      * @return list of strategies
      */
     public List<T> getStrategies(PropertyDescriptor propertyDescriptor) {
@@ -43,8 +43,8 @@ public class MultiStrategyFieldMapping<T> {
     /**
      * Checks if there are any strategies registered for provided propertyDescriptor in the current model
      *
-     * @param propertyDescriptor
-     * @return
+     * @param propertyDescriptor property
+     * @return true if it has any strategies defined
      */
     public boolean hasStrategy(PropertyDescriptor propertyDescriptor) {
         return comparisonMap.containsKey(propertyDescriptor);

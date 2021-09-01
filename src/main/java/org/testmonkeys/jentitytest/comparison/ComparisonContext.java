@@ -42,7 +42,7 @@ public class ComparisonContext {
     /**
      * Generates the full path for current comparison
      *
-     * @return
+     * @return entity property path to current comparison
      */
     @SuppressWarnings("MagicCharacter")
     @Override
@@ -60,8 +60,8 @@ public class ComparisonContext {
     /**
      * Checks if the object was present before in the ComparisonContext tree
      *
-     * @param actual
-     * @return
+     * @param actual actual object
+     * @return true if object was present before in comparison tree
      */
     public boolean isRecursive(Object actual) {
         return canBeRecursive(actual) &&

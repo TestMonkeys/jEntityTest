@@ -30,9 +30,9 @@ public class EntityInspector {
     /**
      * Inspects the class and creates a ComparisonModel based on class properties and annotations
      *
-     * @param clazz
-     * @return
-     * @throws JEntityTestException
+     * @param clazz entity class for which to retrieve the comparison model
+     * @return comparison model
+     * @throws JEntityTestException when comparison model is impossible to generate
      */
     @SuppressWarnings("ObjectAllocationInLoop")
     public ComparisonModel getComparisonModel(Class clazz) {

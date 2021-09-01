@@ -54,11 +54,11 @@ public class ChildEntityListComparator extends AbstractComparator {
     }
 
     /**
-     * @param actual
-     * @param expected
-     * @param context
-     * @return
-     * @throws JEntityTestException
+     * @param actual   actual object
+     * @param expected expected object
+     * @param context  context of this comparison
+     * @return result set of the comparison
+     * @throws JEntityTestException if comparison is impossible
      */
     @Override
     protected ResultSet computeComparison(Object actual, Object expected, ComparisonContext context) {

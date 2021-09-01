@@ -24,10 +24,10 @@ public class EntityComparator {
     private final NullConditionalCheck nullComparatorHelper = new NullConditionalCheck();
 
     /**
-     * @param actual
-     * @param expected
-     * @return
-     * @throws JEntityTestException
+     * @param actual   actual object
+     * @param expected expected object
+     * @return result set of the comparison
+     * @throws JEntityTestException in case the comparison can't be completed
      */
     public ResultSet compare(Object actual, Object expected) {
 
@@ -35,10 +35,11 @@ public class EntityComparator {
     }
 
     /**
-     * @param actual
-     * @param expected
-     * @return
-     * @throws JEntityTestException
+     * @param actual actual object
+     * @param expected expected object
+     * @param comparisonContext comparison context of the current entities
+     * @return result set of the comparison
+     * @throws JEntityTestException in case the comparison can't be completed
      */
     public ResultSet compare(Object actual, Object expected, ComparisonContext comparisonContext) {
         ComparisonContext context = comparisonContext;

@@ -29,7 +29,7 @@ public class ReflectionUtils {
     /**
      * Gets the bean info for provided class
      *
-     * @param clazz
+     * @param clazz entity class type
      * @return bean info
      */
     public BeanInfo getBeanInfo(Class clazz) {
@@ -48,7 +48,7 @@ public class ReflectionUtils {
      * Strategies configured in YAML.
      * Strategy is initialised with default constructor and parameters are assigned based on strategy properties
      *
-     * @param strategy
+     * @param strategy strategy to initialize
      * @param <T>      Expected type
      * @return instance of required strategy
      */
@@ -73,9 +73,9 @@ public class ReflectionUtils {
      * Fills parameters to strategy properties.
      * Method will fail on any property name mismatch, or extra parameters than strategy properties available
      *
-     * @param strategyType
-     * @param strategy
-     * @param parameters
+     * @param strategyType strategy class
+     * @param strategy     strategy instance
+     * @param parameters   parameters
      */
     @SneakyThrows
     private void fillParameters(Class<?> strategyType, Object strategy, Map<String, Object> parameters) {
@@ -126,10 +126,12 @@ public class ReflectionUtils {
     }
 
     /**
-     * @param annotation
-     * @param type
-     * @return
-     * @throws JEntityTestException
+     * initializes comparator using property annotations
+     *
+     * @param annotation property annotation
+     * @param type comparator type
+     * @return comparator instance
+     * @throws JEntityTestException when comparator initialization is impossible
      */
     public Comparator initializeComparator(Annotation annotation, Class<? extends Comparator> type) {
         log.trace("Starting initialization for comparator {}", type); //log
@@ -157,10 +159,11 @@ public class ReflectionUtils {
     }
 
     /**
-     * @param annotation
-     * @param type
-     * @return
-     * @throws JEntityTestException
+     * @param annotation field annotation
+     * @param type comparator type
+     * @param <T> check type
+     * @return check instance
+     * @throws JEntityTestException in case check initialization is impossible
      */
     public <T> T initializeCheck(Annotation annotation, Class<? extends AbstractCheck> type) {
         log.trace("Starting initialization for comparator {}", type); //log

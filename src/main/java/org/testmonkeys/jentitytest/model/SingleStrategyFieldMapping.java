@@ -29,7 +29,7 @@ public class SingleStrategyFieldMapping<T> {
     /**
      * Gets the strategy for the provided propertyDescriptor in the current model mapping
      *
-     * @param propertyDescriptor
+     * @param propertyDescriptor property descriptor for which to retrieve the strategy
      * @return strategy
      */
     public T getStrategy(PropertyDescriptor propertyDescriptor) {
@@ -39,7 +39,7 @@ public class SingleStrategyFieldMapping<T> {
     /**
      * Gets the set of properties for which a mapping was set
      *
-     * @return
+     * @return property descriptor set
      */
     public Set<PropertyDescriptor> getMappedProperties() {
         return strategyMap.keySet();

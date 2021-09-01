@@ -30,8 +30,8 @@ public class YamlModelParser {
     /**
      * Interprets yaml model and creates a ComparisonModel based on that
      *
-     * @param inputStream
-     * @return
+     * @param inputStream input stream of the model
+     * @return Comparison Model
      */
     public ComparisonModel readModel(InputStream inputStream) {
         Yaml yaml = new Yaml(new Constructor(EntityYamlComparisonDefinition.class));

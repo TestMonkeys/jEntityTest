@@ -6,11 +6,11 @@ import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 public interface Comparator {
 
     /**
-     * @param actual
-     * @param expected
-     * @param context
-     * @return
-     * @throws JEntityTestException
+     * @param actual   actual object
+     * @param expected expected object
+     * @param context  context of this comparison
+     * @return result set of the comparison
+     * @throws JEntityTestException if comparison is impossible
      */
     ResultSet compare(Object actual, Object expected, ComparisonContext context);
 }

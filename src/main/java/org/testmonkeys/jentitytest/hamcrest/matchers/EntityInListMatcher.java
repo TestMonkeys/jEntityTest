@@ -18,7 +18,7 @@ import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Passed;
 
 /**
- * Hamcrest matcher for finding an entity in a list for type <T>
+ * Hamcrest matcher for finding an entity in a list
  *
  * @param <T> type of strategies to be matched
  */
@@ -35,8 +35,8 @@ public class EntityInListMatcher<T> extends AbstractJEntityMatcher<T> {
     /**
      * Performs iterative matching using the EntityComparator between the actualItem and entityList items
      *
-     * @param entityList
-     * @return
+     * @param entityList actual list
+     * @return true if expected item is contained in list
      */
     @Override
     public boolean matches(Object entityList) {

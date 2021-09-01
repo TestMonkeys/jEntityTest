@@ -23,7 +23,7 @@ public abstract class AbstractCheck {
      * @param expected expected parent object of the property
      * @param context  comparison context
      * @return conditional check result
-     * @throws JEntityTestException
+     * @throws JEntityTestException if comparison is impossible
      */
     public ConditionalCheckResult check(PropertyDescriptor property, Object actual, Object expected, ComparisonContext context) {
         Object actualValue = getPropertyValue(property, actual);
