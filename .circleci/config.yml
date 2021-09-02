@@ -13,7 +13,10 @@ workflows:
   version: 2.1
   build-test:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              ignore: master
       - test:
           requires:
             - build
