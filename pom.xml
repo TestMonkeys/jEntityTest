@@ -38,7 +38,7 @@
     <distributionManagement>
         <repository>
             <id>rso</id>
-            <url>https://repository.sonatype.org/content/repositories/releases/</url>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/):</url>
         </repository>
     </distributionManagement>
 
