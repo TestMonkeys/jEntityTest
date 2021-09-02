@@ -38,7 +38,7 @@
     <distributionManagement>
         <repository>
             <id>rso</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
         </repository>
     </distributionManagement>
 
@@ -171,6 +171,7 @@
                 <artifactId>maven-release-plugin</artifactId>
                 <configuration>
                     <releaseProfiles>gpg-sign</releaseProfiles>
+                    <tagNameFormat>v@{project.version}</tagNameFormat>
                 </configuration>
             </plugin>
         </plugins>
