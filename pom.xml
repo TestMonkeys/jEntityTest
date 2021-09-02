@@ -30,9 +30,9 @@
         </developer>
     </developers>
     <scm>
-        <connection>scm:git:git@github.com/TestMonkeys/jEntityTest.git</connection>
-        <developerConnection>scm:git:git@github.com/TestMonkeys/jEntityTest.git</developerConnection>
-        <url>git@github.com/TestMonkeys/jEntityTest.git</url>
+        <connection>scm:git:git@github.com:TestMonkeys/jEntityTest.git</connection>
+        <developerConnection>scm:git:git@github.com:TestMonkeys/jEntityTest.git</developerConnection>
+        <url>https://github.com/TestMonkeys/jEntityTest.git</url>
     </scm>
 
     <distributionManagement>
