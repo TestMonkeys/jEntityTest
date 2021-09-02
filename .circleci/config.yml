@@ -21,10 +21,8 @@ workflows:
     jobs:
       - build:
           filters:
-            tags:
-              only: /^v.*/
             branches:
-              ignore: /.*/
+              only: master
       - test:
           requires:
             - build
