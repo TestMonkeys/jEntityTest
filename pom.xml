@@ -39,13 +39,13 @@
     <distributionManagement>
         <repository>
             <id>rso</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+            <url>https://oss.sonatype.org/content/repositories/releases/</url>
         </repository>
     </distributionManagement>
 
     <groupId>org.testmonkeys</groupId>
     <artifactId>jentitytest</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.2-SNAPSHOT</version>
 
     <properties>
         <logbackVersion>1.2.5</logbackVersion>
