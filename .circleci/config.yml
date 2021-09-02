@@ -26,11 +26,6 @@ workflows:
       - test:
           requires:
             - build
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
       - circleci-maven-release-orb/run-maven-release:
           requires:
             - test
