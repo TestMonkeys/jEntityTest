@@ -1,4 +1,6 @@
-version: 2
+version: 2.1
+orbs:
+  circleci-maven-release-orb: sonatype-nexus-community/circleci-maven-release-orb@0.0.16
 references:
   workspace_root: &workspace_root
                     /tmp/workspace
@@ -8,7 +10,7 @@ references:
       at: *workspace_root
 
 workflows:
-  version: 2
+  version: 2.1
   build-test:
     jobs:
       - build
@@ -31,22 +33,10 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
-      - create-package:
+      - circleci-maven-release-orb/run-maven-release:
           requires:
             - test
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
-      - bintray-upload:
-          requires:
-            - create-package
-          filters:
-            tags:
-              only: /^v.*/
-            branches:
-              ignore: /.*/
+          ssh-fingerprints: 'a5:27:08:2f:b8:1f:69:b6:31:4a:67:25:fd:5b:53:46'
 
 
 jobs:
@@ -163,100 +153,3 @@ jobs:
 
       - store_artifacts:
           path: ~/repo/target
-
-
-  ##################################################################
-  ##
-  ##CREATE PACKAGE JOB
-  ##
-  ##################################################################
-  create-package:
-    docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:8u141-browsers
-
-    working_directory: ~/repo
-
-    steps:
-      - checkout
-
-      - restore_cache:
-          keys:
-            # when lock file changes, use increasingly general patterns to restore cache
-            - maven-repo-v1-{{ .Branch }}-{{ checksum "pom.xml" }}
-            - maven-repo-v1-{{ .Branch }}-
-            - maven-repo-v1-
-
-
-      - run:
-          name: Updating jentityTest version as per tag
-          command: |
-            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            mvn versions:set -DnewVersion=$MAVEN_RELEASE_VERSION -f pom.xml
-            mvn versions:commit
-
-      - run:
-          name: Building packages
-          command: |
-            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            mvn clean package -DskipTests=true
-            mkdir -p /tmp/workspace/release/jars
-            mv ~/repo/target/*.jar /tmp/workspace/release/jars/
-            export POM_NAME_1='/tmp/workspace/release/jars/jentitytest-'
-            export POM_NAME_2='.pom'
-            export POM_FULL_NAME="$POM_NAME_1$MAVEN_RELEASE_VERSION$POM_NAME_2"
-            cp ~/repo/pom.xml $POM_FULL_NAME
-
-      - persist_to_workspace:
-          root: *workspace_root
-          paths:
-            - release/jars/
-
-      - store_artifacts:
-          path: ~/repo/target
-
-  ##################################################################
-  ##
-  ##BINTRAY UPLOAD JOB
-  ##
-  ##################################################################
-  bintray-upload:
-    docker:
-      # specify the version you desire here
-      - image: circleci/openjdk:8u141-browsers
-
-    working_directory: ~/repo
-
-    steps:
-      - *attach_workspace
-
-      - run:
-          name: install Bintray CLI
-          command: |
-            cd /tmp
-            sudo curl -fL https://getcli.jfrog.io | sh
-
-      - run:
-          name: upload artifacts to bintray
-          command: |
-            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            export jentityTest_URL='testmonkeys/maven/org.testmonkeys.jentitytest/'
-            export jentityTest_PACKAGE='org/testmonkeys/jentitytest/'
-            export VCS_URL='https://github.com/TestMonkeys/jEntityTest.git'
-            export BINTRAY_URL="$jentityTest_URL$MAVEN_RELEASE_VERSION"
-            export SEPARATOR='/'
-            export PATH="$jentityTest_PACKAGE$MAVEN_RELEASE_VERSION$SEPARATOR"
-            /tmp/jfrog bt config --user=$BINTRAY_USER --key=$BINTRAY_API_KEY --licenses="Apache-2.0"
-            /tmp/jfrog bt u "/tmp/workspace/release/jars/*" $BINTRAY_URL $PATH
-            /tmp/jfrog bt gsv $BINTRAY_URL --passphrase=$BINTRAY_GPG_PWD
-            /tmp/jfrog bt vp $BINTRAY_URL
-      - run:
-          name: Sync to Maven Central
-          command: |
-            sudo apt-get update
-            sudo apt-get install gettext
-            export MAVEN_RELEASE_VERSION="$(echo $CIRCLE_TAG | cut -c 2-)"
-            echo '{"username": "$SONATYPE_USER","password": "$SONATYPE_PASSWORD","close": "1"}' > req.template
-            envsubst < req.template > request
-            sudo curl -u $BINTRAY_USER:$BINTRAY_API_KEY --header "Content-Type: application/json" --data '@./request' --request POST https://api.bintray.com/maven_central_sync/testmonkeys/maven/org.testmonkeys.jentitytest/versions/$MAVEN_RELEASE_VERSION
-            rm request
