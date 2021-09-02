@@ -32,7 +32,7 @@
         <connection>scm:git:git@github.com:TestMonkeys/jEntityTest.git</connection>
         <developerConnection>scm:git:git@github.com:TestMonkeys/jEntityTest.git</developerConnection>
         <url>https://github.com/TestMonkeys/jEntityTest.git</url>
-      <tag>HEAD</tag>
+      <tag>jentitytest-1.0.0</tag>
   </scm>
 
     <distributionManagement>
@@ -44,7 +44,7 @@
 
     <groupId>org.testmonkeys</groupId>
     <artifactId>jentitytest</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <properties>
         <logbackVersion>1.2.5</logbackVersion>
