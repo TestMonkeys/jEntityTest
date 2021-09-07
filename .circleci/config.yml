@@ -2,7 +2,7 @@ version: 2.1
 orbs:
   circleci-maven-release-orb: sonatype-nexus-community/circleci-maven-release-orb@0.0.16
   maven: circleci/maven@1.2.0
-  codecov: codecov/codecov@2.0.0
+  codecov: codecov/codecov@3.0.0
 references:
   workspace_root: &workspace_root
                     /tmp/workspace
@@ -20,7 +20,7 @@ workflows:
             branches:
               ignore: master
       - maven/test
-      - codecov/upload:
+      - codecovUpload:
           requires:
             - maven/test
   release:
@@ -39,6 +39,12 @@ workflows:
 
 
 jobs:
+  codecovUpload:
+    machine:
+      image: ubuntu-2004:202107-02
+    steps:
+      - codecov/upload
+
   ##################################################################
   ##
   ##BUILD JOB
