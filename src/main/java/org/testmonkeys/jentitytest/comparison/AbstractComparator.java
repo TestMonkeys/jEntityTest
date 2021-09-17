@@ -23,6 +23,7 @@ public abstract class AbstractComparator implements Comparator {
     @Override
     public ResultSet compare(Object actual, Object expected, ComparisonContext context) {
         ResultSet resultList = new ResultSet();
+        context.setComparatorDetails(describe());
 
         List<ConditionalCheckResult> conditionalResults = runConditionals(actual, expected, context);
         if (conditionalResults.stream().anyMatch(res -> res.isComparisonFinished() || (res.getStatus() == Failed))) {
@@ -30,7 +31,6 @@ public abstract class AbstractComparator implements Comparator {
             return resultList;
         }
 
-        context.setComparatorDetails(describe());
         resultList.addAll(computeComparison(actual, expected, context));
         return resultList;
     }

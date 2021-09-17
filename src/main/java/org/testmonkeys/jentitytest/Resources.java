@@ -24,6 +24,7 @@ public class Resources {
     public static final String entity = "entity";
     public static final String NULL = "null";
     public static final String NOT_NULL = "not_null";
+    public static final String NOT_NULL_with_object = "not_null_with_object";
     public static final String desc_datetime_precision = "desc_datetime_precision";
     public static final String desc_datetime_delta = "desc_datetime_delta";
     public static final String desc_following_props_did_not_match = "desc_following_props_did_not_match";
