@@ -2,6 +2,7 @@
 [![CircleCI](https://circleci.com/gh/TestMonkeys/jEntityTest.svg?style=svg)](https://circleci.com/gh/TestMonkeys/jEntityTest)
 [![codecov](https://codecov.io/gh/TestMonkeys/jEntityTest/branch/master/graph/badge.svg)](https://codecov.io/gh/TestMonkeys/jEntityTest)
 
+[![Maven Central](https://img.shields.io/maven-central/v/org.testmonkeys/jentitytest)](https://search.maven.org/artifact/org.testmonkeys/jentitytest)
 [![Maintainability](https://api.codeclimate.com/v1/badges/b5f8bf0fdf7bfc9453b0/maintainability)](https://codeclimate.com/github/TestMonkeys/jEntityTest/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/b5f8bf0fdf7bfc9453b0/test_coverage)](https://codeclimate.com/github/TestMonkeys/jEntityTest/test_coverage)
 
