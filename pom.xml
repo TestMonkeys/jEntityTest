@@ -47,14 +47,13 @@
     <version>1.0.4-SNAPSHOT</version>
 
     <properties>
-        <logbackVersion>1.2.6</logbackVersion>
+        <logbackVersion>1.2.10</logbackVersion>
         <hamcrestVersion>2.0.0.0</hamcrestVersion>
         <junitVersion>4.13.2</junitVersion>
-        <maven.compiler.version>3.8.1</maven.compiler.version>
+        <maven.compiler.version>3.9.0</maven.compiler.version>
         <maven.surefire.version>2.22.2</maven.surefire.version>
-        <jackson.version>2.12.5</jackson.version>
         <snakeYamlVersion>1.30</snakeYamlVersion>
-        <lombok.version>1.18.20</lombok.version>
+        <lombok.version>1.18.22</lombok.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
