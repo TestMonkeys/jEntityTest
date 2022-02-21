@@ -218,6 +218,8 @@
                 </plugins>
             </build>
             <properties>
+                <!--suppress UnresolvedMavenProperty -->
+                <!-- property taken from circle ci environment properties -->
                 <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
             </properties>
         </profile>
