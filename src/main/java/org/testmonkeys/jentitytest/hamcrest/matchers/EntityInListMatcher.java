@@ -6,16 +6,13 @@ import org.hamcrest.Description;
 import org.testmonkeys.jentitytest.EntityComparator;
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
+import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
 import java.text.MessageFormat;
-import java.util.LinkedList;
-import java.util.List;
 
 import static org.testmonkeys.jentitytest.Resources.desc_item_in_list;
 import static org.testmonkeys.jentitytest.Resources.desc_item_not_in_list;
-import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
-import static org.testmonkeys.jentitytest.comparison.result.Status.Passed;
 
 /**
  * Hamcrest matcher for finding an entity in a list
@@ -41,37 +38,37 @@ public class EntityInListMatcher<T> extends AbstractJEntityMatcher<T> {
     @Override
     public boolean matches(Object entityList) {
         Iterable<T> iterable = getIterableList(entityList);
-        List<ComparisonResult> closestMatch = null;
+        ResultSet potentialResult = new ResultSet();
 
-        boolean anyItems = false;
-        for (T item : iterable) {
-            anyItems = true;
-
-            List<ComparisonResult> result = new LinkedList<>();
-            EntityComparator comparator = new EntityComparator();
-            result.addAll(comparator.compare(item, expected));
-
-            if (result.stream().allMatch(x -> x.getStatus() == Passed))
-                return true;
-
-            if (closestMatch == null || (result.stream().filter(x -> x.getStatus() == Failed).count() < closestMatch.stream().filter(x -> x.getStatus() == Failed).count())) {
-                closestMatch = result;
-            }
-
-
-        }
-        StringBuilder sb = new StringBuilder();
-        if (anyItems) {
-            for (ComparisonResult res : closestMatch) {
-                if (res.getStatus() == Passed)
-                    continue;
-                sb.append(resultProcessor.getOutput(res.getComparisonContext(), res));
-            }
-        } else {
+        if (!iterable.iterator().hasNext()) {
             failureReason = Resources.getString(Resources.err_actual_list_empty);
+            return false;
+        }
+
+        for (T item : iterable) {
+            ResultSet itemComparisonResult = compareToListItem(expected, item);
+            if (itemComparisonResult.isPerfectMatch())
+                return true;
+            potentialResult.replaceIfBetterMatch(itemComparisonResult);
+        }
+
+        describeClosestMatch(potentialResult);
+        return false;
+    }
+
+    private ResultSet compareToListItem(Object expected, T actualItem) {
+        ResultSet result = new ResultSet();
+        EntityComparator comparator = new EntityComparator();
+        result.addAll(comparator.compare(actualItem, expected));
+        return result;
+    }
+
+    private void describeClosestMatch(ResultSet closestMatch) {
+        StringBuilder sb = new StringBuilder();
+        for (ComparisonResult res : closestMatch.getMismatches()) {
+            sb.append(resultProcessor.getOutput(res.getComparisonContext(), res));
         }
         textualOutput = sb.toString();
-        return false;
     }
 
     private Iterable<T> getIterableList(Object entityList) {

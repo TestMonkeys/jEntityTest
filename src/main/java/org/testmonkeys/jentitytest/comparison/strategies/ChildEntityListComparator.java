@@ -12,7 +12,10 @@ import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.framework.ChildEntityListComparison;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import static org.testmonkeys.jentitytest.Resources.size;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
@@ -106,35 +109,24 @@ public class ChildEntityListComparator extends AbstractComparator {
         Object[] expectedArr = listExpected.toArray();
 
         for (int i = 0; i < listExpected.size(); i++) {
-            List<ResultSet> options = findMatches(expectedArr[i], actualArr, elementComparator, context.withIndex(i));
-            comparisonResults.addAll(findClosestOption(options));
+            comparisonResults.addAll(findClosestMatch(expectedArr[i], actualArr, elementComparator, context.withIndex(i)));
         }
 
         return comparisonResults;
     }
 
-    private List<ResultSet> findMatches(Object expected, Object[] actualArr, Comparator elementComparator, ComparisonContext context) {
-        List<ResultSet> options = new ArrayList<>();
+    private ResultSet findClosestMatch(Object expected, Object[] actualArr, Comparator elementComparator, ComparisonContext context) {
+        ResultSet closestMatch = new ResultSet();
         for (Object actualObject : actualArr) {
             ResultSet option = elementComparator.compare(
                     actualObject,
                     expected,
                     context);
-            options.add(option);
+            closestMatch.replaceIfBetterMatch(option);
             if (option.isPerfectMatch())
                 break;
         }
-        return options;
+        return closestMatch;
     }
-
-    private ResultSet findClosestOption(List<ResultSet> options) {
-        ResultSet closestOption = options.get(0);
-        for (ResultSet option : options) {
-            if (option.stream().filter(x -> x.getStatus().equals(Failed)).count() < closestOption.stream().filter(x -> x.getStatus().equals(Failed)).count())
-                closestOption = option;
-        }
-        return closestOption;
-    }
-
 
 }

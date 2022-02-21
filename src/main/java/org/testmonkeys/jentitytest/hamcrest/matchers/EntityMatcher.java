@@ -6,14 +6,12 @@ import org.hamcrest.Description;
 import org.testmonkeys.jentitytest.EntityComparator;
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
+import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 
 import java.text.MessageFormat;
-import java.util.LinkedList;
-import java.util.List;
 
 import static org.testmonkeys.jentitytest.Resources.desc_entities_same;
 import static org.testmonkeys.jentitytest.Resources.desc_following_props_did_not_match;
-import static org.testmonkeys.jentitytest.comparison.result.Status.Passed;
 
 /**
  * Hamcrest Entity Type matcher
@@ -37,18 +35,16 @@ public class EntityMatcher<T> extends AbstractJEntityMatcher<T> {
      */
     @Override
     public boolean matches(Object item) {
-        List<ComparisonResult> result = new LinkedList<>();
+        ResultSet result = new ResultSet();
         EntityComparator comparator = new EntityComparator();
         result.addAll(comparator.compare(item, expected));
 
         StringBuilder sb = new StringBuilder();
-        for (ComparisonResult res : result) {
-            if (res.getStatus() == Passed)
-                continue;
+        for (ComparisonResult res : result.getMismatches()) {
             sb.append(resultProcessor.getOutput(res.getComparisonContext(), res));
         }
         textualOutput = sb.toString();
-        return result.stream().allMatch(r -> r.getStatus() == Passed);
+        return result.isPerfectMatch();
     }
 
     @Override
