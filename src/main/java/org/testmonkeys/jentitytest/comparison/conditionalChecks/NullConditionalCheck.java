@@ -28,16 +28,16 @@ public class NullConditionalCheck implements PreComparisonCheck {
             return result;
 
         result.setStatus(Failed);
-
-        if (expected != null)
-            result.setExpected(MessageFormat.format(Resources.getString(NOT_NULL_with_object), getObjectRepresentation(expected)));
-        else
-            result.setExpected(Resources.getString(NULL));
-        if (actual != null)
-            result.setActual(MessageFormat.format(Resources.getString(NOT_NULL_with_object), getObjectRepresentation(actual)));
-        else
-            result.setActual(Resources.getString(NULL));
+        result.setExpected(getObjectDescription(expected));
+        result.setActual(getObjectDescription(actual));
         return result;
+    }
+
+    private String getObjectDescription(Object o) {
+        if (o != null)
+            return MessageFormat.format(Resources.getString(NOT_NULL_with_object), getObjectRepresentation(o));
+        else
+            return Resources.getString(NULL);
     }
 
     private String getObjectRepresentation(Object o) {
