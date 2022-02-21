@@ -3,6 +3,9 @@ package org.testmonkeys.jentitytest.comparison.result;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
+
+import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
 
 public class ResultSet extends ArrayList<ComparisonResult> {
 
@@ -19,6 +22,17 @@ public class ResultSet extends ArrayList<ComparisonResult> {
 
     public boolean isPerfectMatch() {
         return this.stream().allMatch(x -> x.getStatus().equals(Status.Passed) || x.getStatus().equals(Status.Skipped));
+    }
+
+    public Iterable<ComparisonResult> getMismatches() {
+        return this.stream().filter(x -> x.getStatus() != Status.Passed && x.getStatus() != Status.Skipped).collect(Collectors.toList());
+    }
+
+    public void replaceIfBetterMatch(ResultSet option) {
+        if (this.isEmpty() || (option.stream().filter(x -> x.getStatus() == Failed).count() < this.stream().filter(x -> x.getStatus() == Failed).count())) {
+            this.clear();
+            this.addAll(option);
+        }
     }
 
 }
