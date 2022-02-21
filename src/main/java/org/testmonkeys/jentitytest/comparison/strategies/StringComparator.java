@@ -68,16 +68,8 @@ public class StringComparator extends AbstractComparator {
         String actualValue = typeCasting.toString(actual);
         String expectedValue = typeCasting.toString(expected);
 
-        if (ignoreCharacters != null) {
-            for (String ignoreString : ignoreCharacters) {
-                actualValue = actualValue.replace(ignoreString, EMPTY_STRING);
-                expectedValue = expectedValue.replace(ignoreString, EMPTY_STRING);
-            }
-        }
-        if (trim) {
-            actualValue = actualValue.trim();
-            expectedValue = expectedValue.trim();
-        }
+        actualValue = stripIgnoredCharactersAndTrim(actualValue);
+        expectedValue = stripIgnoredCharactersAndTrim(expectedValue);
 
         Status status;
         if (caseSensitive) {
@@ -86,6 +78,18 @@ public class StringComparator extends AbstractComparator {
             status = Status.valueOf(actualValue.equalsIgnoreCase(expectedValue));
         }
         return new ResultSet().with(status, context, showControlChars(actualValue), showControlChars(expectedValue));
+    }
+
+    private String stripIgnoredCharactersAndTrim(String value) {
+        if (ignoreCharacters != null) {
+            for (String ignoreString : ignoreCharacters) {
+                value = value.replace(ignoreString, EMPTY_STRING);
+            }
+        }
+        if (trim) {
+            value = value.trim();
+        }
+        return value;
     }
 
     @Override
