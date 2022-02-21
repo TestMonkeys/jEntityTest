@@ -1,14 +1,10 @@
 package org.testmonkeys.jentitytest.hamcrest.matchers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Description;
 import org.testmonkeys.jentitytest.EntityComparator;
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
-
-import java.text.MessageFormat;
 
 import static org.testmonkeys.jentitytest.Resources.desc_entities_same;
 import static org.testmonkeys.jentitytest.Resources.desc_following_props_did_not_match;
@@ -54,11 +50,6 @@ public class EntityMatcher<T> extends AbstractJEntityMatcher<T> {
 
     @Override
     public void describeTo(Description description) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            description.appendText(MessageFormat.format(Resources.getString(desc_entities_same), objectMapper.writeValueAsString(expected)));
-        } catch (JsonProcessingException e) {
-            description.appendText(MessageFormat.format(Resources.getString(desc_entities_same), expected));
-        }
+        description.appendText(generateDescriptionFor(desc_entities_same, expected));
     }
 }

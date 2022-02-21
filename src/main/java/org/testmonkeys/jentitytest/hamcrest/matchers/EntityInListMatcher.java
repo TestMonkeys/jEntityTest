@@ -1,15 +1,11 @@
 package org.testmonkeys.jentitytest.hamcrest.matchers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Description;
 import org.testmonkeys.jentitytest.EntityComparator;
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
-
-import java.text.MessageFormat;
 
 import static org.testmonkeys.jentitytest.Resources.desc_item_in_list;
 import static org.testmonkeys.jentitytest.Resources.desc_item_not_in_list;
@@ -86,11 +82,6 @@ public class EntityInListMatcher<T> extends AbstractJEntityMatcher<T> {
 
     @Override
     public void describeTo(Description description) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            description.appendText(MessageFormat.format(Resources.getString(desc_item_in_list), objectMapper.writeValueAsString(expected)));
-        } catch (JsonProcessingException e) {
-            description.appendText(MessageFormat.format(Resources.getString(desc_item_in_list), expected));
-        }
+        description.appendText(generateDescriptionFor(desc_item_in_list, expected));
     }
 }
