@@ -9,14 +9,14 @@ import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.comparison.result.Status;
-import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.framework.DateTimeComparison;
 
 import java.text.MessageFormat;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 
-import static org.testmonkeys.jentitytest.Resources.*;
+import static org.testmonkeys.jentitytest.Resources.desc_datetime_delta;
+import static org.testmonkeys.jentitytest.Resources.desc_datetime_precision;
 
 @Slf4j
 public class DateTimeComparator extends AbstractComparator {
@@ -28,6 +28,8 @@ public class DateTimeComparator extends AbstractComparator {
     private ChronoUnit chronoUnit = ChronoUnit.NANOS;
     @Getter
     private String unit = "NANOS";
+
+    private final TypeCastingUtils typeCasting = new TypeCastingUtils();
 
     public DateTimeComparator() {
         registerPreConditionalCheck(new NullConditionalCheck());
@@ -46,18 +48,8 @@ public class DateTimeComparator extends AbstractComparator {
 
     @Override
     protected ResultSet computeComparison(Object actual, Object expected, ComparisonContext context) {
-        Temporal actualValue;
-        Temporal expectedValue;
-
-
-        try {
-            actualValue = (Temporal) actual;
-            expectedValue = (Temporal) expected;
-        } catch (ClassCastException castException) {
-            throw new JEntityTestException(MessageFormat.format(
-                    Resources.getString(err_actual_and_expected_must_be_of_type), Temporal.class.getName()),
-                    castException);
-        }
+        Temporal actualValue = typeCasting.toTemporal(actual);
+        Temporal expectedValue = typeCasting.toTemporal(expected);
 
         Status status = Status.valueOf(Math.abs(actualValue.until(expectedValue, chronoUnit)) <= delta);
         return new ResultSet().with(status, context, actual, expected);

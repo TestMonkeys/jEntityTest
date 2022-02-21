@@ -14,7 +14,6 @@ import org.testmonkeys.jentitytest.framework.ChildEntityListComparison;
 
 import java.util.*;
 
-import static org.testmonkeys.jentitytest.Resources.err_actual_and_expected_must_be_generic_Collections;
 import static org.testmonkeys.jentitytest.Resources.size;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
 
@@ -23,6 +22,8 @@ public class ChildEntityListComparator extends AbstractComparator {
     @Getter
     @Setter
     private boolean ordered = true;
+
+    private final TypeCastingUtils typeCasting = new TypeCastingUtils();
 
     public ChildEntityListComparator() {
         registerPreConditionalCheck(new NullConditionalCheck());
@@ -63,8 +64,8 @@ public class ChildEntityListComparator extends AbstractComparator {
     protected ResultSet computeComparison(Object actual, Object expected, ComparisonContext context) {
         ResultSet comparisonResults = new ResultSet();
 
-        Collection<?> listActual = castToCollection(actual);
-        Collection<?> listExpected = castToCollection(expected);
+        Collection<?> listActual = typeCasting.toCollection(actual);
+        Collection<?> listExpected = typeCasting.toCollection(expected);
 
         if (listActual.size() != listExpected.size()) {
             comparisonResults.add(new ComparisonResult(Failed, context.withProperty(Resources.getString(size)),
@@ -135,11 +136,5 @@ public class ChildEntityListComparator extends AbstractComparator {
         return closestOption;
     }
 
-    private Collection<?> castToCollection(Object object) {
-        try {
-            return (Collection<?>) object;
-        } catch (ClassCastException ex) {
-            throw new JEntityTestException(Resources.getString(err_actual_and_expected_must_be_generic_Collections), ex);
-        }
-    }
+
 }
