@@ -73,22 +73,31 @@ public class YamlModelParser {
 
     private void createPropertyComparisonModelFromYamlConfiguration(PropertyDescriptor propertyDescriptor, ComparisonModel model, EntityYamlComparisonDefinition obj) {
         FieldMappingDefinitions fmDefinition = obj.getProperties().get(propertyDescriptor.getDisplayName());
-        List<StrategyDefinition> validators = fmDefinition.getValidators();
-        if (validators != null) {
-            for (StrategyDefinition strategy : validators) {
-                model.addValidation(propertyDescriptor, reflectionUtils.initializeStrategy(strategy));
-            }
-        }
-        List<StrategyDefinition> abortConditions = fmDefinition.getAbortConditions();
-        if (abortConditions != null) {
-            for (StrategyDefinition strategy : abortConditions) {
-                model.addAbortCondition(propertyDescriptor, reflectionUtils.initializeStrategy(strategy));
-            }
-        }
+
+        initModelValidators(propertyDescriptor, model, fmDefinition.getValidators());
+        initModelAbortConditions(propertyDescriptor, model, fmDefinition.getAbortConditions());
+
         if (fmDefinition.getComparisonStrategy() != null) {
             model.setComparisonPoint(propertyDescriptor, new PropertyComparisonWrapper(reflectionUtils.initializeStrategy(fmDefinition.getComparisonStrategy())));
         }
     }
+
+    private void initModelValidators(PropertyDescriptor propertyDescriptor, ComparisonModel model, List<StrategyDefinition> strategies) {
+        if (strategies != null) {
+            for (StrategyDefinition strategy : strategies) {
+                model.addValidation(propertyDescriptor, reflectionUtils.initializeStrategy(strategy));
+            }
+        }
+    }
+
+    private void initModelAbortConditions(PropertyDescriptor propertyDescriptor, ComparisonModel model, List<StrategyDefinition> strategies) {
+        if (strategies != null) {
+            for (StrategyDefinition strategy : strategies) {
+                model.addAbortCondition(propertyDescriptor, reflectionUtils.initializeStrategy(strategy));
+            }
+        }
+    }
+
 
     private void createDefaultPropertyModel(PropertyDescriptor propertyDescriptor, ComparisonModel model) {
         model.setComparisonPoint(propertyDescriptor, new PropertyComparisonWrapper(new SimpleTypeComparator()));
