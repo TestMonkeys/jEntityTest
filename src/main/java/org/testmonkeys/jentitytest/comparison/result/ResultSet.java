@@ -17,4 +17,8 @@ public class ResultSet extends ArrayList<ComparisonResult> {
         return this;
     }
 
+    public boolean isPerfectMatch() {
+        return this.stream().allMatch(x -> x.getStatus().equals(Status.Passed) || x.getStatus().equals(Status.Skipped));
+    }
+
 }

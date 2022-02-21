@@ -9,7 +9,6 @@ import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
-import org.testmonkeys.jentitytest.comparison.result.Status;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.framework.ChildEntityListComparison;
 
@@ -106,25 +105,34 @@ public class ChildEntityListComparator extends AbstractComparator {
         Object[] expectedArr = listExpected.toArray();
 
         for (int i = 0; i < listExpected.size(); i++) {
-            List<ResultSet> options = new ArrayList<>();
-            for (int j = 0; j < actualArr.length; j++) {
-                ResultSet option = elementComparator.compare(
-                        actualArr[j],
-                        expectedArr[i],
-                        context.withIndex(i));
-                options.add(option);
-                if (option.stream().allMatch(x -> x.getStatus().equals(Status.Passed) || x.getStatus().equals(Status.Skipped)))
-                    break;
-            }
-            ResultSet closestOption = options.get(0);
-            for (ResultSet option : options) {
-                if (option.stream().filter(x -> x.getStatus().equals(Failed)).count() < closestOption.stream().filter(x -> x.getStatus().equals(Failed)).count())
-                    closestOption = option;
-            }
-            comparisonResults.addAll(closestOption);
+            List<ResultSet> options = findMatches(expectedArr[i], actualArr, elementComparator, context.withIndex(i));
+            comparisonResults.addAll(findClosestOption(options));
         }
 
         return comparisonResults;
+    }
+
+    private List<ResultSet> findMatches(Object expected, Object[] actualArr, Comparator elementComparator, ComparisonContext context) {
+        List<ResultSet> options = new ArrayList<>();
+        for (Object actualObject : actualArr) {
+            ResultSet option = elementComparator.compare(
+                    actualObject,
+                    expected,
+                    context);
+            options.add(option);
+            if (option.isPerfectMatch())
+                break;
+        }
+        return options;
+    }
+
+    private ResultSet findClosestOption(List<ResultSet> options) {
+        ResultSet closestOption = options.get(0);
+        for (ResultSet option : options) {
+            if (option.stream().filter(x -> x.getStatus().equals(Failed)).count() < closestOption.stream().filter(x -> x.getStatus().equals(Failed)).count())
+                closestOption = option;
+        }
+        return closestOption;
     }
 
     private Collection<?> castToCollection(Object object) {
