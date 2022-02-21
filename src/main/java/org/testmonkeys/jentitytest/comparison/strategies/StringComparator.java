@@ -8,7 +8,6 @@ import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.comparison.result.Status;
-import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.framework.StringComparison;
 
 import java.text.MessageFormat;
@@ -51,6 +50,8 @@ public class StringComparator extends AbstractComparator {
     @Setter
     private List<String> ignoreCharacters = new ArrayList<>();
 
+    private final TypeCastingUtils typeCasting = new TypeCastingUtils();
+
     public StringComparator() {
         registerPreConditionalCheck(new NullConditionalCheck());
     }
@@ -64,17 +65,8 @@ public class StringComparator extends AbstractComparator {
     }
 
     public ResultSet computeComparison(Object actual, Object expected, ComparisonContext context) {
-        String actualValue;
-        String expectedValue;
-
-        try {
-            actualValue = (String) actual;
-            expectedValue = (String) expected;
-        } catch (ClassCastException castException) {
-            throw new JEntityTestException(MessageFormat.format(
-                    Resources.getString(Resources.err_actual_and_expected_must_be_of_type), String.class.getName()),
-                    castException);
-        }
+        String actualValue = typeCasting.toString(actual);
+        String expectedValue = typeCasting.toString(expected);
 
         if (ignoreCharacters != null) {
             for (String ignoreString : ignoreCharacters) {
