@@ -145,16 +145,7 @@ public final class AnnotationToComparatorDictionary {
      */
     public Comparator getComparatorForAnnotation(Annotation annotation) {
         log.trace("Getting comparator for Annotation {}", annotation); //log
-        if (annotation == null)
-            throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
-
-        if (mapping.containsKey(annotation.annotationType())) {
-            return reflectionUtils.initializeComparator(annotation, mapping.get(annotation.annotationType()));
-        }
-
-        throw new JEntityModelException(
-                MessageFormat.format(Resources.getString(Resources.ERR_NO_COMPARATOR_DEFINED_FOR_ANNOTATION),
-                        annotation.annotationType().getName()));
+        return getStrategyForAnnotation(annotation, mapping);
     }
 
     /**
@@ -166,16 +157,7 @@ public final class AnnotationToComparatorDictionary {
      */
     public AbstractAbortCondition getPreComparisonCheckForAnnotation(Annotation annotation) {
         log.trace("Getting pre-comparison check for Annotation {}", annotation); //log
-        if (annotation == null)
-            throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
-
-        if (preConditionalMapping.containsKey(annotation.annotationType())) {
-            return reflectionUtils.initializeCheck(annotation, preConditionalMapping.get(annotation.annotationType()));
-        }
-
-        throw new JEntityModelException(
-                MessageFormat.format(Resources.getString(Resources.ERR_NO_COMPARATOR_DEFINED_FOR_ANNOTATION),
-                        annotation.annotationType().getName()));
+        return getStrategyForAnnotation(annotation, preConditionalMapping);
     }
 
     /**
@@ -187,11 +169,15 @@ public final class AnnotationToComparatorDictionary {
      */
     public AbstractValidation getValidationForAnnotation(Annotation annotation) {
         log.trace("Getting validation check for Annotation {}", annotation); //log
+        return getStrategyForAnnotation(annotation, validationsMapping);
+    }
+
+    private <T> T getStrategyForAnnotation(Annotation annotation, Map<Class<?>, Class<? extends T>> annotationToStrategyMapping) {
         if (annotation == null)
             throw new IllegalArgumentException(Resources.getString(Resources.err_annotation_null));
 
-        if (validationsMapping.containsKey(annotation.annotationType())) {
-            return reflectionUtils.initializeCheck(annotation, validationsMapping.get(annotation.annotationType()));
+        if (annotationToStrategyMapping.containsKey(annotation.annotationType())) {
+            return reflectionUtils.initializeStrategyByAnnotation(annotation, annotationToStrategyMapping.get(annotation.annotationType()));
         }
 
         throw new JEntityModelException(
