@@ -4,8 +4,8 @@ import org.hamcrest.junit.ExpectedException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.testmonkeys.jentitytest.exceptions.ComparatorInstantiationByAnnotationException;
 import org.testmonkeys.jentitytest.exceptions.JEntityModelException;
+import org.testmonkeys.jentitytest.exceptions.StrategyInstantiationByAnnotationException;
 import org.testmonkeys.jentitytest.model.AnnotationToComparatorDictionary;
 import org.testmonkeys.jentitytest.test.unit.model.util.*;
 
@@ -83,7 +83,7 @@ public class AnnotationToComparatorDictionaryTest {
 
     @Test
     public void annotationToComparatoryDictionary_bad_initCtrAnn_privateConstructor() {
-        expectedException.expect(ComparatorInstantiationByAnnotationException.class);
+        expectedException.expect(StrategyInstantiationByAnnotationException.class);
         AnnotationToComparatorDictionary dictionary = AnnotationToComparatorDictionary.getInstance();
         dictionary.setComparatorForAnnotation(BadComparatorPrivateConstructor.class, BadComparatorAnnotation.class);
         dictionary.getComparatorForAnnotation(new BadComparatorAnnotationImp());
@@ -91,7 +91,7 @@ public class AnnotationToComparatorDictionaryTest {
 
     @Test
     public void annotationToComparatoryDictionary_bad_initCtrAnn_abstractComparator() {
-        expectedException.expect(ComparatorInstantiationByAnnotationException.class);
+        expectedException.expect(StrategyInstantiationByAnnotationException.class);
         AnnotationToComparatorDictionary dictionary = AnnotationToComparatorDictionary.getInstance();
         dictionary.setComparatorForAnnotation(BadComparatorAbstract.class, BadComparatorAnnotation.class);
         dictionary.getComparatorForAnnotation(new BadComparatorAnnotationImp());
@@ -99,7 +99,7 @@ public class AnnotationToComparatorDictionaryTest {
 
     @Test
     public void annotationToComparatoryDictionary_bad_initCtrAnn_exceptionTrhown() {
-        expectedException.expect(ComparatorInstantiationByAnnotationException.class);
+        expectedException.expect(StrategyInstantiationByAnnotationException.class);
         AnnotationToComparatorDictionary dictionary = AnnotationToComparatorDictionary.getInstance();
         dictionary.setComparatorForAnnotation(BadComparatorErrInConstructor.class, BadComparatorAnnotation.class);
         dictionary.getComparatorForAnnotation(new BadComparatorAnnotationImp());
@@ -107,7 +107,7 @@ public class AnnotationToComparatorDictionaryTest {
 
     @Test
     public void annotationToComparatoryDictionary_bad_initCtrDefault_privateConstructor() {
-        expectedException.expect(ComparatorInstantiationByAnnotationException.class);
+        expectedException.expect(StrategyInstantiationByAnnotationException.class);
         AnnotationToComparatorDictionary dictionary = AnnotationToComparatorDictionary.getInstance();
         dictionary.setComparatorForAnnotation(BadComparatorPrivateDefaultConstructor.class, BadComparatorAnnotation.class);
         dictionary.getComparatorForAnnotation(new BadComparatorAnnotationImp());
@@ -115,7 +115,7 @@ public class AnnotationToComparatorDictionaryTest {
 
     @Test
     public void annotationToComparatoryDictionary_bad_initCtrDefault_abstractComparator() {
-        expectedException.expect(ComparatorInstantiationByAnnotationException.class);
+        expectedException.expect(StrategyInstantiationByAnnotationException.class);
         AnnotationToComparatorDictionary dictionary = AnnotationToComparatorDictionary.getInstance();
         dictionary.setComparatorForAnnotation(BadComparatorAbstractDefaultCtr.class, BadComparatorAnnotation.class);
         dictionary.getComparatorForAnnotation(new BadComparatorAnnotationImp());
@@ -123,7 +123,7 @@ public class AnnotationToComparatorDictionaryTest {
 
     @Test
     public void annotationToComparatoryDictionary_bad_initCtrDefault_exceptionTrhown() {
-        expectedException.expect(ComparatorInstantiationByAnnotationException.class);
+        expectedException.expect(StrategyInstantiationByAnnotationException.class);
         AnnotationToComparatorDictionary dictionary = AnnotationToComparatorDictionary.getInstance();
         dictionary.setComparatorForAnnotation(BadComparatorErrInDefaultConstructor.class, BadComparatorAnnotation.class);
         dictionary.getComparatorForAnnotation(new BadComparatorAnnotationImp());

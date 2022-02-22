@@ -10,7 +10,6 @@ import org.testmonkeys.jentitytest.model.ReflectionUtils;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
 
-import java.beans.BeanInfo;
 import java.beans.FeatureDescriptor;
 import java.beans.PropertyDescriptor;
 import java.io.InputStream;
@@ -40,21 +39,21 @@ public class YamlModelParser {
 
 
         Class<?> testEntityClass = reflectionUtils.getEntityTypeForName(yamlModel.getEntity());
-        BeanInfo testEntityBean = reflectionUtils.getBeanInfo(testEntityClass);
+        PropertyDescriptor[] testEntityPropertyDescriptors = reflectionUtils.getPropertyDescriptors(testEntityClass);
 
-        validateAllDefinedPropertiesInYamlModel(testEntityBean, yamlModel);
+        validateAllDefinedPropertiesInYamlModel(testEntityPropertyDescriptors, yamlModel);
 
         ComparisonModel model = new ComparisonModel();
         model.setEntityType(testEntityClass);
 
-        for (PropertyDescriptor propertyDescriptor : testEntityBean.getPropertyDescriptors()) {
+        for (PropertyDescriptor propertyDescriptor : testEntityPropertyDescriptors) {
             createPropertyModel(propertyDescriptor, model, yamlModel);
         }
         return model;
     }
 
-    private void validateAllDefinedPropertiesInYamlModel(BeanInfo testEntityBean, EntityYamlComparisonDefinition yamlModel) {
-        Set<String> entityProperties = Arrays.stream(testEntityBean.getPropertyDescriptors()).map(FeatureDescriptor::getName).collect(Collectors.toSet());
+    private void validateAllDefinedPropertiesInYamlModel(PropertyDescriptor[] testEntityPropertyDescriptors, EntityYamlComparisonDefinition yamlModel) {
+        Set<String> entityProperties = Arrays.stream(testEntityPropertyDescriptors).map(FeatureDescriptor::getName).collect(Collectors.toSet());
         if (!entityProperties.containsAll(yamlModel.getProperties().keySet())) {
             Set<String> yamlProperties = yamlModel.getProperties().keySet();
             yamlProperties.removeAll(entityProperties);

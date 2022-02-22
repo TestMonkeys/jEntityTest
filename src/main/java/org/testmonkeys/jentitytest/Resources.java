@@ -9,8 +9,7 @@ import java.util.ResourceBundle;
 public class Resources {
 
     public static final String ERR_NO_COMPARATOR_DEFINED_FOR_ANNOTATION = "err_no_comparator_defined_for_annotation";
-    public static final String err_creating_comparator_for_annotation = "err_creating_comparator_for_annotation";
-    public static final String err_creating_check_for_annotation = "err_creating_comparator_for_check";
+    public static final String err_creating_strategy_for_annotation = "err_creating_strategy_for_annotation";
     public static final String err_creating_strategy = "err_creating_strategy";
     public static final String err_actual_and_expected_must_be_generic_Collections =
             "err_actual_and_expected_must_be_generic_Collections";

@@ -4,7 +4,7 @@ import org.hamcrest.junit.ExpectedException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.testmonkeys.jentitytest.exceptions.CheckInstantiationByAnnotationException;
+import org.testmonkeys.jentitytest.exceptions.StrategyInstantiationByAnnotationException;
 import org.testmonkeys.jentitytest.exceptions.StrategyInstantiationException;
 import org.testmonkeys.jentitytest.model.ReflectionUtils;
 import org.testmonkeys.jentitytest.model.yaml.StrategyDefinition;
@@ -41,10 +41,10 @@ public class ReflectionUtilsTest {
      */
     @Test
     public void reflectionUtils_intialiseCheck_bad() throws Throwable {
-        expectedException.expect(CheckInstantiationByAnnotationException.class);
-        expectedException.expectMessage("Could not create instance of Check: class org.testmonkeys.jentitytest.test.unit.model.util.BadCheck for annotation org.testmonkeys.jentitytest.test.unit.model.ReflectionUtilsTest");
+        expectedException.expect(StrategyInstantiationByAnnotationException.class);
+        expectedException.expectMessage("Could not create instance of Strategy: class org.testmonkeys.jentitytest.test.unit.model.util.BadCheck for annotation org.testmonkeys.jentitytest.test.unit.model.ReflectionUtilsTest");
         Annotation an = () -> BadComparisonCustom.class;
-        reflectionUtils.initializeCheck(an, BadCheck.class);
+        reflectionUtils.initializeStrategyByAnnotation(an, BadCheck.class);
 
     }
 
