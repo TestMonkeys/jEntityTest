@@ -1,31 +1,25 @@
 package org.testmonkeys.jentitytest.model;
 
 import lombok.extern.slf4j.Slf4j;
-import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.PropertyComparisonWrapper;
 import org.testmonkeys.jentitytest.comparison.strategies.SimpleTypeComparator;
 import org.testmonkeys.jentitytest.exceptions.JEntityModelException;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.testmonkeys.jentitytest.Resources.err_getting_beaninfo_from_class;
 
 @Slf4j
 public class EntityInspector {
 
     private final AnnotationToComparatorDictionary annotationToComparator =
             AnnotationToComparatorDictionary.getInstance();
+    private final ReflectionUtils reflectionUtils = new ReflectionUtils();
 
     /**
      * Inspects the class and creates a ComparisonModel based on class properties and annotations
@@ -35,12 +29,11 @@ public class EntityInspector {
      * @throws JEntityTestException when comparison model is impossible to generate
      */
     @SuppressWarnings("ObjectAllocationInLoop")
-    public ComparisonModel getComparisonModel(Class clazz) {
+    public ComparisonModel getComparisonModel(Class<?> clazz) {
         log.debug("Starting inspection for {}", clazz); //log
         ComparisonModel model = new ComparisonModel();
-        BeanInfo beanInfo = getBeanInfo(clazz);
 
-        for (PropertyDescriptor propertyDescriptor : beanInfo.getPropertyDescriptors()) {
+        for (PropertyDescriptor propertyDescriptor : reflectionUtils.getPropertyDescriptors(clazz)) {
             log.debug("Analyzing property {}", propertyDescriptor.getName()); //log
             Method method = propertyDescriptor.getReadMethod();
             if (method == null) {
@@ -49,35 +42,13 @@ public class EntityInspector {
             }
             Field field = getField(clazz, propertyDescriptor);
 
-            //Field level processing
-            if (field != null) {
-                for (Annotation annotation : getPreConditionalChecksAnnotation(field)) {
-                    model.addAbortCondition(propertyDescriptor, annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
-                }
-                for (Annotation annotation : getValidationChecksAnnotation(field)) {
-                    model.addValidation(propertyDescriptor, annotationToComparator.getValidationForAnnotation(annotation));
-                }
-                Annotation annotation = getComparisonAnnotation(field);
-                if (annotation != null) {
-                    log.debug("Found annotation at field level"); //log
-                    model.setComparisonPoint(propertyDescriptor, getPropertyComparator(annotation));
-                    continue;
-                }
-            }
-
-            //Method level processing
-            for (Annotation annotation : getPreConditionalChecksAnnotation(method)) {
-                model.addAbortCondition(propertyDescriptor, annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
-            }
-            for (Annotation annotation : getValidationChecksAnnotation(method)) {
-                model.addValidation(propertyDescriptor, annotationToComparator.getValidationForAnnotation(annotation));
-            }
-            Annotation annotation = getComparisonAnnotation(method);
-            if (annotation != null) {
-                log.debug("Found annotation at method level"); //log
-                model.setComparisonPoint(propertyDescriptor, getPropertyComparator(annotation));
+            log.debug("Searching annotation at field level..."); //log
+            if (field != null && findAndProcessMember(field, model, propertyDescriptor))
                 continue;
-            }
+
+            log.debug("Searching annotation at method level..."); //log
+            if (findAndProcessMember(method, model, propertyDescriptor))
+                continue;
 
             //Default (in case no annotations were used)
             log.debug("No annotation found, using default comparator"); //log
@@ -86,15 +57,20 @@ public class EntityInspector {
         return model;
     }
 
-    private BeanInfo getBeanInfo(Class clazz) {
-        BeanInfo beanInfo;
-        try {
-            beanInfo = Introspector.getBeanInfo(clazz, Object.class);
-        } catch (IntrospectionException e) {
-            throw new JEntityModelException(MessageFormat.format(
-                    Resources.getString(err_getting_beaninfo_from_class), clazz), e);
+    private boolean findAndProcessMember(AnnotatedElement field, ComparisonModel model, PropertyDescriptor propertyDescriptor) {
+        for (Annotation annotation : getPreConditionalChecksAnnotation(field)) {
+            model.addAbortCondition(propertyDescriptor, annotationToComparator.getPreComparisonCheckForAnnotation(annotation));
         }
-        return beanInfo;
+        for (Annotation annotation : getValidationChecksAnnotation(field)) {
+            model.addValidation(propertyDescriptor, annotationToComparator.getValidationForAnnotation(annotation));
+        }
+        Annotation annotation = getComparisonAnnotation(field);
+        if (annotation != null) {
+            log.debug("Found annotation"); //log
+            model.setComparisonPoint(propertyDescriptor, getPropertyComparator(annotation));
+            return true;
+        }
+        return false;
     }
 
     private Annotation getComparisonAnnotation(AnnotatedElement member) {
@@ -136,7 +112,7 @@ public class EntityInspector {
         return new PropertyComparisonWrapper(annotationToComparator.getComparatorForAnnotation(annotation));
     }
 
-    private Field getField(Class clazz, PropertyDescriptor propertyDescriptor) {
+    private Field getField(Class<?> clazz, PropertyDescriptor propertyDescriptor) {
         Field field = null;
         try {
             field = clazz.getDeclaredField(propertyDescriptor.getName());
