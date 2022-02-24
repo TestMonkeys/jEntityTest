@@ -96,4 +96,12 @@ public class InspectionTest {
         EntityInspector inspector = new EntityInspector();
         inspector.getComparisonModel(int.class);
     }
+
+    @Test
+    public void unit_inspection_fieldWithMultipleStrategies() {
+        this.expectedException.expect(JEntityModelException.class);
+        this.expectedException.expectMessage("There should be only one Comparison Annotation on your model");
+        EntityInspector inspector = new EntityInspector();
+        inspector.getComparisonModel(ModelWithMultipleAnnotationsOnMethod.class);
+    }
 }

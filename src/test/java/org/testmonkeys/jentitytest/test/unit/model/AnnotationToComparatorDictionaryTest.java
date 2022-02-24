@@ -4,8 +4,11 @@ import org.hamcrest.junit.ExpectedException;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.testmonkeys.jentitytest.comparison.abortConditions.AbortOnExpectNullCondition;
+import org.testmonkeys.jentitytest.comparison.validations.NotNullValidator;
 import org.testmonkeys.jentitytest.exceptions.JEntityModelException;
 import org.testmonkeys.jentitytest.exceptions.StrategyInstantiationByAnnotationException;
+import org.testmonkeys.jentitytest.framework.DateTimeComparison;
 import org.testmonkeys.jentitytest.model.AnnotationToComparatorDictionary;
 import org.testmonkeys.jentitytest.test.unit.model.util.*;
 
@@ -133,6 +136,38 @@ public class AnnotationToComparatorDictionaryTest {
     @Target({ElementType.METHOD, ElementType.FIELD})
     public @interface BadComparatorAnnotation {
         int value();
+    }
+
+    @Test
+    public void setPreConditionalCheckForAnnotation_nullCheck() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Comparator can not be null");
+
+        comparisonMap.setPreConditionalCheckForAnnotation(null, DateTimeComparison.class);
+    }
+
+    @Test
+    public void setPreConditionalCheckForAnnotation_nullAnnotation() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Annotation can not be null");
+
+        comparisonMap.setPreConditionalCheckForAnnotation(AbortOnExpectNullCondition.class, null);
+    }
+
+    @Test
+    public void setValidatorForAnnotation_nullCheck() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Comparator can not be null");
+
+        comparisonMap.setValidatorForAnnotation(null, DateTimeComparison.class);
+    }
+
+    @Test
+    public void setValidatorForAnnotation_nullAnnotation() {
+        expectedException.expect(IllegalArgumentException.class);
+        expectedException.expectMessage("Annotation can not be null");
+
+        comparisonMap.setValidatorForAnnotation(NotNullValidator.class, null);
     }
 
 }

@@ -3,6 +3,7 @@ package org.testmonkeys.jentitytest.test.integration.entityInList;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.hamcrest.Entity;
 
 import java.util.ArrayList;
@@ -14,6 +15,14 @@ public class EntityInListTest {
 
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
+
+    @Test
+    public void entityInList_ListNotIterable() {
+        expectedException.expect(JEntityTestException.class);
+        expectedException.expectMessage("Actual object not iterable");
+        ItemModel model = new ItemModel();
+        assertThat(model, Entity.listContains(model));
+    }
 
     @Test
     public void entityInList_emptyList() {
