@@ -29,10 +29,14 @@ public class ResultSet extends ArrayList<ComparisonResult> {
     }
 
     public void replaceIfBetterMatch(ResultSet option) {
-        if (this.isEmpty() || (option.stream().filter(x -> x.getStatus() == Failed).count() < this.stream().filter(x -> x.getStatus() == Failed).count())) {
+        if (this.isEmpty() || isWorseMatchThan(option)) {
             this.clear();
             this.addAll(option);
         }
+    }
+
+    public boolean isWorseMatchThan(ResultSet option) {
+        return this.isEmpty() || option.stream().filter(x -> x.getStatus() == Failed).count() < this.stream().filter(x -> x.getStatus() == Failed).count();
     }
 
 }
