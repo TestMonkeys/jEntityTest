@@ -1,5 +1,6 @@
 package org.testmonkeys.jentitytest.comparison.strategies;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.testmonkeys.jentitytest.Resources;
@@ -12,10 +13,7 @@ import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
 import org.testmonkeys.jentitytest.framework.ChildEntityListComparison;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 import static org.testmonkeys.jentitytest.Resources.size;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
@@ -108,25 +106,56 @@ public class ChildEntityListComparator extends AbstractComparator {
         Object[] actualArr = listActual.toArray();
         Object[] expectedArr = listExpected.toArray();
 
+        List<Integer> matchedActualIndexes = new ArrayList<>();
+        List<Integer> unmatchedExpectedIndexes = new ArrayList<>();
+        // weeding out the matches
         for (int i = 0; i < listExpected.size(); i++) {
-            comparisonResults.addAll(findClosestMatch(expectedArr[i], actualArr, elementComparator, context.withIndex(i)));
+            Object expected = expectedArr[i];
+            ResultSetAndIndex option=getClosestMatchWithActualIndex(expected,actualArr,elementComparator, context,matchedActualIndexes);
+            if (option.getResultSet().isPerfectMatch()) {
+                matchedActualIndexes.add(option.getIndex());
+                comparisonResults.addAll(option.getResultSet());
+            }else
+                unmatchedExpectedIndexes.add(i);
         }
-
+        // finding closest matches among what's left
+        for (int i = 0; i < listExpected.size(); i++) {
+            if (!unmatchedExpectedIndexes.contains(i))
+                continue;
+            Object expected = expectedArr[i];
+            ResultSetAndIndex option=getClosestMatchWithActualIndex(expected,actualArr,elementComparator, context,matchedActualIndexes);
+            matchedActualIndexes.add(option.getIndex());
+            comparisonResults.addAll(option.getResultSet());
+        }
         return comparisonResults;
     }
 
-    private ResultSet findClosestMatch(Object expected, Object[] actualArr, Comparator elementComparator, ComparisonContext context) {
-        ResultSet closestMatch = new ResultSet();
-        for (Object actualObject : actualArr) {
+    private ResultSetAndIndex getClosestMatchWithActualIndex(Object expected, Object[] actualArr, Comparator elementComparator, ComparisonContext context,
+                                         List<Integer> matchedActualIndexes){
+        ResultSet closestMatch=new ResultSet();
+        int closestMatchIndex=-1;
+        for (int j = 0; j < actualArr.length; j++) {
+            if (matchedActualIndexes.contains(j))
+                continue;
+            Object actual = actualArr[j];
             ResultSet option = elementComparator.compare(
-                    actualObject,
+                    actual,
                     expected,
                     context);
-            closestMatch.replaceIfBetterMatch(option);
-            if (option.isPerfectMatch())
-                break;
+            if (closestMatch.isWorseMatchThan(option)) {
+                closestMatchIndex=j;
+                closestMatch.replaceIfBetterMatch(option);
+                if (closestMatch.isPerfectMatch())
+                    break;
+            }
         }
-        return closestMatch;
+        return new ResultSetAndIndex(closestMatchIndex,closestMatch);
     }
 
+    @Getter
+    @AllArgsConstructor
+    private class ResultSetAndIndex{
+        private int index;
+        private ResultSet resultSet;
+    }
 }
