@@ -3,14 +3,15 @@ package org.testmonkeys.jentitytest.hamcrest;
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.hamcrest.matchers.DefaultResultOutput;
 import org.testmonkeys.jentitytest.hamcrest.matchers.EntityInListMatcher;
+import org.testmonkeys.jentitytest.hamcrest.matchers.EntityListMatcher;
 import org.testmonkeys.jentitytest.hamcrest.matchers.EntityMatcher;
 import org.testmonkeys.jentitytest.hamcrest.matchers.ResultProcessor;
 
 /**
- * Entity is a facade for accessing matcher's
+ * EntityList is a facade for accessing matcher's related to lists
  */
 @SuppressWarnings("ClassWithTooManyTransitiveDependencies")
-public final class Entity {
+public final class EntityList {
 
     private static ResultProcessor resultProcessor;
 
@@ -21,31 +22,31 @@ public final class Entity {
     public static void setResultProcessor(ResultProcessor resultProcessor) {
         if (resultProcessor == null)
             throw new IllegalArgumentException(Resources.getString(Resources.err_result_processor_null));
-        Entity.resultProcessor = resultProcessor;
+        EntityList.resultProcessor = resultProcessor;
     }
 
     /**
-     * Returns a matcher for the expected strategies type
+     * Returns a matcher for the comparing two lists
      *
-     * @param expected expected object
-     * @param <T>      enitity type
+     * @param expected expected object list
+     * @param <T>      entity type
      * @return entity matcher
      */
     @SuppressWarnings("NonBooleanMethodNameMayNotStartWithQuestion")
-    public static synchronized <T> EntityMatcher<T> isEqualTo(Object expected) {
-        EntityMatcher<T> matcher = new EntityMatcher<>(expected);
+    public static synchronized <T> EntityListMatcher<T> isEqualTo(Object expected) {
+        EntityListMatcher<T> matcher = new EntityListMatcher<>(expected);
         matcher.setResultProcessor(resultProcessor);
         return matcher;
     }
 
     /**
-     * Deprecated, please use EntityList.contains(expected object) instead
-     * @param expected
-     * @return
-     * @param <T>
+     * Returns a matcher for matching if an item is in a list
+     *
+     * @param expected expected object
+     * @param <T>      entity type
+     * @return entity matcher
      */
-    @Deprecated()
-    public static synchronized <T> EntityInListMatcher<T> listContains(Object expected) {
+    public static synchronized <T> EntityInListMatcher<T> contains(Object expected) {
         EntityInListMatcher<T> matcher = new EntityInListMatcher<>(expected);
         matcher.setResultProcessor(resultProcessor);
         return matcher;
