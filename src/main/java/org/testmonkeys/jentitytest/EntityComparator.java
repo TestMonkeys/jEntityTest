@@ -12,6 +12,7 @@ import org.testmonkeys.jentitytest.model.ComparisonModel;
 import org.testmonkeys.jentitytest.model.EntityToComparisonModelDictionary;
 
 import java.beans.PropertyDescriptor;
+import java.util.Collection;
 
 import static org.testmonkeys.jentitytest.Resources.entity;
 import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
@@ -42,6 +43,7 @@ public class EntityComparator {
      * @throws JEntityTestException in case the comparison can't be completed
      */
     public ResultSet compare(Object actual, Object expected, ComparisonContext comparisonContext) {
+
         ComparisonContext context = comparisonContext;
         if (context == null) {
             context = new ComparisonContext();
@@ -54,6 +56,8 @@ public class EntityComparator {
         if ((conditionalCheckResult.getStatus() == Failed) || conditionalCheckResult.isComparisonFinished()) {
             return new ResultSet().with(conditionalCheckResult);
         }
+        if (expected instanceof Collection)
+            throw new JEntityTestException("comparison on lists should be done using EntityList Comparison");
 
         ComparisonModel model = comparisonDictionary.getComparisonModel(expected.getClass());
 
