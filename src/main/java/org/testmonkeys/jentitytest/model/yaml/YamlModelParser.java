@@ -33,7 +33,7 @@ public class YamlModelParser {
      * @return Comparison Model
      */
     public ComparisonModel readModel(InputStream inputStream) {
-        Yaml yaml = new Yaml(new Constructor(EntityYamlComparisonDefinition.class));
+        Yaml yaml = new Yaml();
 
         EntityYamlComparisonDefinition yamlModel = yaml.loadAs(inputStream, EntityYamlComparisonDefinition.class);
 

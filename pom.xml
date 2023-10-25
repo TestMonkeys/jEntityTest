@@ -51,8 +51,8 @@
         <hamcrestVersion>2.0.0.0</hamcrestVersion>
         <junitVersion>4.13.2</junitVersion>
         <maven.compiler.version>3.11.0</maven.compiler.version>
+        <snakeYamlVersion>2.0</snakeYamlVersion>
         <maven.surefire.version>3.1.2</maven.surefire.version>
-        <snakeYamlVersion>1.33</snakeYamlVersion>
         <jackson.version>2.15.2</jackson.version>
         <lombok.version>1.18.26</lombok.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
