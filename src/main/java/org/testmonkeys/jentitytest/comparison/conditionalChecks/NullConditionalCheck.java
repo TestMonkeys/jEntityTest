@@ -6,6 +6,7 @@ import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.ComparisonContext;
 import org.testmonkeys.jentitytest.comparison.PreComparisonCheck;
 import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
+import org.testmonkeys.jentitytest.hamcrest.Entity;
 
 import java.text.MessageFormat;
 
@@ -35,18 +36,9 @@ public class NullConditionalCheck implements PreComparisonCheck {
 
     private String getObjectDescription(Object o) {
         if (o != null)
-            return MessageFormat.format(Resources.getString(NOT_NULL_with_object), getObjectRepresentation(o));
+            return MessageFormat.format(Resources.getString(NOT_NULL_with_object), Entity.getResultProcessor().describeObject(o));
         else
             return Resources.getString(NULL);
-    }
-
-    private String getObjectRepresentation(Object o) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.writeValueAsString(o);
-        } catch (JsonProcessingException e) {
-            return o.toString();
-        }
     }
 
 }

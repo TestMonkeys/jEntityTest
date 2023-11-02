@@ -47,7 +47,7 @@ public class EntityListContainsTest {
     public void entityInList_match_not_in_List() {
         expectedException.expect(AssertionError.class);
         expectedException.expectMessage("List contains entity {\"id\":\"id1\",\"name\":\"modelName\",\"price\":15}\n" +
-                "     but: Entity not in list, closest match:\n" +
+                "     but: Entity not in list, closest match has the following differences:\n" +
                 "Property: ItemModel.name\n" +
                 "\tExpected: modelName\n" +
                 "\tActual: modelName2");
@@ -63,7 +63,7 @@ public class EntityListContainsTest {
     public void entityInList_match_not_in_List_expected_null() {
         expectedException.expect(AssertionError.class);
         expectedException.expectMessage("List contains entity null\n" +
-                "     but: Entity not in list, closest match:\n" +
+                "     but: Entity not in list, closest match has the following differences:\n" +
                 "Property: ItemModel\n" +
                 "\tExpected: null\n" +
                 "\tActual: not null");

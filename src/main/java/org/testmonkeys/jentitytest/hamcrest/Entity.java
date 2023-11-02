@@ -24,6 +24,10 @@ public final class Entity {
         Entity.resultProcessor = resultProcessor;
     }
 
+    public static ResultProcessor getResultProcessor(){
+        return resultProcessor;
+    }
+
     /**
      * Returns a matcher for the expected strategies type
      *

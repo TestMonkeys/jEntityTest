@@ -1,9 +1,10 @@
-package org.testmonkeys.jentitytest.test.example;
+package org.testmonkeys.jentitytest.test.integration.standaloneAssertions;
 
 import org.testmonkeys.jentitytest.framework.ChildEntityComparison;
 import org.testmonkeys.jentitytest.framework.ChildEntityListComparison;
 import org.testmonkeys.jentitytest.framework.DateTimeComparison;
 import org.testmonkeys.jentitytest.framework.IgnoreComparison;
+import org.testmonkeys.jentitytest.test.example.Address;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
@@ -13,7 +14,10 @@ import java.util.List;
  * Sample class for showing how jEntityTest comparison annotations can be used
  */
 public class User {
-
+    public User(){}
+    public User(String lastName){
+        this.lastName=lastName;
+    }
     private String firstName;
     private String lastName;
     private int age;
@@ -22,7 +26,7 @@ public class User {
     @ChildEntityListComparison
     private List<User> children;
 
-    @ChildEntityListComparison()
+    @ChildEntityListComparison
     private List<String> emailAddresses;
 
     @ChildEntityComparison
