@@ -1,7 +1,5 @@
 package org.testmonkeys.jentitytest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.hamcrest.Entity;
@@ -17,6 +15,11 @@ public class EntityAssertion<T> {
         this.entity = entity;
     }
 
+    /**
+     * Asserts that the entities are the same
+     *
+     * @param expected expected entity
+     */
     public void isEqualTo(T expected) {
         EntityComparator comparator = new EntityComparator();
         ResultSet result = comparator.compare(entity, expected);
@@ -34,7 +37,9 @@ public class EntityAssertion<T> {
 
 
     /**
+     * Asserts that the entity is present in the collection
      *
+     * @param collection the collection in which to look for the entity
      */
     public void isPresentInCollection(Collection<T> collection) {
         CollectionAssertion<T> collectionAssertion = new CollectionAssertion<>(entityName,collection);

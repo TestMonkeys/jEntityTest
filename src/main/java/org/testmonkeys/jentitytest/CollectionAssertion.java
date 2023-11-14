@@ -1,20 +1,12 @@
 package org.testmonkeys.jentitytest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.testmonkeys.jentitytest.comparison.ComparisonContext;
-import org.testmonkeys.jentitytest.comparison.conditionalChecks.NullConditionalCheck;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
-import org.testmonkeys.jentitytest.comparison.result.ConditionalCheckResult;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
-import org.testmonkeys.jentitytest.comparison.strategies.ChildEntityListComparator;
 import org.testmonkeys.jentitytest.hamcrest.Entity;
 
 import java.util.Collection;
 
-import static org.testmonkeys.jentitytest.Resources.getStandaloneEntitiesNotEqualAssertionMessage;
 import static org.testmonkeys.jentitytest.Resources.getStandaloneListsNotEqualAssertionMessage;
-import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
 
 public class CollectionAssertion<T> {
 
@@ -27,11 +19,19 @@ public class CollectionAssertion<T> {
         this.entityCollection = entityCollection;
     }
 
+    /**
+     * If set will ignore the order of the elements when comparing two collections.
+     */
     public CollectionAssertion<T> ignoringOrder(){
         orderedComparison=false;
         return this;
     }
 
+    /**
+     * Asserts that the collections have the same entities.
+     *
+     * @param expectedCollection expected collection
+     */
     public void isEqualTo(Collection<T> expectedCollection) {
         EntityListComparator comparator = new EntityListComparator();
 
@@ -49,7 +49,9 @@ public class CollectionAssertion<T> {
     }
 
     /**
+     * Asserts that the collection has a specific entity.
      *
+     * @param item expected entity to be present in collection
      */
     public void hasItem(T item) {
         EntityInListComparator<T> comparator = new EntityInListComparator<>();
@@ -65,6 +67,11 @@ public class CollectionAssertion<T> {
             throw new AssertionError(sb.toString());
     }
 
+    /**
+     * Asserts that the collection has several specific entities
+     *
+     * @param items expected entities to be present in collection
+     */
     public void hasItems(Collection<T> items) {
         EntityInListComparator<T> comparator = new EntityInListComparator<>();
 
