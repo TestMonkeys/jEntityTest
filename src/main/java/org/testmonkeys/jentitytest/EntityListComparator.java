@@ -19,10 +19,20 @@ import static org.testmonkeys.jentitytest.comparison.result.Status.Failed;
 
 
 public class EntityListComparator {
-
-    private final EntityToComparisonModelDictionary comparisonDictionary =
-            EntityToComparisonModelDictionary.getInstance();
     private final NullConditionalCheck nullComparatorHelper = new NullConditionalCheck();
+
+    /**
+     * @param actual   actual object list
+     * @param expected expected object list
+     * @param ordered if set to false will ignore the order of the items in the lists
+     * @return result set of the comparison
+     * @throws JEntityTestException in case the comparison can't be completed
+     */
+    public ResultSet compare(Object actual, Object expected, boolean ordered) {
+        ComparisonContext context=new ComparisonContext();
+        context.setParentName("List");
+        return compare(actual, expected, context, ordered);
+    }
 
     /**
      * @param actual   actual object list
@@ -44,13 +54,19 @@ public class EntityListComparator {
      * @throws JEntityTestException in case the comparison can't be completed
      */
     public ResultSet compare(Object actual, Object expected, ComparisonContext comparisonContext) {
+        return compare(actual,expected,comparisonContext,true);
+    }
+
+    /**
+     * @param actual actual object list
+     * @param expected expected object list
+     * @param comparisonContext comparison context of the current entities
+     * @param ordered if set to false will ignore the order of the items in the lists
+     * @return result set of the comparison
+     * @throws JEntityTestException in case the comparison can't be completed
+     */
+    public ResultSet compare(Object actual, Object expected, ComparisonContext comparisonContext, boolean ordered) {
         ComparisonContext context = comparisonContext;
-        if (context == null) {
-            context = new ComparisonContext();
-            String parent = getContextParentName(actual, expected);
-            context.setParentName(parent);
-            context.setActualObj(actual);
-        }
 
         ConditionalCheckResult conditionalCheckResult = nullComparatorHelper.runCheck(actual, expected, context);
         if ((conditionalCheckResult.getStatus() == Failed) || conditionalCheckResult.isComparisonFinished()) {
@@ -59,19 +75,10 @@ public class EntityListComparator {
 
         ResultSet comparisonResults = new ResultSet();
         ChildEntityListComparator comparator = new ChildEntityListComparator();
+        comparator.setOrdered(ordered);
         comparisonResults.addAll(comparator.compare(actual,expected,comparisonContext));
         return comparisonResults;
     }
 
-
-    private String getContextParentName(Object actual, Object expected) {
-        if (expected != null)
-            return expected.getClass().getSimpleName();
-
-        if (actual != null)
-            return actual.getClass().getSimpleName();
-
-        return Resources.getString(entity);
-    }
 
 }

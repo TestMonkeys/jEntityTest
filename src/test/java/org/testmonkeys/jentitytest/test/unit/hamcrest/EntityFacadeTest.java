@@ -117,6 +117,11 @@ public class EntityFacadeTest {
         public String getOutput(ComparisonContext context, ComparisonResult result) {
             return "CustomResultOutput";
         }
+
+        @Override
+        public String describeObject(Object o) {
+            return o.toString();
+        }
     }
 
 }

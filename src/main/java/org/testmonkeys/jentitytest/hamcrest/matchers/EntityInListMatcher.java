@@ -2,10 +2,13 @@ package org.testmonkeys.jentitytest.hamcrest.matchers;
 
 import org.hamcrest.Description;
 import org.testmonkeys.jentitytest.EntityComparator;
+import org.testmonkeys.jentitytest.EntityInListComparator;
 import org.testmonkeys.jentitytest.Resources;
 import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import org.testmonkeys.jentitytest.comparison.result.ResultSet;
 import org.testmonkeys.jentitytest.exceptions.JEntityTestException;
+
+import java.util.Collection;
 
 import static org.testmonkeys.jentitytest.Resources.desc_item_in_list;
 import static org.testmonkeys.jentitytest.Resources.desc_item_not_in_list;
@@ -33,43 +36,29 @@ public class EntityInListMatcher<T> extends AbstractJEntityMatcher<T> {
      */
     @Override
     public boolean matches(Object entityList) {
-        Iterable<T> iterable = getIterableList(entityList);
-        ResultSet potentialResult = new ResultSet();
-
-        if (!iterable.iterator().hasNext()) {
+        EntityInListComparator comparator = new EntityInListComparator();
+        Collection<T> collection = getIterableList(entityList);
+        if (collection==null) {
+            failureReason = Resources.getString(Resources.err_actual_list_null);
+            return false;
+        }
+        if (collection.isEmpty()) {
             failureReason = Resources.getString(Resources.err_actual_list_empty);
             return false;
         }
 
-        for (T item : iterable) {
-            ResultSet itemComparisonResult = compareToListItem(expected, item);
-            if (itemComparisonResult.isPerfectMatch())
-                return true;
-            potentialResult.replaceIfBetterMatch(itemComparisonResult);
-        }
-
-        describeClosestMatch(potentialResult);
-        return false;
-    }
-
-    private ResultSet compareToListItem(Object expected, T actualItem) {
-        ResultSet result = new ResultSet();
-        EntityComparator comparator = new EntityComparator();
-        result.addAll(comparator.compare(actualItem, expected));
-        return result;
-    }
-
-    private void describeClosestMatch(ResultSet closestMatch) {
+        ResultSet resultSet = comparator.entityInList(expected,collection);
         StringBuilder sb = new StringBuilder();
-        for (ComparisonResult res : closestMatch.getMismatches()) {
+        for (ComparisonResult res : resultSet.getMismatches()) {
             sb.append(resultProcessor.getOutput(res.getComparisonContext(), res));
         }
         textualOutput = sb.toString();
+        return resultSet.isPerfectMatch();
     }
 
-    private Iterable<T> getIterableList(Object entityList) {
+    private Collection<T> getIterableList(Object entityList) {
         try {
-            return (Iterable<T>) entityList;
+            return (Collection<T>) entityList;
         } catch (Exception e) {
             throw new JEntityTestException(Resources.getString(Resources.err_actual_not_iterable), e);
         }
