@@ -2,17 +2,13 @@ package org.testmonkeys.jentitytest.test.integration.standaloneAssertions;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThrows;
-import static org.testmonkeys.jentitytest.JEntityAssertions.assertEntity;
 import static org.testmonkeys.jentitytest.JEntityAssertions.assertEntityCollection;
 
 @Slf4j
@@ -90,8 +86,7 @@ public class StandaloneCollectionAssertions {
                         "\t but following properties didnt match:\n" +
                         "Property: List.lastName\n" +
                         "\tExpected: Dow\n" +
-                        "\tActual: Jow\n" +
-                        "Comparison was performed using SimpleTypeComparator\r\n",
+                        "\tActual: Jow\r\n",
                 e.getMessage());
     }
 
@@ -114,8 +109,7 @@ public class StandaloneCollectionAssertions {
                         "\t but following properties didnt match:\n" +
                         "Property: List[0].lastName\n" +
                         "\tExpected: Dow\n" +
-                        "\tActual: Snow\n" +
-                        "Comparison was performed using SimpleTypeComparator\r\n",
+                        "\tActual: Snow\r\n",
                 e.getMessage());
     }
 
@@ -148,8 +142,7 @@ public class StandaloneCollectionAssertions {
                         "\tclosest match has the following differences:\n" +
                         "Property: User.lastName\n" +
                         "\tExpected: Dow\n" +
-                        "\tActual: Snow\n" +
-                        "Comparison was performed using SimpleTypeComparator\r\n",
+                        "\tActual: Snow\r\n",
                 e.getMessage());
     }
 
@@ -186,14 +179,12 @@ public class StandaloneCollectionAssertions {
                         "\tclosest match has the following differences:\n" +
                         "Property: User.lastName\n" +
                         "\tExpected: Mow\n" +
-                        "\tActual: Snow\n" +
-                        "Comparison was performed using SimpleTypeComparator\r\n" +
+                        "\tActual: Snow\r\n" +
                         "Collection has no item like:{\"firstName\":null,\"lastName\":\"Cow\",\"age\":0,\"married\":false,\"children\":null,\"emailAddresses\":null,\"address\":null,\"createdDate\":null,\"id\":0,\"randomGenerated\":null}\n" +
                         "\tclosest match has the following differences:\n" +
                         "Property: User.lastName\n" +
                         "\tExpected: Cow\n" +
-                        "\tActual: Snow\n" +
-                        "Comparison was performed using SimpleTypeComparator\r\n",
+                        "\tActual: Snow\r\n",
                 e.getMessage());
     }
 
@@ -217,14 +208,12 @@ public class StandaloneCollectionAssertions {
                         "\tclosest match has the following differences:\n" +
                         "Property: User.lastName\n" +
                         "\tExpected: Mow\n" +
-                        "\tActual: Snow\n" +
-                        "Comparison was performed using SimpleTypeComparator\r\n" +
+                        "\tActual: Snow\r\n" +
                         "Collection has no user list item like:{\"firstName\":null,\"lastName\":\"Cow\",\"age\":0,\"married\":false,\"children\":null,\"emailAddresses\":null,\"address\":null,\"createdDate\":null,\"id\":0,\"randomGenerated\":null}\n" +
                         "\tclosest match has the following differences:\n" +
                         "Property: User.lastName\n" +
                         "\tExpected: Cow\n" +
-                        "\tActual: Snow\n" +
-                        "Comparison was performed using SimpleTypeComparator\r\n",
+                        "\tActual: Snow\r\n",
                 e.getMessage());
     }
 
@@ -245,20 +234,17 @@ public class StandaloneCollectionAssertions {
                         "\tclosest match has the following differences:\n" +
                         "Property: Collection\n" +
                         "\tExpected: not empty\n" +
-                        "\tActual: empty\n" +
-                        "Comparison was performed using null\r\n" +
+                        "\tActual: empty\r\n" +
                         "Collection has no user list item like:{\"firstName\":null,\"lastName\":\"Mow\",\"age\":0,\"married\":false,\"children\":null,\"emailAddresses\":null,\"address\":null,\"createdDate\":null,\"id\":0,\"randomGenerated\":null}\n" +
                         "\tclosest match has the following differences:\n" +
                         "Property: Collection\n" +
                         "\tExpected: not empty\n" +
-                        "\tActual: empty\n" +
-                        "Comparison was performed using null\r\n" +
+                        "\tActual: empty\r\n" +
                         "Collection has no user list item like:{\"firstName\":null,\"lastName\":\"Cow\",\"age\":0,\"married\":false,\"children\":null,\"emailAddresses\":null,\"address\":null,\"createdDate\":null,\"id\":0,\"randomGenerated\":null}\n" +
                         "\tclosest match has the following differences:\n" +
                         "Property: Collection\n" +
                         "\tExpected: not empty\n" +
-                        "\tActual: empty\n" +
-                        "Comparison was performed using null\r\n",
+                        "\tActual: empty\r\n",
                 e.getMessage());
     }
 
@@ -280,20 +266,17 @@ public class StandaloneCollectionAssertions {
                         "\tclosest match has the following differences:\n" +
                         "Property: Collection\n" +
                         "\tExpected: not null\n" +
-                        "\tActual: null\n" +
-                        "Comparison was performed using null\r\n" +
+                        "\tActual: null\r\n" +
                         "Collection has no user list item like:{\"firstName\":null,\"lastName\":\"Mow\",\"age\":0,\"married\":false,\"children\":null,\"emailAddresses\":null,\"address\":null,\"createdDate\":null,\"id\":0,\"randomGenerated\":null}\n" +
                         "\tclosest match has the following differences:\n" +
                         "Property: Collection\n" +
                         "\tExpected: not null\n" +
-                        "\tActual: null\n" +
-                        "Comparison was performed using null\r\n" +
+                        "\tActual: null\r\n" +
                         "Collection has no user list item like:{\"firstName\":null,\"lastName\":\"Cow\",\"age\":0,\"married\":false,\"children\":null,\"emailAddresses\":null,\"address\":null,\"createdDate\":null,\"id\":0,\"randomGenerated\":null}\n" +
                         "\tclosest match has the following differences:\n" +
                         "Property: Collection\n" +
                         "\tExpected: not null\n" +
-                        "\tActual: null\n" +
-                        "Comparison was performed using null\r\n",
+                        "\tActual: null\r\n",
                 e.getMessage());
     }
 }

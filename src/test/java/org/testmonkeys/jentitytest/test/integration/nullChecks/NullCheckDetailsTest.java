@@ -62,8 +62,7 @@ public class NullCheckDetailsTest {
         expectedEx.expect(AssertionError.class);
         expectedEx.expectMessage(StringContains.containsString("Property: NullCheckModel.address\n" +
                 "\tExpected: null\n" +
-                "\tActual: not null ({\"street\":\"street1\"})\n" +
-                "Comparison was performed using SimpleTypeComparator"));
+                "\tActual: not null ({\"street\":\"street1\"})\r\n"));
 
         Address address = new Address();
         address.setStreet("street1");

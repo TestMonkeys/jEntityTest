@@ -10,7 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 import static org.testmonkeys.jentitytest.JEntityAssertions.assertEntity;
 import static org.testmonkeys.jentitytest.JEntityAssertions.assertEntityCollection;
 
@@ -81,8 +82,7 @@ public class StandaloneEntityAssertions {
                 "\t but following properties didnt match:\n" +
                 "Property: User.lastName\n" +
                 "\tExpected: Dow\n" +
-                "\tActual: Snow\n" +
-                "Comparison was performed using SimpleTypeComparator\r\n",
+                        "\tActual: Snow\r\n",
                 e.getMessage());
     }
 
@@ -100,8 +100,7 @@ public class StandaloneEntityAssertions {
                         "\t but following properties didnt match:\n" +
                         "Property: User.lastName\n" +
                         "\tExpected: Dow\n" +
-                        "\tActual: Snow\n" +
-                        "Comparison was performed using SimpleTypeComparator\r\n",
+                        "\tActual: Snow\r\n",
                 e.getMessage());
     }
 
@@ -133,8 +132,7 @@ public class StandaloneEntityAssertions {
                         "\tclosest match has the following differences:\n" +
                         "Property: User.lastName\n" +
                         "\tExpected: Dow\n" +
-                        "\tActual: Snow\n" +
-                        "Comparison was performed using SimpleTypeComparator\r\n",
+                        "\tActual: Snow\r\n",
                 e.getMessage());
     }
 
@@ -155,8 +153,7 @@ public class StandaloneEntityAssertions {
                         "\tclosest match has the following differences:\n" +
                         "Property: User.lastName\n" +
                         "\tExpected: Dow\n" +
-                        "\tActual: Snow\n" +
-                        "Comparison was performed using SimpleTypeComparator\r\n",
+                        "\tActual: Snow\r\n",
                 e.getMessage());
     }
 
@@ -174,8 +171,7 @@ public class StandaloneEntityAssertions {
                         "\tclosest match has the following differences:\n" +
                         "Property: Collection\n" +
                         "\tExpected: not empty\n" +
-                        "\tActual: empty\n" +
-                        "Comparison was performed using null\r\n",
+                        "\tActual: empty\r\n",
                 e.getMessage());
     }
 
@@ -193,8 +189,7 @@ public class StandaloneEntityAssertions {
                         "\tclosest match has the following differences:\n" +
                         "Property: Collection\n" +
                         "\tExpected: not null\n" +
-                        "\tActual: null\n" +
-                        "Comparison was performed using null\r\n",
+                        "\tActual: null\r\n",
                 e.getMessage());
     }
 }

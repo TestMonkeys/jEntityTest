@@ -39,6 +39,7 @@ public class Resources {
     public static final String desc_string_ignoring_chars = "desc_string_ignoring_chars";
     public static final String desc_string = "desc_string";
     public static final String comp_result = "comp_result";
+    public static final String comp_result_light = "comp_result_light";
     public static final String err_actual_not_iterable = "err_actual_not_iterable";
     public static final String err_actual_list_empty = "err_actual_list_empty";
     public static final String err_actual_list_null = "err_actual_list_null";

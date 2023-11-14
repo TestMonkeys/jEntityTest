@@ -9,12 +9,16 @@ import org.testmonkeys.jentitytest.comparison.result.ComparisonResult;
 import java.text.MessageFormat;
 
 import static org.testmonkeys.jentitytest.Resources.comp_result;
+import static org.testmonkeys.jentitytest.Resources.comp_result_light;
 
 public class DefaultResultOutput implements ResultProcessor {
 
     @Override
     public synchronized String getOutput(ComparisonContext context, ComparisonResult result) {
-        return MessageFormat.format(Resources.getString(comp_result),
+        if (context.getComparatorDetails() == null || context.getComparatorDetails().equalsIgnoreCase("SimpleTypeComparator"))
+            return MessageFormat.format(Resources.getString(comp_result_light), context, result.getExpected(), result.getActual());
+        else
+            return MessageFormat.format(Resources.getString(comp_result),
                 context, result.getExpected(), result.getActual(), context.getComparatorDetails());
     }
 
